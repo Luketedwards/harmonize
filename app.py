@@ -19,7 +19,9 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/test")
 def test():
-    return render_template("test.html")
+    users = mongo.db.users.find()
+    return render_template("test.html", users = users)
+    
 
 
 if __name__ == "__main__":
