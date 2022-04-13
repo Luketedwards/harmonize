@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="center-align">Compose an Account</h3>
+
+<div class="row">
+    <form class="col s12 m8 offset-m2" method="POST" action="">
+        <div class="card-panel">
+            <!-- username -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                    <input id="username" name="username" type="text" minlength="5"
+                        maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                    <label for="username">Username</label>
+                </div>
+            </div>
+            <div class="input-field col s6">
+                <input  id="first_name" type="text" class="validate">
+                <label for="first_name">First Name</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">Last Name</label>
+              </div>
+            <!-- password -->
+            
+                <div class="row s12">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="password" type="password" class="validate">
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="passwordConfirm" type="password">
+                                <label id="lblPasswordConfirm" for="passwordConfirm" data-error="Password not match" data-success="Password Match">Password (Confirm)</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                      <input id="city" type="text" class="validate">
+                      <label for="city">City</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+            <div class="input-field col s12">
+                <select multiple>
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="1">Guitar</option>
+                  <option value="2">Bass Guitar</option>
+                  <option value="2">Mandolin</option>
+                  <option value="3">Violin</option>
+                  <option value="3">Viola</option>
+                  <option value="3">Cello</option>
+                  <option value="3">Trumpet</option>
+                  <option value="3">Trombone</option>
+                  <option value="3">French Horn</option>
+                  <option value="3">Euphonium</option>
+                  <option value="3">Saxophone</option>
+                  <option value="3">Clarinet</option>
+                  <option value="3">Flute</option>
+                  <option value="3">Drums</option>
+                  <option type="text" value="3">Other (Please Type)</option>
+                </select>
+                
+                <label>What Instruments Do You Play?</label>
+                    
+              </div>
+              <div class="input-field col s12">
+                <select multiple>
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="1">Rock</option>
+                  <option value="2">Pop</option>
+                  <option value="2">Classical</option>
+                  <option value="3">Jazz</option>
+                  <option value="3">Metal</option>
+                  <option value="3">Blues</option>
+                  <option value="3">Bluegrass</option>
+                  <option value="3">Folk</option>
+                  <option value="3">EDM</option>
+                  <option value="3">Celtic</option>
+                  <option value="3">World</option>
+                  <option type="text" value="3">Other (Please Type)</option>
+                </select>
+                
+                <label>What Genres Do You Play?</label>
+                    
+              </div>
+            <!-- register -->
+            <div class="row">
+                <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
+                    Register <i class="fas fa-sign-in-alt"></i>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<div class="row">
+    <div class="col s12">
+        <p class="center-align">
+            Already Registered?
+            <a href="" class="light-blue-text text-darken-4">Log In</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
