@@ -24,3 +24,8 @@
 #username{
     text-align: center;
 }
+
+#logo{
+    padding-left: 10px;
+    font-family: 'Source Serif Pro', serif;
+}
