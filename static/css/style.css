@@ -17,15 +17,70 @@
 
 #profile-image {
     height: 50vh; 
-    margin-left: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
     border: 8px solid black;
 }
 
-#username{
-    text-align: center;
-}
 
 #logo{
     padding-left: 10px;
     font-family: 'Source Serif Pro', serif;
+}
+
+#music-icon{
+    font-size: 2.6rem;
+}
+
+#profile-genres{
+    font-family: 'Source Serif Pro', serif;
+    font-size: 2rem;
+    background-color: lightgray;
+    height: 100%;
+}
+
+#profile-instruments{
+    font-family: 'Source Serif Pro', serif;
+    font-size: 2rem;
+    background-color: beige;
+    height: 100%;
+}
+
+.card .card-reveal{
+    padding: 0;
+    
+}
+
+.card-content{
+    background-color: #fafafa;
+}
+
+#inner-card-title{
+    height: 50px;
+    font-family: 'Source Serif Pro', serif;
+}
+
+.card-title{
+    font-family: 'Source Serif Pro', serif;
+}
+
+#profile-header{
+    background-color: #B1D0E0;
+}
+
+.navbar-color{
+    background-color: #3A3845;
+}
+
+#profile-title{
+    background-color: #3A3845;
+    color: white;
+}
+
+
+
+body{
+    background-color: #B1D0E0;
 }
