@@ -127,8 +127,9 @@ def edit_profile():
             }}
         user = (session["user"])    
         current_user = mongo.db.users.find_one({'username':user})
+        user_id = mongo.db.users.find_one({'username':user})['_id']
         
-        mongo.db.users.update_one({'_id':ObjectId('625db5b304304ca5c58f118b')},edit)  
+        mongo.db.users.update_one({'_id':ObjectId(user_id)},edit)  
         flash("success")
     
     if session["user"]:
