@@ -1,14 +1,15 @@
 {% extends "base.html"%}
+
 {% block content %}
 <div class="col s12 m8 offset-m2 l6 offset-l3">
     <div class=" grey lighten-5 z-depth-1 ">
       <div class="row valign-wrapper ">
         <div id="profile-header" class="col s12 ">
-            {%for user in users%}
+            
           <div class="row s12">
-          <img src="{{user.profile_pic}}" alt="" id="profile-image" class="circle center-align responsive-img "> <!-- notice the "circle" class -->
+          <img src="{{current_user.profile_pic}}" alt="" id="profile-image" class="circle center-align responsive-img "> <!-- notice the "circle" class -->
            
-           <h2 id="profile-title" class="center-align" id="username">@{{username}}</h2> 
+           <h2 id="profile-title" class="center-align" id="username">@{{username}} {{current_user.fname}}</h2> 
            <div class="fixed-action-btn">
             <a class="btn-floating btn-large red">
               <i class="large material-icons">Options</i>
@@ -53,7 +54,7 @@
           <div id="profile-instruments" class="col s6 left">
             <h3>Instruments</h3>
             <ul>  
-              {% for instrument in user.instruments%}
+              {% for instrument in current_user.instruments%}
                 <li>
                 {{instrument}}
                 </li>
@@ -63,7 +64,7 @@
           <div id="profile-genres" class="col s6 right">
             <h3>Genres</h3>
             <ul>  
-              {% for genre in user.genres%}
+              {% for genre in current_user.genres%}
                 <li>
                 {{genre}}
                 </li>
@@ -76,5 +77,5 @@
       </div>
       </span>
   </div>
-  {%endfor%}
+  
 {% endblock %}

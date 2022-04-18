@@ -93,14 +93,15 @@ def logout():
 def profile(username):
     # grab the session user's username from db
     username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-      
-
+        {"username": session["user"]})["username"] 
+    user = (session["user"])      
+    
+         
     if session["user"]:
-        user = session["user"]
-        users = mongo.db.users.find()
+        user = (session["user"])
+        current_user = mongo.db.users.find_one({'username':user})
 
-        return render_template("profile.html", username=username, users=users)
+        return render_template("profile.html", username=username, current_user=current_user)
 
     return redirect(url_for("login"))
 
