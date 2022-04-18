@@ -18,7 +18,7 @@
 #profile-image {
     height: 50vh; 
     display: block;
-    margin-left: auto;
+    margin-left: 20px;
     margin-right: auto;
     margin-top: 10px;
     border: 8px solid black;
@@ -83,4 +83,9 @@
 
 body{
     background-color: #B1D0E0;
+}
+
+#info-card{
+    margin-top: 100px;
+    height: 300px;
 }
