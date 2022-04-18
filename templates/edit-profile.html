@@ -5,7 +5,7 @@
 <div class="row">
     <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_profile') }}">
         <div class="card-panel">
-            <!-- username -->
+            
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
@@ -91,7 +91,7 @@
 <div class="row">
     <div class="col s12">
         <p class="center-align">
-            Changed your mind? {{current_user._id}}
+            Changed your mind? 
             <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Cancel Edit</a>
         </p>
     </div>

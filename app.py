@@ -116,20 +116,19 @@ def profile(username):
 @app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
     if request.method == "POST":
-        edit = {
-                "fname": request.form.get("first_name"),
-                "lname": request.form.get("last_name"),
-                "city": request.form.get("city"),
-                "email": request.form.get("email"),
-                "instruments": request.form.getlist("instruments"),
-                "genres": request.form.getlist("genres"),
+        edit = { '$set': {
+                "fname": request.form.get("first_nameEdit"),
+                "lname": request.form.get("last_nameEdit"),
+                "city": request.form.get("cityEdit"),
+                "instruments": request.form.getlist("instrumentsEdit"),
+                "genres": request.form.getlist("genreEdit"),
                 "bio": request.form.get("bio")
                 
-            }
+            }}
         user = (session["user"])    
         current_user = mongo.db.users.find_one({'username':user})
         
-        mongo.db.users.update({'_id':ObjectId('625db5b304304ca5c58f118b')},edit)  
+        mongo.db.users.update_one({'_id':ObjectId('625db5b304304ca5c58f118b')},edit)  
         flash("success")
     
     if session["user"]:
