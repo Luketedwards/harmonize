@@ -24,6 +24,10 @@
     border: 8px solid black;
 }
 
+h1, h2, h3, h4{
+    font-family: 'Source Serif Pro', serif;
+}
+
 
 #logo{
     padding-left: 10px;
@@ -88,4 +92,20 @@ body{
 #info-card{
     margin-top: 100px;
     height: 300px;
+    background-color: #B1D0E0;
+    color: black !important;
+}
+
+#bio-container{
+    margin-left: 80px;
+}
+
+
+.tabs{
+    background-color: #B1D0E0;
+    
+}
+
+.tab a{
+    color: blue;
 }

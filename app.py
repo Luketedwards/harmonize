@@ -16,6 +16,10 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+global user
+
+
+
 
 @app.route("/")
 @app.route("/register", methods=["GET", "POST"])
@@ -37,7 +41,9 @@ def register():
             "city": request.form.get("city"),
             "email": request.form.get("email"),
             "instruments": request.form.getlist("instruments"),
-            "genres": request.form.getlist("genres")
+            "genres": request.form.getlist("genres"),
+            "bio": "Tell us a little about yourself! Click the edit profile button to write your bio",
+            "profile_pic": "/static/images/default-pp-min.png"
         }
 
         mongo.db.users.insert_one(register)
@@ -106,6 +112,32 @@ def profile(username):
     return redirect(url_for("login"))
 
 
+
+@app.route("/edit_profile", methods=["GET", "POST"])
+def edit_profile():
+    if request.method == "POST":
+        edit = {
+                "fname": request.form.get("first_name"),
+                "lname": request.form.get("last_name"),
+                "city": request.form.get("city"),
+                "email": request.form.get("email"),
+                "instruments": request.form.getlist("instruments"),
+                "genres": request.form.getlist("genres"),
+                "bio": request.form.get("bio")
+                
+            }
+        user = (session["user"])    
+        current_user = mongo.db.users.find_one({'username':user})
+        
+        mongo.db.users.update({'_id':ObjectId('625db5b304304ca5c58f118b')},edit)  
+        flash("success")
+    
+    if session["user"]:
+        user = (session["user"])
+        current_user = mongo.db.users.find_one({'username':user})
+        
+
+    return render_template("edit-profile.html", current_user=current_user)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
