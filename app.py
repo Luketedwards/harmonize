@@ -5,11 +5,18 @@ from flask import (
 from flask_pymongo import PyMongo  
 from bson.objectid import ObjectId  
 from werkzeug.security import generate_password_hash, check_password_hash
+from PIL import Image
+import pathlib
+
 if os.path.exists("env.py"):
     import env
 
+
 app = Flask(__name__)
 
+
+UPLOAD_FOLDER = 'static/images/user-images/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
@@ -138,6 +145,37 @@ def edit_profile():
         
 
     return render_template("edit-profile.html", current_user=current_user)
+
+
+
+
+@app.route('/upload_file', methods=['GET', 'POST'])
+def upload_file():
+    user = (session["user"])
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    current_user = mongo.db.users.find_one({'username':user})    
+    user_id = mongo.db.users.find_one({'username':user})['_id']
+    if request.method == 'POST':
+        if 'file1' not in request.files:
+            return 'there is no file1 in form!'   
+        file1 = request.files['file1']
+        
+        newFileName = "profile-image" + "-" + user 
+        path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+        ext = pathlib.Path(path).suffix
+        newPath = os.path.join(app.config['UPLOAD_FOLDER'], newFileName + ext)
+        file1.save(newPath)
+        profile_pic_update = {'$set':{
+                'profile_pic': '/' + newPath
+            }
+        }
+        mongo.db.users.update_one({'_id':ObjectId(user_id)},profile_pic_update) 
+        flash("Profile Picture Updated!")
+
+        return redirect(url_for("profile", username=username, current_user=current_user))
+        
+    return render_template("upload_file.html")
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

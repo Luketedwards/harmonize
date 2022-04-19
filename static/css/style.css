@@ -110,4 +110,40 @@ body{
     color: blue;
 }
 
+#image-upload{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+}
 
+#image-upload input{
+    background-color: #B1D0E0;
+}
+
+#file-upload{
+    display: none;   
+}
+
+#file-selected{
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 1.6vw;
+    visibility: hidden;
+    position: relative;
+    
+}
+
+#file-upload-label{
+    font-size: 1.4vw;
+    height: 40px;
+    margin-right: 42px;
+    margin-top: 20px;
+}
+
+#image-submit-btn{
+    height: 40px;
+    font-size: 1.4vw;
+    margin-top: 20px;
+
+}
