@@ -193,10 +193,12 @@ def other_users():
 @app.route('/other_profile/<username>', methods=["GET", "POST"])
 def other_profile(username):
     selectedUser= mongo.db.users.find_one({'username':username})
+    user = (session["user"])
+    current_user = mongo.db.users.find_one({'username':user}) 
     
-    
-    
-    return render_template('other-profile.html', username=username, selectedUser=selectedUser)    
+    if username != user:
+        return render_template('other-profile.html', username=username, selectedUser=selectedUser)    
+    return redirect(url_for("profile", username=username, current_user=current_user))    
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
