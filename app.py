@@ -177,6 +177,27 @@ def upload_file():
         
     return render_template("upload_file.html")
 
+
+@app.route("/other_users")    
+def other_users():
+    users = mongo.db.users.find()
+    user = (session["user"])
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    current_user = mongo.db.users.find_one({'username':user})    
+    user_id = mongo.db.users.find_one({'username':user})['_id']
+
+    return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)
+
+
+@app.route('/other_profile/<username>', methods=["GET", "POST"])
+def other_profile(username):
+    selectedUser= mongo.db.users.find_one({'username':username})
+    
+    
+    
+    return render_template('other-profile.html', username=username, selectedUser=selectedUser)    
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

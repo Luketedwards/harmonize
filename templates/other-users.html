@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+
+{%block content%}
+<ul>
+    {% for use in users%}
+    <li>
+        <div class="row s12">
+            <img id="user-images" class="responsive-img circle center" src="{{use.profile_pic}}" alt="">
+            <a href="{{url_for('other_profile', username=use.username )}}" class='center'>{{use.username}}</a>
+        </div>
+    </li> 
+    {% endfor%}
+</ul>
+{%endblock%}
