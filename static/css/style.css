@@ -149,5 +149,39 @@ body{
 }
 
 #user-images{
-    height: 50px;
+    float: left;
+    display: inline;
+    height: 13vw;
+    width: 12vw;
+    border-radius: 50%;
+    margin-top: -61px;
+    margin-left: 6vw
+}
+
+#other-users-link{
+    font-size: 2.5vw;
+    margin-left: 20%;
+}
+
+#other-user-instruments{
+    
+}
+
+#user-info-collapse{
+    width: 19%;
+    margin-left: 74%;
+    margin-top: -117px;
+    font-family: 'Source Serif Pro', serif;
+    text-align: center;
+    font-size: 1.1vw;
+
+}
+
+#user-info-collapse .collapsible-header{
+    text-align: center;
+    font-size: 1.3vw;
+}
+
+#user-display-div{
+    padding-top: 64px;
 }

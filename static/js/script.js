@@ -25,3 +25,8 @@ $(document).ready(function(){
   $('#file-upload').bind('change', function() { var fileName = ''; fileName = $(this).val(); $('#file-selected').html(fileName).css("visibility", "visible");; })
 });
 
+
+
+$(document).ready(function(){
+  $('.collapsible').collapsible();
+});
