@@ -188,3 +188,12 @@ body{
     padding-top: 0;
     margin: 0;
 }
+
+.follower{
+    font-family: 'Source Serif Pro', serif;
+    font-weight: 600;
+    font-size: 1.5vw;
+    padding-right: 2vw;
+    margin-left: 2vw;
+
+}

@@ -215,6 +215,7 @@ def follow_user(username):
     following = mongo.db.users.find_one({'username':user},{"following"})
 
     mongo.db.users.update_one( { "username" : user },{ '$push': { "following": username } })
+    mongo.db.users.update_one( { "username" : username },{ '$push': { "followers": user } })
     flash("You are now following " + username)
 
     return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
@@ -230,10 +231,28 @@ def unfollow_user(username):
     following = mongo.db.users.find_one({'username':user},{"following"})
 
     mongo.db.users.update_one( { "username" : user },{ '$pull': { "following": username } })
+    mongo.db.users.update_one( { "username" : username },{ '$pull': { "followers": user } })
     flash("You are no longer following " + username)
 
         
     return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
+
+
+@app.route("/my_connections")    
+def my_connections():
+    
+    user = (session["user"])
+    users = mongo.db.users.find({"username" : user},{'followers'})
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    current_user = mongo.db.users.find_one({'username':user})    
+    user_id = mongo.db.users.find_one({'username':user})['_id']
+    
+    
+
+    return render_template("my-connections.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
