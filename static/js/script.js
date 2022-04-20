@@ -2,12 +2,11 @@
   $(document).ready(function(){
     $('.sidenav').sidenav();
     $('select').formSelect();
+    $('ul.tabs').tabs();
+    $('#file-upload').bind('change', function() { var fileName = ''; fileName = $(this).val(); $('#file-selected').html(fileName).css("visibility", "visible");; })
+    $('.collapsible').collapsible();
   });
-
-
  
-// Script for password confirmation
-
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.fixed-action-btn');
@@ -16,17 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
     
-$(document).ready(function(){
-  // TABS
-  $('ul.tabs').tabs();
-});
-
-$(document).ready(function(){
-  $('#file-upload').bind('change', function() { var fileName = ''; fileName = $(this).val(); $('#file-selected').html(fileName).css("visibility", "visible");; })
-});
 
 
 
-$(document).ready(function(){
-  $('.collapsible').collapsible();
-});

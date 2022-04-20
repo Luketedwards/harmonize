@@ -217,7 +217,7 @@ def follow_user(username):
     mongo.db.users.update_one( { "username" : user },{ '$push': { "following": username } })
     flash("You are now following " + username)
 
-    return render_template("other-profile.html", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following)
+    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
 
 
 
@@ -232,8 +232,8 @@ def unfollow_user(username):
     mongo.db.users.update_one( { "username" : user },{ '$pull': { "following": username } })
     flash("You are no longer following " + username)
 
-    return render_template("other-profile.html", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following)    
-
+        
+    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
