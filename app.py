@@ -21,6 +21,7 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
+
 mongo = PyMongo(app)
 
 global user
@@ -50,7 +51,9 @@ def register():
             "instruments": request.form.getlist("instruments"),
             "genres": request.form.getlist("genres"),
             "bio": "Tell us a little about yourself! Click the edit profile button to write your bio",
-            "profile_pic": "/static/images/default-pp-min.png"
+            "profile_pic": "/static/images/default-pp-min.png",
+            "followers": [],
+            "following": []
         }
 
         mongo.db.users.insert_one(register)
@@ -186,6 +189,7 @@ def other_users():
         {"username": session["user"]})["username"]
     current_user = mongo.db.users.find_one({'username':user})    
     user_id = mongo.db.users.find_one({'username':user})['_id']
+    
 
     return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)
 
@@ -195,10 +199,40 @@ def other_profile(username):
     selectedUser= mongo.db.users.find_one({'username':username})
     user = (session["user"])
     current_user = mongo.db.users.find_one({'username':user}) 
+    following = mongo.db.users.find_one({'username':user},{"following"})
     
     if username != user:
-        return render_template('other-profile.html', username=username, selectedUser=selectedUser)    
-    return redirect(url_for("profile", username=username, current_user=current_user))    
+        return render_template('other-profile.html', username=username, selectedUser=selectedUser,following=following)    
+    return redirect(url_for("profile", username=username, current_user=current_user))  
+
+
+@app.route('/follow-user/<username>', methods=["GET", "POST"])    
+def follow_user(username):
+    selectedUser = mongo.db.users.find_one({'username':username})
+    user = (session["user"])
+    current_user = mongo.db.users.find_one({'username':user})
+    user_id = mongo.db.users.find_one({'username':user})['_id']
+    following = mongo.db.users.find_one({'username':user},{"following"})
+
+    mongo.db.users.update_one( { "username" : user },{ '$push': { "following": username } })
+    flash("You are now following " + username)
+
+    return render_template("other-profile.html", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following)
+
+
+
+@app.route('/unfollow-user/<username>', methods=["GET", "POST"])    
+def unfollow_user(username):
+    selectedUser = mongo.db.users.find_one({'username':username})
+    user = (session["user"])
+    current_user = mongo.db.users.find_one({'username':user})
+    user_id = mongo.db.users.find_one({'username':user})['_id']
+    following = mongo.db.users.find_one({'username':user},{"following"})
+
+    mongo.db.users.update_one( { "username" : user },{ '$pull': { "following": username } })
+    flash("You are no longer following " + username)
+
+    return render_template("other-profile.html", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following)    
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

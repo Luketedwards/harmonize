@@ -56,6 +56,12 @@
         </div>
         <div class="center-align row s12">
           <a href="#" class=" waves-effect waves-light btn">Contact {{username}}</a>
+          {% if username in following.following%}
+            <a href="{{url_for('unfollow_user', username=username )}}" class=" waves-effect waves-light btn">Unfollow {{username}}</a>
+          {%endif%}
+          {% if username not in following.following%}
+            <a href="{{url_for('follow_user', username=username )}}" class=" waves-effect waves-light btn">Follow {{username}}</a>
+          {%endif%}
         </div>
       </div>
 
