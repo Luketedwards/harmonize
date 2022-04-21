@@ -22,6 +22,7 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 
+
 mongo = PyMongo(app)
 
 global user
@@ -238,16 +239,15 @@ def unfollow_user(username):
     return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
 
 
-@app.route("/my_connections")    
+@app.route("/my_connections/")   
 def my_connections():
     
+    users = mongo.db.users.find()
     user = (session["user"])
-    users = mongo.db.users.find({"username" : user},{'followers'})
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     current_user = mongo.db.users.find_one({'username':user})    
     user_id = mongo.db.users.find_one({'username':user})['_id']
-    
     
 
     return render_template("my-connections.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)

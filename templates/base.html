@@ -36,7 +36,7 @@
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                 <li><a href="#">Create a Project</a></li>
                 <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
-                <li><a href="{{ url_for('my_connections') }}">My Connections</a></li>
+                <li><a href="{{ url_for('my_connections', username=session['user']) }}">My Connections</a></li>
                 <li><a href="{{ url_for('other_users') }}">Users</a></li>
             {%endif%}
           </ul>
