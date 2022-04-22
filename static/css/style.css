@@ -197,3 +197,13 @@ body{
     margin-left: 2vw;
 
 }
+
+#register-background{
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("/static/images/instruments-sign-up.jpg");
+    background-size: contain;
+}
+
+#register-h3{
+    font-weight: 600;
+    font-size: 3.5vw;
+}

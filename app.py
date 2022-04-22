@@ -123,6 +123,33 @@ def profile(username):
     return redirect(url_for("login"))
 
 
+@app.route("/settings/<username>", methods=["GET", "POST"])
+def settings(username):
+    # grab the session user's username from db
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+    user = (session["user"])      
+    
+         
+    if session["user"]:
+        user = (session["user"])
+        current_user = mongo.db.users.find_one({'username':user})
+
+        return render_template("settings.html", username=username, current_user=current_user)
+
+    return redirect(url_for("login"))    
+
+
+
+@app.route("/delete_account", methods=["GET", "POST"])
+def delete_account():
+    username = (session["user"]) 
+    mongo.db.user.remove_one({"username": username})
+
+    return render_template("register.html")
+    flash("Account successfully deleted")
+
+
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
@@ -239,8 +266,8 @@ def unfollow_user(username):
     return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
 
 
-@app.route("/my_connections/")   
-def my_connections():
+@app.route("/following/")   
+def following():
     
     users = mongo.db.users.find()
     user = (session["user"])
@@ -250,7 +277,21 @@ def my_connections():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("my-connections.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)
+    return render_template("following.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)
+
+
+@app.route("/followers/")   
+def followers():
+    
+    users = mongo.db.users.find()
+    user = (session["user"])
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    current_user = mongo.db.users.find_one({'username':user})    
+    user_id = mongo.db.users.find_one({'username':user})['_id']
+    
+
+    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)    
 
 
 if __name__ == "__main__":

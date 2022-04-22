@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<h3 class="center-align">Compose an Account</h3>
+<div id="register-background" class="row">
+<h3 id="register-h3" class="center-align">Compose an Account</h3>
 
 <div class="row">
     <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
@@ -110,5 +111,6 @@
             <a href="" class="light-blue-text text-darken-4">Log In</a>
         </p>
     </div>
+</div>
 </div>
 {% endblock %}
