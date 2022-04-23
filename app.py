@@ -255,7 +255,7 @@ def other_profile_search():
     usernameOther = request.form.get("user-search-input")
         
     listOfUsers = mongo.db.users.find()
-    following = mongo.db.users.find_one({'username':user},{"following"})
+    
 
     
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
