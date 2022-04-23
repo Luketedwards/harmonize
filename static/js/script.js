@@ -8,6 +8,7 @@
     $(".dropdown-trigger").dropdown();
   });
  
+      
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.fixed-action-btn');

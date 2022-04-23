@@ -25,6 +25,7 @@
 </head>
 <body>
     <nav>
+        
         <ul id="dropdown-connections" class="dropdown-content">
             <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
             <li><a href="{{ url_for('followers', username=session['user']) }}">Followers</a></li>
@@ -34,7 +35,9 @@
             <li><a href="{{ url_for('settings', username=session['user']) }}">Profile Settings</a></li>
           </ul>  
         <div class="nav-wrapper navbar-color">
+            
           <a href="#!" id="logo" class="brand-logo">Harmonize</a>
+        
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
           <ul class="right hide-on-med-and-down">
             {% if not session.user%}  
@@ -42,14 +45,27 @@
             <li><a href="{{ url_for('login') }}">Log In</a></li>
             {% endif%}
             {%if session.user%}
+                <li>
+                    
+<input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search" list="user-search">
+
+<datalist id="user-search">
+	{%for user in listOfUsers%}
+    <option value="{{user.username}}">{{user.username}}</option>
+    {%endfor%}
+</datalist>
+                
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                 <li><a href="#">Create a Project</a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
                 <li><a href="{{ url_for('other_users') }}">Users</a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections<i class="right fa-solid fa-circle-down"></i></a></li>
             {%endif%}
+                
+                    
           </ul>
         </div>
+        
       </nav>
     
       <ul class="sidenav" id="mobile-demo">
@@ -88,5 +104,16 @@
     {% block scripts %}
     {% endblock %}
 </body>
-
+<script>
+    $( function() {
+     var availableTags = [
+         {% for user in listOfUsers %}
+             "{{user}}",
+         {% endfor %}
+     ];
+     $( "#autocomplete-input" ).autocomplete({
+       source: availableTags
+     });
+   } );
+ </script>
 </html>

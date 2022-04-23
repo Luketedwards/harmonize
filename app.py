@@ -30,6 +30,7 @@ global user
 
 
 
+
 @app.route("/")
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -111,14 +112,15 @@ def profile(username):
     # grab the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
-    user = (session["user"])      
+    user = (session["user"])    
+    listOfUsers = mongo.db.users.find()
     
          
     if session["user"]:
         user = (session["user"])
         current_user = mongo.db.users.find_one({'username':user})
 
-        return render_template("profile.html", username=username, current_user=current_user)
+        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers)
 
     return redirect(url_for("login"))
 
@@ -144,10 +146,18 @@ def settings(username):
 @app.route("/delete_account", methods=["GET", "POST"])
 def delete_account():
     username = (session["user"]) 
-    mongo.db.user.remove_one({"username": username})
+    mongo.db.users.delete_one({"username": username})
+    mongo.db.users.update_many(
+    {"following": username},    
+    { '$pull': { "following": username}})
+    mongo.db.users.update_many(
+    {"followers": username},     
+    { '$pull': { "followers": username } })
+    session.pop("user")
+    flash("Account successfully deleted")
 
     return render_template("register.html")
-    flash("Account successfully deleted")
+    
 
 
 
