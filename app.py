@@ -163,6 +163,7 @@ def delete_account():
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
+    listOfUsers = mongo.db.users.find()
     if request.method == "POST":
         edit = { '$set': {
                 "fname": request.form.get("first_nameEdit"),
@@ -185,13 +186,14 @@ def edit_profile():
         current_user = mongo.db.users.find_one({'username':user})
         
 
-    return render_template("edit-profile.html", current_user=current_user)
+    return render_template("edit-profile.html", current_user=current_user, listOfUsers=listOfUsers)
 
 
 
 
 @app.route('/upload_file', methods=['GET', 'POST'])
 def upload_file():
+    listOfUsers = mongo.db.users.find()
     user = (session["user"])
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
@@ -214,13 +216,14 @@ def upload_file():
         mongo.db.users.update_one({'_id':ObjectId(user_id)},profile_pic_update) 
         flash("Profile Picture Updated!")
 
-        return redirect(url_for("profile", username=username, current_user=current_user))
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers))
         
-    return render_template("upload_file.html")
+    return render_template("upload_file.html", listOfUsers=listOfUsers)
 
 
 @app.route("/other_users")    
 def other_users():
+    listOfUsers = mongo.db.users.find()
     users = mongo.db.users.find()
     user = (session["user"])
     username = mongo.db.users.find_one(
@@ -229,56 +232,86 @@ def other_users():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)
+    return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)
 
 
-@app.route('/other_profile/<username>', methods=["GET", "POST"])
-def other_profile(username):
-    selectedUser= mongo.db.users.find_one({'username':username})
+@app.route('/other_profile/<usernameOther>', methods=["GET", "POST"])
+def other_profile(usernameOther):
+    listOfUsers = mongo.db.users.find()
+    selectedUser= mongo.db.users.find_one({'username':usernameOther})
     user = (session["user"])
     current_user = mongo.db.users.find_one({'username':user}) 
     following = mongo.db.users.find_one({'username':user},{"following"})
+    username = user
+    current_user = mongo.db.users.find_one({'username':user}) 
     
-    if username != user:
-        return render_template('other-profile.html', username=username, selectedUser=selectedUser,following=following)    
-    return redirect(url_for("profile", username=username, current_user=current_user))  
+    if usernameOther != user:
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user)    
+    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following))  
 
+
+@app.route('/other_profile_search/', methods=["GET", "POST"])
+def other_profile_search():
+    usernameOther = request.form.get("user-search-input")
+        
+    listOfUsers = mongo.db.users.find()
+    following = mongo.db.users.find_one({'username':user},{"following"})
+
+    
+    selectedUser= mongo.db.users.find_one({'username':usernameOther})
+    
+    user = (session["user"])
+    
+    current_user = mongo.db.users.find_one({'username':user}) 
+    following = mongo.db.users.find_one({'username':user},{"following"})
+    
+    
+    if usernameOther != user:
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user)  
+    username = user      
+    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following))  
 
 @app.route('/follow-user/<username>', methods=["GET", "POST"])    
 def follow_user(username):
+    listOfUsers = mongo.db.users.find()
     selectedUser = mongo.db.users.find_one({'username':username})
     user = (session["user"])
     current_user = mongo.db.users.find_one({'username':user})
     user_id = mongo.db.users.find_one({'username':user})['_id']
     following = mongo.db.users.find_one({'username':user},{"following"})
+    usernameOther= selectedUser['username']
 
     mongo.db.users.update_one( { "username" : user },{ '$push': { "following": username } })
     mongo.db.users.update_one( { "username" : username },{ '$push': { "followers": user } })
     flash("You are now following " + username)
 
-    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
+    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
 
 
 
 @app.route('/unfollow-user/<username>', methods=["GET", "POST"])    
 def unfollow_user(username):
+    listOfUsers = mongo.db.users.find()
     selectedUser = mongo.db.users.find_one({'username':username})
+    usernameOther=selectedUser
     user = (session["user"])
     current_user = mongo.db.users.find_one({'username':user})
     user_id = mongo.db.users.find_one({'username':user})['_id']
     following = mongo.db.users.find_one({'username':user},{"following"})
+    usernameOther= selectedUser['username']
+
 
     mongo.db.users.update_one( { "username" : user },{ '$pull': { "following": username } })
     mongo.db.users.update_one( { "username" : username },{ '$pull': { "followers": user } })
     flash("You are no longer following " + username)
 
         
-    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following))
+    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
 
 
 @app.route("/following/")   
 def following():
-    
+    listOfUsers = mongo.db.users.find()
     users = mongo.db.users.find()
     user = (session["user"])
     username = mongo.db.users.find_one(
@@ -287,12 +320,12 @@ def following():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("following.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)
+    return render_template("following.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)
 
 
 @app.route("/followers/")   
 def followers():
-    
+    listOfUsers = mongo.db.users.find()
     users = mongo.db.users.find()
     user = (session["user"])
     username = mongo.db.users.find_one(
@@ -301,7 +334,7 @@ def followers():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users)    
+    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)    
 
 
 if __name__ == "__main__":

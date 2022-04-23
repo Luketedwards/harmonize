@@ -15,7 +15,7 @@
             <div class="container">
               <div class="row">
                 <div class="col s12">
-                  <h2>About {{username}}</h2>
+                  <h2>About {{selectedUser.username}}</h2>
                   <span class="follower">Following: {{selectedUser.following|length}}</span>
                   <span class="follower">Followers: {{selectedUser.followers|length}}</span>
                   <div class="card">
@@ -57,12 +57,12 @@
           
         </div>
         <div class="center-align row s12">
-          <a href="#" class=" waves-effect waves-light btn">Contact {{username}}</a>
-          {% if username in following.following%}
-            <a href="{{url_for('unfollow_user', username=username )}}" class=" waves-effect waves-light btn">Unfollow {{username}}</a>
+          <a href="#" class=" waves-effect waves-light btn">Contact {{usernameOther}}</a>
+          {% if usernameOther in current_user.followers%}
+            <a href="{{url_for('unfollow_user', username=selectedUser.username, usernameOther=selectedUser.username )}}" class=" waves-effect waves-light btn">Unfollow {{usernameOther}}</a>
           {%endif%}
-          {% if username not in following.following%}
-            <a href="{{url_for('follow_user', username=username )}}" class=" waves-effect waves-light btn">Follow {{username}}</a>
+          {% if usernameOther not in current_user.followers%}
+            <a href="{{url_for('follow_user', username=selectedUser.username, usernameOther=selectedUser.username)}}" class=" waves-effect waves-light btn">Follow {{usernameOther}}</a>
           {%endif%}
         </div>
       </div>

@@ -207,3 +207,7 @@ body{
     font-weight: 600;
     font-size: 3.5vw;
 }
+
+#user-search-input{
+    color: white;
+}
