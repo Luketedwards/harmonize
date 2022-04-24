@@ -34,6 +34,11 @@
             <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
             <li><a href="{{ url_for('settings', username=session['user']) }}">Profile Settings</a></li>
           </ul>  
+          <ul id="dropdown-projects" class="dropdown-content">
+            <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
+            <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
+            <li><a href="#!">Browse Projects</a></li>
+          </ul> 
         <div class="nav-wrapper navbar-color">
             
           <a href="#!" id="logo" class="brand-logo">Harmonize</a>
@@ -57,7 +62,7 @@
 </form> 
                 
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-                <li><a href="#">Create a Project</a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects" href="#!">Projects<i class="right fa-solid fa-circle-down"></i></a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
                 <li><a href="{{ url_for('other_users') }}">Users</a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections<i class="right fa-solid fa-circle-down"></i></a></li>

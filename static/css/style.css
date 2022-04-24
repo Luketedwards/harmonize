@@ -211,3 +211,12 @@ body{
 #user-search-input{
     color: white;
 }
+
+#create-project-panel{
+    width: 70%;
+    margin-left: 15%;
+}
+
+#project-username-div{
+    visibility: hidden;
+}

@@ -334,8 +334,51 @@ def followers():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)    
+    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)   
 
+
+
+@app.route("/create_a_project/", methods=["GET", "POST"])   
+def create_a_project():
+    user = (session['user'])
+    
+    
+
+    if request.method == "POST":
+        # check if username project name already exists for user
+        existing_project = mongo.db.projects.find_one(
+            {"project-title": request.form.get("project-title").lower()})
+
+        if existing_project:
+            flash("You already have a project by this name")
+            return redirect(url_for("create_a_project"))
+        
+        new_project = {
+            "username": request.form.get("project-username"),
+            "projectTitle": request.form.get("project-title").lower(),
+            "projectDescription": request.form.get("project-description"),
+            "city": request.form.get("city"),
+            "email": request.form.get("email"),
+            "instruments": request.form.getlist("instruments"),
+            "genres": request.form.getlist("genres"),
+            "completed": False
+
+        }
+
+        mongo.db.projects.insert_one(new_project)
+
+    
+        flash("Project successfully created!")
+    return render_template('create-a-project.html', user=user)  
+
+
+
+@app.route('/my_projects/')
+def my_projects():
+    user = (session['user'])
+    projects = mongo.db.projects.find({'username':user})
+
+    return render_template('my-projects.html', user = user, projects=projects)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

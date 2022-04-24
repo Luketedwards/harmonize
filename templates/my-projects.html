@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+{%block content%}  
+{% for project in projects%}
+    <li class="card-panel">{{project}}</li>
+    {% else %} 
+    <h1>You currently have no projects.</h1>
+{%endfor%}   
+
+
+{%endblock%}
