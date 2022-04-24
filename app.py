@@ -271,42 +271,42 @@ def other_profile_search():
     username = user      
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following))  
 
-@app.route('/follow-user/<username>', methods=["GET", "POST"])    
-def follow_user(username):
+@app.route('/follow-user/<usernameOther>', methods=["GET", "POST"])    
+def follow_user(usernameOther):
     listOfUsers = mongo.db.users.find()
-    selectedUser = mongo.db.users.find_one({'username':username})
+    selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
     current_user = mongo.db.users.find_one({'username':user})
     user_id = mongo.db.users.find_one({'username':user})['_id']
     following = mongo.db.users.find_one({'username':user},{"following"})
-    usernameOther= selectedUser['username']
+    usernameOther= (selectedUser['username'])
 
-    mongo.db.users.update_one( { "username" : user },{ '$push': { "following": username } })
-    mongo.db.users.update_one( { "username" : username },{ '$push': { "followers": user } })
-    flash("You are now following " + username)
+    mongo.db.users.update_one( { "username" : user },{ '$push': { "following": usernameOther } })
+    mongo.db.users.update_one( { "username" : usernameOther },{ '$push': { "followers": user } })
+    flash("You are now following " + selectedUser['username'])
 
-    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
+    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
 
 
 
-@app.route('/unfollow-user/<username>', methods=["GET", "POST"])    
-def unfollow_user(username):
+@app.route('/unfollow-user/<usernameOther>', methods=["GET", "POST"])    
+def unfollow_user(usernameOther):
     listOfUsers = mongo.db.users.find()
-    selectedUser = mongo.db.users.find_one({'username':username})
-    usernameOther=selectedUser
+    mongo.db.users.find_one({'username': usernameOther})
+    selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
     current_user = mongo.db.users.find_one({'username':user})
     user_id = mongo.db.users.find_one({'username':user})['_id']
     following = mongo.db.users.find_one({'username':user},{"following"})
-    usernameOther= selectedUser['username']
+    usernameOther= (selectedUser['username'])
 
 
-    mongo.db.users.update_one( { "username" : user },{ '$pull': { "following": username } })
-    mongo.db.users.update_one( { "username" : username },{ '$pull': { "followers": user } })
-    flash("You are no longer following " + username)
+    mongo.db.users.update_one( { "username" : user },{ '$pull': { "following": usernameOther } })
+    mongo.db.users.update_one( { "username" : usernameOther },{ '$pull': { "followers": user } })
+    flash("You are no longer following " + selectedUser['username'])
 
         
-    return redirect(url_for("other_profile", user=user, username=username, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
+    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
 
 
 @app.route("/following/")   

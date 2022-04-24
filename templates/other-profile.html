@@ -57,12 +57,12 @@
           
         </div>
         <div class="center-align row s12">
-          <a href="#" class=" waves-effect waves-light btn">Contact {{usernameOther}}</a>
-          {% if usernameOther in current_user.followers%}
-            <a href="{{url_for('unfollow_user', username=selectedUser.username, usernameOther=selectedUser.username )}}" class=" waves-effect waves-light btn">Unfollow {{usernameOther}}</a>
+          <a href="#" class=" waves-effect waves-light btn">Contact {{selectedUser.username}}</a>
+          {% if selectedUser.username in current_user.following %}
+            <a href="{{url_for('unfollow_user', username=selectedUser.username, usernameOther=selectedUser.username )}}" class=" waves-effect waves-light btn">Unfollow {{selectedUser.username}}</a>
           {%endif%}
-          {% if usernameOther not in current_user.followers%}
-            <a href="{{url_for('follow_user', username=selectedUser.username, usernameOther=selectedUser.username)}}" class=" waves-effect waves-light btn">Follow {{usernameOther}}</a>
+          {% if selectedUser.username not in current_user.following%}
+            <a href="{{url_for('follow_user', username=selectedUser.username, usernameOther=selectedUser.username)}}" class=" waves-effect waves-light btn">Follow {{selectedUser.username}}</a>
           {%endif%}
         </div>
       </div>

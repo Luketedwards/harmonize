@@ -9,7 +9,7 @@
           <li>
               <div id="user-display-div" class="row s12">
                   <img id="user-images" class="responsive-img  " src="{{use.profile_pic}}" alt="">
-                  <a id="other-users-link" href="{{url_for('other_profile', username=use.username )}}" class=''>{{use.username}}</a>
+                  <a id="other-users-link" href="{{url_for('other_profile', username=use.username, usernameOther=use.username )}}" class=''>{{use.username}}</a>
                   
                       <ul id="user-info-collapse" class="collapsible s6 ">
                           <li> 
