@@ -341,15 +341,15 @@ def followers():
 @app.route("/create_a_project/", methods=["GET", "POST"])   
 def create_a_project():
     user = (session['user'])
-    
+    projects = mongo.db.projects.find({'username':user})
     
 
     if request.method == "POST":
-        # check if username project name already exists for user
+        # check if project name already exists for user
         existing_project = mongo.db.projects.find_one(
             {"project-title": request.form.get("project-title").lower()})
 
-        if existing_project:
+        if existing_project in projects:
             flash("You already have a project by this name")
             return redirect(url_for("create_a_project"))
         
@@ -369,6 +369,7 @@ def create_a_project():
 
     
         flash("Project successfully created!")
+        return redirect(url_for('my_projects', user = user, projects=projects))
     return render_template('create-a-project.html', user=user)  
 
 

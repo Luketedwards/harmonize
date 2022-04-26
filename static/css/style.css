@@ -220,3 +220,23 @@ body{
 #project-username-div{
     visibility: hidden;
 }
+
+#my-projects-panel-tick {
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: green;
+    color: white;
+    font-size: 1.5vw;
+    margin-left: 5px;
+    padding: 2px;
+}
+
+#my-projects-panel-cross {
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: white;
+    color: red;
+    font-size: 1.5vw;
+    margin-left: 5px;
+    padding: 2px;
+}
