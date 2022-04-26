@@ -221,6 +221,30 @@ body{
     visibility: hidden;
 }
 
+#my-projects-panel{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 2px white solid;
+    border-radius: 5px;
+    color: white;
+}
+
+#my-projects-panel h2{
+    margin-top: 0;
+    text-align: center !important;
+}
+
+#projects-panel-apply a{
+    width: 6vw;
+    font-size: 1.5vw;
+    padding:0;
+    top: 85px;
+    right: 7vw;
+    text-align: center;
+}
+
 #my-projects-panel-tick {
     border: 2px solid black;
     border-radius: 50%;
@@ -229,6 +253,7 @@ body{
     font-size: 1.5vw;
     margin-left: 5px;
     padding: 2px;
+
 }
 
 #my-projects-panel-cross {
@@ -239,4 +264,8 @@ body{
     font-size: 1.5vw;
     margin-left: 5px;
     padding: 2px;
+}
+
+#contact-chip{
+    margin-left: 43%;
 }

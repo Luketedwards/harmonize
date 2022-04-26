@@ -378,8 +378,9 @@ def create_a_project():
 def my_projects():
     user = (session['user'])
     projects = mongo.db.projects.find({'username':user})
+    username = mongo.db.users.find_one({'username': user})
 
-    return render_template('my-projects.html', user = user, projects=projects)
+    return render_template('my-projects.html', user = user, projects=projects, username=username)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
