@@ -239,6 +239,7 @@ def other_users():
 def other_profile(usernameOther):
     listOfUsers = mongo.db.users.find()
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
+    projects = mongo.db.projects.find({'username':usernameOther})
     user = (session["user"])
     current_user = mongo.db.users.find_one({'username':user}) 
     following = mongo.db.users.find_one({'username':user},{"following"})
@@ -246,14 +247,14 @@ def other_profile(usernameOther):
     current_user = mongo.db.users.find_one({'username':user}) 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user)    
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects)    
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following))  
 
 
 @app.route('/other_profile_search/', methods=["GET", "POST"])
 def other_profile_search():
     usernameOther = request.form.get("user-search-input")
-        
+    projects = mongo.db.projects.find({'username':usernameOther})    
     listOfUsers = mongo.db.users.find()
     
 
@@ -267,7 +268,7 @@ def other_profile_search():
     
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user)  
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects)  
     username = user      
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following))  
 
