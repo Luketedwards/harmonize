@@ -134,13 +134,13 @@ def settings(username):
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     user = (session["user"])      
-    
+    user_notifications = mongo.db.users.find_one({'username':user}) 
          
     if session["user"]:
         user = (session["user"])
         current_user = mongo.db.users.find_one({'username':user})
 
-        return render_template("settings.html", username=username, current_user=current_user)
+        return render_template("settings.html", username=username, current_user=current_user, user_notifications=user_notifications)
 
     return redirect(url_for("login"))    
 
@@ -178,6 +178,7 @@ def edit_profile():
                 
             }}
         user = (session["user"])    
+        user_notifications = mongo.db.users.find_one({'username':user}) 
         current_user = mongo.db.users.find_one({'username':user})
         user_id = mongo.db.users.find_one({'username':user})['_id']
         
@@ -189,7 +190,7 @@ def edit_profile():
         current_user = mongo.db.users.find_one({'username':user})
         
 
-    return render_template("edit-profile.html", current_user=current_user, listOfUsers=listOfUsers)
+    return render_template("edit-profile.html", current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications)
 
 
 
@@ -198,6 +199,7 @@ def edit_profile():
 def upload_file():
     listOfUsers = mongo.db.users.find()
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     current_user = mongo.db.users.find_one({'username':user})    
@@ -219,9 +221,9 @@ def upload_file():
         mongo.db.users.update_one({'_id':ObjectId(user_id)},profile_pic_update) 
         flash("Profile Picture Updated!")
 
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers))
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications))
         
-    return render_template("upload_file.html", listOfUsers=listOfUsers)
+    return render_template("upload_file.html", listOfUsers=listOfUsers, user_notifications=user_notifications)
 
 
 @app.route("/other_users")    
@@ -229,13 +231,14 @@ def other_users():
     listOfUsers = mongo.db.users.find()
     users = mongo.db.users.find()
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     current_user = mongo.db.users.find_one({'username':user})    
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)
+    return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications)
 
 
 @app.route('/other_profile/<usernameOther>', methods=["GET", "POST"])
@@ -244,14 +247,15 @@ def other_profile(usernameOther):
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     projects = mongo.db.projects.find({'username':usernameOther})
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user}) 
     following = mongo.db.users.find_one({'username':user},{"following"})
     username = user
     current_user = mongo.db.users.find_one({'username':user}) 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects)    
-    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following))  
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications)    
+    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following, user_notifications=user_notifications))  
 
 
 @app.route('/other_profile_search/', methods=["GET", "POST"])
@@ -265,21 +269,23 @@ def other_profile_search():
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     
     current_user = mongo.db.users.find_one({'username':user}) 
     following = mongo.db.users.find_one({'username':user},{"following"})
     
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects)  
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications)  
     username = user      
-    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following))  
+    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
 
 @app.route('/follow-user/<usernameOther>', methods=["GET", "POST"])    
 def follow_user(usernameOther):
     listOfUsers = mongo.db.users.find()
     selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user})
     user_id = mongo.db.users.find_one({'username':user})['_id']
     following = mongo.db.users.find_one({'username':user},{"following"})
@@ -289,7 +295,7 @@ def follow_user(usernameOther):
     mongo.db.users.update_one( { "username" : usernameOther },{ '$push': { "followers": user } })
     flash("You are now following " + selectedUser['username'])
 
-    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
+    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications))
 
 
 
@@ -299,6 +305,7 @@ def unfollow_user(usernameOther):
     mongo.db.users.find_one({'username': usernameOther})
     selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user})
     user_id = mongo.db.users.find_one({'username':user})['_id']
     following = mongo.db.users.find_one({'username':user},{"following"})
@@ -310,7 +317,7 @@ def unfollow_user(usernameOther):
     flash("You are no longer following " + selectedUser['username'])
 
         
-    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther))
+    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications))
 
 
 @app.route("/following/")   
@@ -318,13 +325,14 @@ def following():
     listOfUsers = mongo.db.users.find()
     users = mongo.db.users.find()
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     current_user = mongo.db.users.find_one({'username':user})    
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("following.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)
+    return render_template("following.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications)
 
 
 @app.route("/followers/")   
@@ -332,19 +340,21 @@ def followers():
     listOfUsers = mongo.db.users.find()
     users = mongo.db.users.find()
     user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     current_user = mongo.db.users.find_one({'username':user})    
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers)   
+    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications)   
 
 
 
 @app.route("/create_a_project/", methods=["GET", "POST"])   
 def create_a_project():
     user = (session['user'])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     projects = mongo.db.projects.find({'username':user})
     
 
@@ -373,24 +383,26 @@ def create_a_project():
 
     
         flash("Project successfully created!")
-        return redirect(url_for('my_projects', user = user, projects=projects))
-    return render_template('create-a-project.html', user=user)  
+        return redirect(url_for('my_projects', user = user, projects=projects, user_notifications=user_notifications))
+    return render_template('create-a-project.html', user=user, user_notifications=user_notifications)  
 
 
 
 @app.route('/my_projects/')
 def my_projects():
     user = (session['user'])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     projects = mongo.db.projects.find({'username':user})
     username = mongo.db.users.find_one({'username': user})
 
-    return render_template('my-projects.html', user = user, projects=projects, username=username)
+    return render_template('my-projects.html', user = user, projects=projects, username=username, user_notifications=user_notifications)
 
 
 
 @app.route('/new_notification/')
 def new_notification():
     user = (session['user'])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     notification = "test new new 2 "
 
     mongo.db.users.update_one( { "username" : user },{ '$push':{'notifications' : {'$each':[notification], '$position':0}}})
