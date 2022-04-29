@@ -40,6 +40,17 @@
             <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
             <li><a href="#!">Browse Projects</a></li>
           </ul> 
+          <ul id="dropdown-notifications" class="dropdown-content">
+            {% if user_notifications.notifications|length == 0%}
+            <li>You have no notifications</li>
+            {%else%}
+            {% for notify in user_notifications.notifications[0:5] %} 
+            <li>{{notify}}</li>
+            
+            {%endfor%}
+            <li><a href="#!">View All Notifications</a></li>
+            {%endif%}
+          </ul> 
         <div class="nav-wrapper navbar-color">
             
           <a href="#!" id="logo" class="brand-logo">Harmonize</a>
@@ -63,10 +74,16 @@
 </form> 
                 
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                <li><a data-target="dropdown-notifications" class="dropdown-trigger" href="#!"><i class="right fa-solid fa-bell"></i> 
+                  {% if user_notifications.notifications|length > 0%}
+                  <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
+                  {%endif%}
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects" href="#!">Projects<i class="right fa-solid fa-circle-down"></i></a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
                 <li><a href="{{ url_for('other_users') }}">Users</a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections<i class="right fa-solid fa-circle-down"></i></a></li>
+                
+
             {%endif%}
                 
                     

@@ -269,3 +269,10 @@ body{
 #contact-chip{
     margin-left: 43%;
 }
+
+#dropdown-notifications{
+    width: 30vw !important;
+    white-space: initial;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+}

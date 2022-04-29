@@ -55,7 +55,8 @@ def register():
             "bio": "Tell us a little about yourself! Click the edit profile button to write your bio",
             "profile_pic": "/static/images/default-pp-min.png",
             "followers": [],
-            "following": []
+            "following": [],
+            "notifications": []
         }
 
         mongo.db.users.insert_one(register)
@@ -109,10 +110,12 @@ def logout():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
+    
     # grab the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
-    user = (session["user"])    
+    user = (session["user"])   
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     listOfUsers = mongo.db.users.find()
     
          
@@ -120,7 +123,7 @@ def profile(username):
         user = (session["user"])
         current_user = mongo.db.users.find_one({'username':user})
 
-        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers)
+        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications)
 
     return redirect(url_for("login"))
 
@@ -382,6 +385,19 @@ def my_projects():
     username = mongo.db.users.find_one({'username': user})
 
     return render_template('my-projects.html', user = user, projects=projects, username=username)
+
+
+
+@app.route('/new_notification/')
+def new_notification():
+    user = (session['user'])
+    notification = "test new new 2 "
+
+    mongo.db.users.update_one( { "username" : user },{ '$push':{'notifications' : {'$each':[notification], '$position':0}}})
+
+    return redirect(request.referrer)
+
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
