@@ -1,155 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
-    
-    {% block styles %}
-    {% endblock %}
-    
-    
-    <title>Harmonize</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    type="text/css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+  {% block styles %}
+  {% endblock %}
+
+
+  <title>Harmonize</title>
 </head>
+
 <body>
-    <nav>
-        
-        <ul id="dropdown-connections" class="dropdown-content">
-            <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
-            <li><a href="{{ url_for('followers', username=session['user']) }}">Followers</a></li>
-          </ul>
-          <ul id="dropdown-profile" class="dropdown-content">
-            <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
-            <li><a href="{{ url_for('settings', username=session['user']) }}">Profile Settings</a></li>
-          </ul>  
-          <ul id="dropdown-projects" class="dropdown-content">
-            <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
-            <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
-            <li><a href="#!">Browse Projects</a></li>
-          </ul> 
-          <ul id="dropdown-notifications" class="dropdown-content">
-          {%if session.user%}  
-            {% if user_notifications.notifications|length == 0%}
-            <li>You have no notifications</li>
-            {%else%}
-            {% for notify in user_notifications.notifications[0:10] %} 
-            {%if notify in listOfUsers.username%}
-            <li><a href="{{url_for('other_profile', usernameOther=notify)}}">{{notify}}</a></li>
-            {%else%}
-            <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a></li>
-            {%endif%}
-            
-            
-            {%endfor%}
-            <li><a href="{{url_for('clear_notifications')}}">Clear All Notifications</a></li>
-            {%endif%}
-          {%endif%}  
-          </ul> 
-        <div class="nav-wrapper navbar-color">
-            
-          <a href="#!" id="logo" class="brand-logo">Harmonize</a>
-        
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
-          <ul class="right hide-on-med-and-down">
-            {% if not session.user%}  
-            <li><a href="{{ url_for('register') }}">Register</a></li>
-            <li><a href="{{ url_for('login') }}">Log In</a></li>
-            {% endif%}
-            {%if session.user%}
-                <li>
-<form method="post" action="{{url_for('other_profile_search', username=username)}}">                   
-<input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input" list="user-search" >
+  <nav>
 
-<datalist id="user-search">
-	{%for user in listOfUsers%}
-    <option value="{{user.username}}">{{user.username}}</option>
-    {%endfor%}
-</datalist>
-</form> 
-                
-                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-                <li><a data-target="dropdown-notifications" class="dropdown-trigger" href="#!"><i class="right fa-solid fa-bell"></i> 
-                  {% if user_notifications.notifications|length > 0%}
-                  <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
-                  {%endif%}
-                <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects" href="#!">Projects<i class="right fa-solid fa-circle-down"></i></a></li>
-                <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
-                <li><a href="{{ url_for('other_users') }}">Users</a></li>
-                <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections<i class="right fa-solid fa-circle-down"></i></a></li>
-                
-
-            {%endif%}
-                
-                    
-          </ul>
-        </div>
-        
-      </nav>
+    <ul id="dropdown-connections" class="dropdown-content">
+      <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
+      <li><a href="{{ url_for('followers', username=session['user']) }}">Followers</a></li>
+    </ul>
+    <ul id="dropdown-profile" class="dropdown-content">
+      <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
+      <li><a href="{{ url_for('settings', username=session['user']) }}">Profile Settings</a></li>
+    </ul>
+    <ul id="dropdown-projects" class="dropdown-content">
+      <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
+      <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
+      <li><a href="#!">Browse Projects</a></li>
+    </ul>
     
-      <ul class="sidenav" id="mobile-demo">
-            {% if not session.user%}  
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-                <li><a href="{{ url_for('login') }}">Log In</a></li>
-            {% endif %}
-            {% if session.user %}
-                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-                <li><a href="#">Create a Project</a></li>
-                <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
-                <li><a href="#">My Connections</a></li>
-            {% endif %}
+    <ul id="dropdown-notifications" class="dropdown-content">
+      {%if session.user%}
+      {% if user_notifications.notifications|length == 0%}
+      <li>You have no notifications</li>
+      {%else%}
+      {% for notify in user_notifications.notifications[0:10] %}
+      {%if notify in listOfUsers.username%}
+      <li><a href="{{url_for('other_profile', usernameOther=notify)}}">{{notify}}</a></li>
+      {%else%}
+      <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a>
+      </li>
+      {%endif%}
+
+
+      {%endfor%}
+      <li><a href="{{url_for('clear_notifications')}}">Clear All Notifications</a></li>
+      {%endif%}
+      {%endif%}
+    </ul>
+    <ul id="dropdown-notifications-side" class="dropdown-content">
+      {%if session.user%}
+      {% if user_notifications.notifications|length == 0%}
+      <li>You have no notifications</li>
+      {%else%}
+      {% for notify_side in user_notifications.notifications[0:10] %}
+      {%if notify_side in listOfUsers.username%}
+      <li><a href="{{url_for('other_profile', usernameOther=notify_side)}}">{{notify_side}}</a></li>
+      {%else%}
+      <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}}</a>
+      </li>
+      {%endif%}
+
+
+      {%endfor%}
+      <li><a href="{{url_for('clear_notifications')}}">Clear All Notifications</a></li>
+      {%endif%}
+      {%endif%}
+    </ul>
+    <div class="nav-wrapper navbar-color">
+
+      <a href="#!" id="logo" class="brand-logo">Harmonize</a>
+
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+      <ul class="right hide-on-med-and-down">
+        {% if not session.user%}
+        <li><a href="{{ url_for('register') }}">Register</a></li>
+        <li><a href="{{ url_for('login') }}">Log In</a></li>
+        {% endif%}
+        {%if session.user%}
+        <li>
+          <form method="post" action="{{url_for('other_profile_search', username=username)}}">
+            <input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input"
+              list="user-search">
+
+            <datalist id="user-search">
+              {%for user in listOfUsers%}
+              <option value="{{user.username}}">{{user.username}}</option>
+              {%endfor%}
+            </datalist>
+          </form>
+
+        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+        <li><a data-target="dropdown-notifications" class="dropdown-trigger" href="#!"><i
+              class="right fa-solid fa-bell"></i>
+            {% if user_notifications.notifications|length > 0%}
+            <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
+        {%endif%}
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects" href="#!">Projects<i
+              class="right fa-solid fa-circle-down"></i></a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
+        <li><a href="{{ url_for('other_users') }}">Users</a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections<i
+              class="right fa-solid fa-circle-down"></i></a></li>
+
+
+        {%endif%}
+
+
       </ul>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </div>
 
+  </nav>
+  
+  <ul class="sidenav" id="mobile-demo">
     
-    <section>
-        <!-- flash messages -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="row flashes">
-                        <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </section>
-    {% block content %}
-    
-    {% endblock %}
-    {% block scripts %}
-    {% endblock %}
+    <ul id="dropdown-connections-side" class="dropdown-content">
+      <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
+      <li><a href="{{ url_for('followers', username=session['user']) }}">Followers</a></li>
+    </ul>
+    <ul id="dropdown-profile-side" class="dropdown-content">
+      <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
+      <li><a href="{{ url_for('settings', username=session['user']) }}">Profile Settings</a></li>
+    </ul>
+    <ul id="dropdown-projects-side" class="dropdown-content">
+      <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
+      <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
+      <li><a href="#!">Browse Projects</a></li>
+    </ul>
+    {% if not session.user%}
+    <li><a href="{{ url_for('register') }}">Register</a></li>
+    <li><a href="{{ url_for('login') }}">Log In</a></li>
+    {% endif %}
+    {%if session.user%}
+    <li>
+      <form method="post" action="{{url_for('other_profile_search', username=username)}}">
+        <input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input"
+          list="user-search">
+
+        <datalist id="user-search">
+          {%for user in listOfUsers%}
+          <option value="{{user.username}}">{{user.username}}</option>
+          {%endfor%}
+        </datalist>
+      </form>
+
+    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+    <li><a data-target="dropdown-notifications-side" class="dropdown-trigger" href="#!"><i
+          class="right fa-solid fa-bell"></i>
+        {% if user_notifications.notifications|length > 0%}
+        <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
+    {%endif%}
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects-side" href="#!">Projects<i
+          class="right fa-solid fa-circle-down"></i></a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile-side" href="#!">My Account<i
+      class="right fa-solid fa-circle-down"></i></a></li>
+    <li><a href="{{ url_for('other_users') }}">Users</a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections-side" href="#!">My Connections<i
+          class="right fa-solid fa-circle-down"></i></a></li>
+
+
+    {%endif%}
+  </ul>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+  <section>
+    <!-- flash messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="row flashes">
+      <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </section>
+  {% block content %}
+
+  {% endblock %}
+  {% block scripts %}
+  {% endblock %}
 </body>
 <script>
-    $( function() {
-     var availableTags = [
-         {% for user in listOfUsers %}
-             "{{user}}",
-         {% endfor %}
-     ];
-     $( "#autocomplete-input" ).autocomplete({
-       source: availableTags
-     });
-   } );
+  $(function () {
+    var availableTags = [{
+        %
+        for user in listOfUsers %
+      }
+      "{{user}}",
+      {
+        % endfor %
+      }
+    ];
+    $("#autocomplete-input").autocomplete({
+      source: availableTags
+    });
+  });
 
-   function searchBar{
-    window.location.href = "{{url_for('profile', username=username)}}"; 
-   }
- </script>
- <script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>
+  function searchBar {
+    window.location.href = "{{url_for('profile', username=username)}}";
+  }
+</script>
+<script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>
+
 </html>

@@ -113,6 +113,8 @@ def logout():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+
     
     # grab the session user's username from db
     username = mongo.db.users.find_one(
@@ -126,7 +128,7 @@ def profile(username):
         user = (session["user"])
         current_user = mongo.db.users.find_one({'username':user})
 
-        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications)
+        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames)
 
     return redirect(url_for("login"))
 
@@ -270,8 +272,7 @@ def other_profile_search():
     usernameOther = request.form.get("user-search-input")
     projects = mongo.db.projects.find({'username':usernameOther})    
     listOfUsers = mongo.db.users.find()
-    
-
+    allCurrentUsernames = mongo.db.users.distinct("username")
     
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     
@@ -280,7 +281,12 @@ def other_profile_search():
     
     current_user = mongo.db.users.find_one({'username':user}) 
     following = mongo.db.users.find_one({'username':user},{"following"})
-    
+
+    if usernameOther not in allCurrentUsernames:
+        flash("That user doesn't exist")
+        username=user
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
+
     
     if usernameOther != user:
         return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications)  
