@@ -41,15 +41,22 @@
             <li><a href="#!">Browse Projects</a></li>
           </ul> 
           <ul id="dropdown-notifications" class="dropdown-content">
+          {%if session.user%}  
             {% if user_notifications.notifications|length == 0%}
             <li>You have no notifications</li>
             {%else%}
-            {% for notify in user_notifications.notifications[0:5] %} 
-            <li>{{notify}}</li>
+            {% for notify in user_notifications.notifications[0:10] %} 
+            {%if notify in listOfUsers.username%}
+            <li><a href="{{url_for('other_profile', usernameOther=notify)}}">{{notify}}</a></li>
+            {%else%}
+            <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a></li>
+            {%endif%}
+            
             
             {%endfor%}
-            <li><a href="#!">View All Notifications</a></li>
+            <li><a href="{{url_for('clear_notifications')}}">Clear All Notifications</a></li>
             {%endif%}
+          {%endif%}  
           </ul> 
         <div class="nav-wrapper navbar-color">
             

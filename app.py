@@ -102,6 +102,8 @@ def login():
 
 @app.route("/logout")
 def logout():
+    listOfUsers = mongo.db.users.find()
+
     # remove user from session cookie
     flash("You have been logged out")
     session.pop("user")
@@ -110,6 +112,7 @@ def logout():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
+    listOfUsers = mongo.db.users.find()
     
     # grab the session user's username from db
     username = mongo.db.users.find_one(
@@ -130,6 +133,8 @@ def profile(username):
 
 @app.route("/settings/<username>", methods=["GET", "POST"])
 def settings(username):
+    listOfUsers = mongo.db.users.find()
+
     # grab the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
@@ -148,6 +153,8 @@ def settings(username):
 
 @app.route("/delete_account", methods=["GET", "POST"])
 def delete_account():
+    listOfUsers = mongo.db.users.find()
+
     username = (session["user"]) 
     mongo.db.users.delete_one({"username": username})
     mongo.db.users.update_many(
@@ -282,15 +289,17 @@ def other_profile_search():
 
 @app.route('/follow-user/<usernameOther>', methods=["GET", "POST"])    
 def follow_user(usernameOther):
-    listOfUsers = mongo.db.users.find()
+    listOfUsers = mongo.db.users.find({'username'})
     selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user})
+    current_username = mongo.db.users.find_one({'username':user})["username"]
     user_id = mongo.db.users.find_one({'username':user})['_id']
     following = mongo.db.users.find_one({'username':user},{"following"})
     usernameOther= (selectedUser['username'])
 
+    mongo.db.users.update_one({ "username" : usernameOther },{ '$push': { "notifications": current_username } })
     mongo.db.users.update_one( { "username" : user },{ '$push': { "following": usernameOther } })
     mongo.db.users.update_one( { "username" : usernameOther },{ '$push': { "followers": user } })
     flash("You are now following " + selectedUser['username'])
@@ -354,6 +363,8 @@ def followers():
 @app.route("/create_a_project/", methods=["GET", "POST"])   
 def create_a_project():
     user = (session['user'])
+    listOfUsers = mongo.db.users.find()
+
     user_notifications = mongo.db.users.find_one({'username':user}) 
     projects = mongo.db.projects.find({'username':user})
     
@@ -391,6 +402,8 @@ def create_a_project():
 @app.route('/my_projects/')
 def my_projects():
     user = (session['user'])
+    listOfUsers = mongo.db.users.find()
+
     user_notifications = mongo.db.users.find_one({'username':user}) 
     projects = mongo.db.projects.find({'username':user})
     username = mongo.db.users.find_one({'username': user})
@@ -402,6 +415,8 @@ def my_projects():
 @app.route('/new_notification/')
 def new_notification():
     user = (session['user'])
+    listOfUsers = mongo.db.users.find()
+
     user_notifications = mongo.db.users.find_one({'username':user}) 
     notification = "test new new 2 "
 
@@ -410,6 +425,17 @@ def new_notification():
     return redirect(request.referrer)
 
 
+
+@app.route('/clear_notifications/')
+def clear_notifications():
+    user = (session['user'])
+    listOfUsers = mongo.db.users.find()
+
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+
+    mongo.db.users.update_one( { "username" : user },{ '$set':{'notifications' : []}})
+
+    return redirect(request.referrer)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

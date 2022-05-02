@@ -2,6 +2,9 @@
 
 {%block content%}
 <h1>{{following}}</h1>
+{% for user in listOfUsers%}
+<li>{{user}}</li>
+{%endfor%}
 <div class="row s12">
     <ul>
         {% for use in users%}
