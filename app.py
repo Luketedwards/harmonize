@@ -255,6 +255,7 @@ def other_profile(usernameOther):
     listOfUsers = mongo.db.users.find()
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     projects = mongo.db.projects.find({'username':usernameOther})
+    project_number = mongo.db.projects.count_documents({'username':usernameOther})
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user}) 
@@ -263,20 +264,22 @@ def other_profile(usernameOther):
     current_user = mongo.db.users.find_one({'username':user}) 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications)    
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications,project_number=project_number)    
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following, user_notifications=user_notifications))  
 
 
 @app.route('/other_profile_search/', methods=["GET", "POST"])
 def other_profile_search():
+    user = (session["user"])
     usernameOther = request.form.get("user-search-input")
-    projects = mongo.db.projects.find({'username':usernameOther})    
+    projects = mongo.db.projects.find({'username':usernameOther})  
+    project_number = mongo.db.projects.count_documents({'username':usernameOther})  
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
     
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     
-    user = (session["user"])
+    
     user_notifications = mongo.db.users.find_one({'username':user}) 
     
     current_user = mongo.db.users.find_one({'username':user}) 
@@ -289,7 +292,7 @@ def other_profile_search():
 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications)  
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications,project_number=project_number)  
     username = user      
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
 
@@ -412,9 +415,10 @@ def my_projects():
 
     user_notifications = mongo.db.users.find_one({'username':user}) 
     projects = mongo.db.projects.find({'username':user})
+    project_number = mongo.db.projects.count_documents({'username':user})
     username = mongo.db.users.find_one({'username': user})
 
-    return render_template('my-projects.html', user = user, projects=projects, username=username, user_notifications=user_notifications)
+    return render_template('my-projects.html', user = user, projects=projects, username=username, user_notifications=user_notifications,project_number=project_number)
 
 
 

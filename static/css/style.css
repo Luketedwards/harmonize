@@ -277,6 +277,10 @@ body{
     text-overflow: ellipsis;
 }
 
+#main-navbar{
+    padding-right: 15px;
+}
+
 @media screen and (max-width: 1000px){
     #user-search-input{
         color: black;
@@ -286,4 +290,5 @@ body{
     #dropdown-notifications-side{
         width: 450px !important;
     }
+    
 }

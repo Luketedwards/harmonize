@@ -7,7 +7,7 @@
       <div id="profile-header" class="col s12 ">
 
         <div class="row s12">
-          <img src="{{selectedUser.profile_pic}}" alt="" id="profile-image" class="circle  s12 left responsive-img ">
+          <img id="profile-image" src="{{selectedUser.profile_pic}}" alt="" id="profile-image" class="circle  s12 left responsive-img ">
           <!-- notice the "circle" class -->
 
           <div id="bio-container" class="col s8 center m6">
@@ -74,8 +74,11 @@
 </div>
 <div class="row">
   <h2 class="center-align">{{selectedUser.username}}'s Projects</h2>
+  {%if project_number > 0%}
+    <h2 class="center-align">{{selectedUser.username}} has {{project_number}} existing projects.</h2>
+  {%endif%}
   {% for project in projects%}
-<h2 class="center-align">{{selectedUser.username}} has {{project|length}} existing projects.</h2>
+
     <div id="my-projects-panel" class="card-panel blue-grey darken-1">
         {%if project.completed == false%}
                 <span class="">This project is still active!<i id="my-projects-panel-tick"  class="fa-solid fa-check"></i></span>

@@ -91,7 +91,7 @@
       <a href="#!" id="logo" class="brand-logo">Harmonize</a>
 
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
-      <ul class="right hide-on-med-and-down">
+      <ul id="main-navbar" class="right hide-on-med-and-down">
         {% if not session.user%}
         <li><a href="{{ url_for('register') }}">Register</a></li>
         <li><a href="{{ url_for('login') }}">Log In</a></li>
@@ -164,7 +164,7 @@
       </form>
 
     <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-    <li><a data-target="dropdown-notifications-side" class="dropdown-trigger" href="#!"><i
+    <li><a data-target="dropdown-notifications-side" class="dropdown-trigger" href="#!">Notifications<i
           class="right fa-solid fa-bell"></i>
         {% if user_notifications.notifications|length > 0%}
         <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
