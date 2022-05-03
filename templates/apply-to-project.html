@@ -1,0 +1,98 @@
+{% extends 'base.html'%}
+{%block content%}
+
+<h3 class="center-align">Apply to {{thisProject.projectTitle}}</h3>
+
+
+<div id="create-project-panel" class="row card-panel s8">
+    <form class="col s12 m8 offset-m2" method="POST" action="#!">
+        <div class="row">
+            <div id="project-username-div" class="row">
+                <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                    <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
+                        maxlength="300" >
+                    <label for="project-username">username</label>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                    <input id="project-title" name="project-title" placeholder="Write a project title!" type="text" minlength="5"
+                        maxlength="300" required>
+                    <label for="project-title">Project Title</label>
+                </div>
+            </div>
+            <div class="input-field col s12">
+                <div class="input-field col s12">
+                    <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                    <textarea id="project-description" name="project-description" placeholder="Describe your project." type="text" minlength="5"
+                        maxlength="3000" required></textarea>
+                    <label for="project-description">Project Description</label>
+                </div>
+        
+                <div class="row">
+                    <div class="input-field col s6">
+                      <input id="city" name="city" type="text" class="validate">
+                      <label for="city">City</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="email" value="{{user.email}}" name="email" type="email" class="validate">
+                        <label for="email">Contact Email</label>
+                    </div>
+                </div>
+            <div class="input-field col s12">
+                <select id="instruments" name="instruments" required multiple>
+                  <option value="Guitar">Guitar</option>
+                  <option value="Bass Guitar">Bass Guitar</option>
+                  <option value="Mandolin">Mandolin</option>
+                  <option value="Violin">Violin</option>
+                  <option value="Viola">Viola</option>
+                  <option value="Cello">Cello</option>
+                  <option value="Trumpet">Trumpet</option>
+                  <option value="Trombone">Trombone</option>
+                  <option value="French Horn">French Horn</option>
+                  <option value="Euphonium">Euphonium</option>
+                  <option value="Saxophone">Saxophone</option>
+                  <option value="Clarinet">Clarinet</option>
+                  <option value="Flute">Flute</option>
+                  <option value="Drums">Drums</option>
+                  
+                </select>
+                
+                <label for="instruments">Instruments Needed</label>
+                    
+              </div>
+              <div class="input-field col s12">
+                <select id="genres" name="genres" required multiple>
+                  <option value="Rock">Rock</option>
+                  <option value="Pop">Pop</option>
+                  <option value="Classical">Classical</option>
+                  <option value="Jazz">Jazz</option>
+                  <option value="Metal">Metal</option>
+                  <option value="Blues">Blues</option>
+                  <option value="Bluegrass">Bluegrass</option>
+                  <option value="Folk">Folk</option>
+                  <option value="EDM">EDM</option>
+                  <option value="Celtic">Celtic</option>
+                  <option value="World">World</option>
+                  
+                </select>
+                
+                <label for="genres" >Genres Needed</label>
+                    
+                  
+              
+              <div class="row">
+                <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
+                    Create Project <i class="fas fa-sign-in-alt"></i>
+                </button>
+            
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <p class="center-align">
+                        Changed your mind? 
+                        <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Back to profile</a>
+                    </p>
+                </div>
+            </div>
+{%endblock%}

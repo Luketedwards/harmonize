@@ -422,6 +422,15 @@ def my_projects():
 
 
 
+@app.route('/apply_to_project/<thisProject>', methods=["GET", "POST"])
+def apply_to_project(thisProject):
+    user = (session['user'])
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+    thisProject= mongo.db.projects.find_one({'projectTitle':thisProject})
+
+
+    return render_template('apply-to-project.html', user=user, user_notifications=user_notifications,thisProject=thisProject)
+
 @app.route('/new_notification/')
 def new_notification():
     user = (session['user'])
