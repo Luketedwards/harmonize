@@ -49,16 +49,17 @@
     </ul>
     
     <ul id="dropdown-notifications" class="dropdown-content">
+
       {%if session.user%}
       {% if user_notifications.notifications|length == 0%}
       <li>You have no notifications</li>
       {%else%}
       {% for notify in user_notifications.notifications[0:10] %}
-      {%if notify in listOfUsers.username%}
-      <li><a href="{{url_for('other_profile', usernameOther=notify)}}">{{notify}}</a></li>
-      {%else%}
+      {%if notify in allCurrentUsernames  %}
       <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a>
       </li>
+      {%elif notify not in listOfProjectNames%}
+      <li>You have a new application to your project: {{notify}}</li>
       {%endif%}
 
 
@@ -68,16 +69,19 @@
       {%endif%}
     </ul>
     <ul id="dropdown-notifications-side" class="dropdown-content">
+     
       {%if session.user%}
       {% if user_notifications.notifications|length == 0%}
       <li>You have no notifications</li>
       {%else%}
       {% for notify_side in user_notifications.notifications[0:10] %}
-      {%if notify_side in listOfUsers.username%}
-      <li><a href="{{url_for('other_profile', usernameOther=notify_side)}}">{{notify_side}}</a></li>
-      {%else%}
+      {%if notify_side in listOfUsers%}
       <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}}</a>
       </li>
+      {%else%}
+      
+      <li>You have a new application to your project: {{notify_side}}</li>
+
       {%endif%}
 
 
@@ -204,6 +208,7 @@
   {% endblock %}
   {% block scripts %}
   {% endblock %}
+  
 </body>
 <script>
   $(function () {

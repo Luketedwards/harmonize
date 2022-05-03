@@ -253,6 +253,8 @@ def other_users():
 @app.route('/other_profile/<usernameOther>', methods=["GET", "POST"])
 def other_profile(usernameOther):
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjects = mongo.db.projects.distinct("projectTitle")
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     projects = mongo.db.projects.find({'username':usernameOther})
     project_number = mongo.db.projects.count_documents({'username':usernameOther})
@@ -264,7 +266,7 @@ def other_profile(usernameOther):
     current_user = mongo.db.users.find_one({'username':user}) 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications,project_number=project_number)    
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames)    
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following, user_notifications=user_notifications))  
 
 
@@ -298,7 +300,7 @@ def other_profile_search():
 
 @app.route('/follow-user/<usernameOther>', methods=["GET", "POST"])    
 def follow_user(usernameOther):
-    listOfUsers = mongo.db.users.find({'username'})
+    listOfUsers = mongo.db.users.distinct('username')
     selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
@@ -400,7 +402,7 @@ def create_a_project():
         }
 
         mongo.db.projects.insert_one(new_project)
-
+        
     
         flash("Project successfully created!")
         return redirect(url_for('my_projects', user = user, projects=projects, user_notifications=user_notifications))
@@ -422,14 +424,37 @@ def my_projects():
 
 
 
-@app.route('/apply_to_project/<thisProject>', methods=["GET", "POST"])
-def apply_to_project(thisProject):
-    user = (session['user'])
+@app.route('/apply_to_project/<thisProject>/<usernameOther>', methods=["GET", "POST"])
+def apply_to_project(thisProject, usernameOther):
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+    user = (session["user"])   
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+    current_user = mongo.db.users.find_one({'username':user})
+
     user_notifications = mongo.db.users.find_one({'username':user}) 
     thisProject= mongo.db.projects.find_one({'projectTitle':thisProject})
+    thisProjectId = thisProject['_id']
+    thisProjectTitle = thisProject['projectTitle']
 
-
-    return render_template('apply-to-project.html', user=user, user_notifications=user_notifications,thisProject=thisProject)
+    if request.method == "POST":
+        
+        new_project_apply = {
+            "projectMessage": request.form.get("project-message"),
+            "city": request.form.get('city'),
+            "email": request.form.get('email'),
+            "instruments": request.form.getlist("instruments"),
+            "genres": request.form.getlist("genres"),
+            "applicantUsername": mongo.db.users.find_one({"username": session["user"]})["username"] 
+        }
+        mongo.db.users.update_one({ "username" : usernameOther },{ '$push': { "notifications": thisProjectTitle } })
+        mongo.db.projects.update_one({ '_id': thisProjectId },{ '$push': { "applications": new_project_apply } })
+        flash("Your application to " + thisProject['projectTitle'] + " has been submitted.")
+        
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,usernameOther=usernameOther))  
+    return render_template('apply-to-project.html', user=user, user_notifications=user_notifications,thisProject=thisProject, usernameOther=usernameOther, listOfUsers=listOfUsers)
 
 @app.route('/new_notification/')
 def new_notification():

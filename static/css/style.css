@@ -236,6 +236,17 @@ body{
     text-align: center !important;
 }
 
+#projects-panel-apply-closed a{
+    width: max-content;
+    font-size: 1.1vw;
+    padding: 0;
+    top: 85px;
+    right: 7vw;
+    text-align: center;
+    padding: 3px;
+    background-color: red !important;
+}
+
 #projects-panel-apply a{
     width: 6vw;
     font-size: 1.5vw;
