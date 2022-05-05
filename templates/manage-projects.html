@@ -1,7 +1,6 @@
 {% extends 'base.html'%}
 {% block content %}
 <h3 class="center-align">Manage Project: {{thisProject.projectTitle}}</h3>
-<h3>{{thisProject._id}}</h3>
 
 
 
@@ -97,22 +96,26 @@
                     </p>
                 </div>
             </div>
-            <h3>Project Applications</h3>
-            {% for apply in applications%}
-            <div class="card-panel">
-                <a href="{{url_for('other_profile', usernameOther=apply.applicantUsername )}}"><h4>{{apply.applicantUsername}}</h4></a>
-                <div class="row s12">
-                <div>
-                    <h5>Project Message</h5>
-                    <p>{{apply.projectMessage}}</p>
+            <h3 class="center">Project Applications</h3>
+            {% if applications|length == 0%}
+                    <h4 class="center card-panel">No current applications.</h4>
+                {%else%}
+                {% for apply in applications%}   
+                <div class="card-panel">
+                    <a href="{{url_for('other_profile', usernameOther=apply.applicantUsername )}}"><h4>{{apply.applicantUsername}}</h4></a>
+                    <div class="row s12">
+                    <div>
+                        <h5>Project Message</h5>
+                        <p>{{apply.projectMessage}}</p>
+                    </div>
+                        <h5>Instrument applied for.</h5>
+                        {% for instrument in apply.instruments%}
+                        <p>{{instrument}}</p>
+                        {%endfor%}
+                    </div>
+                    <a href="{{url_for('accept_application', applicant=apply.applicantUsername,applicantInstrument=apply.instruments, thisProject=thisProject._id)}}" class="waves-effect waves-light green btn">Accept</a>
+                    <a href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject._id)}}" class="waves-effect waves-light red btn">Deny</a>
                 </div>
-                    <h5>Instrument applied for.</h5>
-                    {% for instrument in apply.instruments%}
-                    <p>{{instrument}}</p>
-                    {%endfor%}
-                </div>
-                <a href="{{url_for('accept_application', applicant=apply.applicantUsername, thisProject=thisProject)}}" class="waves-effect waves-light green btn">Accept</a>
-                <a href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject)}}" class="waves-effect waves-light red btn">Deny</a>
-            </div>
-            {%endfor%}
+                {%endfor%}
+            {%endif%}    
 {%endblock%}

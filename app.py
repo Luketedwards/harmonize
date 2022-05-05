@@ -458,8 +458,8 @@ def apply_to_project(thisProject, usernameOther):
     return render_template('apply-to-project.html', user=user, user_notifications=user_notifications,thisProject=thisProject, usernameOther=usernameOther, listOfUsers=listOfUsers)
 
 
-@app.route('/accept_application/<applicant>/<thisProject>/', methods=["GET", "POST"])
-def accept_application(applicant,thisProject):
+@app.route('/accept_application/<applicant>/<applicantInstrument>/<thisProject>/', methods=["GET", "POST"])
+def accept_application(applicant,applicantInstrument,thisProject,):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
     username = mongo.db.users.find_one(
@@ -467,22 +467,24 @@ def accept_application(applicant,thisProject):
     user = (session["user"])   
     user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user})
-    thisProject= mongo.db.projects.find_one({'_id':thisProject})
-    
+    thisProject= thisProject
+    applicantInstrument=applicantInstrument
 
+    
     user_notifications = mongo.db.users.find_one({'username':user}) 
     
-    applicant = mongo.db.projects.find_one({'applications': applicant})
-
-    if request.method == "POST":
+    
+    
+    approvedApplication = {
+        'memberUsername': applicant,
+        'memberInstrument': applicantInstrument
+    }
+    
         
+    mongo.db.projects.update_one({ '_id': ObjectId(thisProject)},{ '$push': { "projectMembers": approvedApplication }})
+    flash("Application Approved")
         
-        mongo.db.projects.update_one({ '_id': thisProjectId },{ '$set': { applicant: True }})
-        flash("Application Approved")
-        
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
-        
-    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
+    return redirect(request.referrer)
     
 
 
@@ -497,17 +499,22 @@ def deny_application(applicant,thisProject):
     user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user})
     thisProject= thisProject
-    thisProjectId=thisProject
+    
     user_notifications = mongo.db.users.find_one({'username':user}) 
     
     
 
 
-        
-    mongo.db.projects.update_one({ '_id': thisProject }, { '$unset' : { 'application' : applicant} })    
+    mongo.db.projects.update_one(
+    { '_id': ObjectId(thisProject) }, 
+    { '$pull': { 'applications': { 'applicantUsername': applicant } } },
+
+    );    
+      
     
     flash("Application Denied") 
-    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
+    return redirect(request.referrer)
+     
 
 
 
