@@ -33,7 +33,7 @@
                     </div>
                 </div>
             <div class="input-field col s12">
-                <select id="instruments" name="instruments" required multiple>
+                <select id="instruments" name="instruments" required >
                     {% for instrument in thisProject.instruments%}
                   <option value="{{instrument}}">{{instrument}}</option>
                   {%endfor%}
@@ -44,7 +44,7 @@
                     
               </div>
               <div class="input-field col s12">
-                <select id="genres" name="genres" required multiple>
+                <select id="genres" name="genres" required >
                     {% for genre in thisProject.genres%}
                     <option value="{{genre}}">{{genre}}</option>
                     {%endfor%}

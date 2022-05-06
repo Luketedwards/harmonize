@@ -96,6 +96,19 @@
                     </p>
                 </div>
             </div>
+            <h3 class="center">Project Members</h3>
+            {% if members|length == 0%}
+                    <h4 class="center card-panel">No current members.</h4>
+                {%else%}
+                {% for member in members%}   
+                <div class="card-panel">
+                    <a href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4>{{member.memberUsername}}</h4></a>
+                    
+                    <span>{{member.memberInstrument}}</span>
+                   
+                </div>
+                {%endfor%}
+            {%endif%}  
             <h3 class="center">Project Applications</h3>
             {% if applications|length == 0%}
                     <h4 class="center card-panel">No current applications.</h4>
@@ -113,7 +126,7 @@
                         <p>{{instrument}}</p>
                         {%endfor%}
                     </div>
-                    <a href="{{url_for('accept_application', applicant=apply.applicantUsername,applicantInstrument=apply.instruments, thisProject=thisProject._id)}}" class="waves-effect waves-light green btn">Accept</a>
+                    <a href="{{url_for('accept_application', applicant=apply.applicantUsername,applicantInstrument=apply.instruments[0], thisProject=thisProject._id)}}" class="waves-effect waves-light green btn">Accept</a>
                     <a href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject._id)}}" class="waves-effect waves-light red btn">Deny</a>
                 </div>
                 {%endfor%}

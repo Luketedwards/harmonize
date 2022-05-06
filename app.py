@@ -482,6 +482,11 @@ def accept_application(applicant,applicantInstrument,thisProject,):
     
         
     mongo.db.projects.update_one({ '_id': ObjectId(thisProject)},{ '$push': { "projectMembers": approvedApplication }})
+    mongo.db.projects.update_one(
+    { '_id': ObjectId(thisProject) }, 
+    { '$pull': { 'applications': { 'applicantUsername': applicant } } },
+
+    );   
     flash("Application Approved")
         
     return redirect(request.referrer)
@@ -527,19 +532,35 @@ def manage_project(thisProject):
     user = (session["user"])   
     user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user})
+    
 
     user_notifications = mongo.db.users.find_one({'username':user}) 
     thisProject= mongo.db.projects.find_one({'projectTitle':thisProject})
     thisProjectId = thisProject['_id']
     thisProjectTitle = thisProject['projectTitle']
     applications = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['applications']
+    members = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectMembers']
 
     if request.method == "POST":
         
        
         
         return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
-    return render_template('manage-projects.html', user=user, user_notifications=user_notifications,thisProject=thisProject, listOfUsers=listOfUsers, applications=applications)    
+    return render_template('manage-projects.html', user=user, user_notifications=user_notifications,thisProject=thisProject, listOfUsers=listOfUsers, applications=applications, members=members) 
+
+
+
+@app.route('/projects_im_in/')       
+def projects_im_in():
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    user = (session["user"])   
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+    projectsImIn = mongo.db.projects.find({'projectMembers.memberUsername':username})
+
+    return render_template('projects-im-in.html', listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,user=user,user_notifications=user_notifications,projectsImIn=projectsImIn)
 
 @app.route('/new_notification/')
 def new_notification():

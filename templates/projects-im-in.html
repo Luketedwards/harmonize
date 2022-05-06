@@ -1,0 +1,6 @@
+{% extends 'base.html'%}
+{% block content %}
+{% for projects in projectsImIn%}
+<h1 class="card-panel center"><a href="">{{projects.projectTitle}}</a></h1>
+{%endfor%}
+{%endblock%}

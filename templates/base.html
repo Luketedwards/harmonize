@@ -46,7 +46,7 @@
       <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
       <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
       <li><a href="#!">Browse Projects</a></li>
-      <li><a href="#!">Projects I'm In</a></li>
+      <li><a href="{{url_for('projects_im_in')}}">Projects I'm In</a></li>
     </ul>
     
     <ul id="dropdown-notifications" class="dropdown-content">
