@@ -59,8 +59,10 @@
       {%if notify in allCurrentUsernames  %}
       <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a>
       </li>
-      {%elif notify not in listOfProjectNames%}
+      {%elif notify in listOfProjectNames%}
       <li><a href="{{url_for('manage_project', thisProject=notify )}}">You have a new application to your project: {{notify}}</a></li>
+      {%else%}
+      <li><a href="{{url_for('my_projects', user=session['user']) }}">{{notify}}</a></li>
       {%endif%}
 
 

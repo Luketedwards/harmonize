@@ -36,15 +36,22 @@
     <div id="comments-panel" class="col card-panel s5 right">
         <h3 class="center">Comments</h3>
         <hr>
-        <div class="col s10">
+        <div id="comment-container" class="col s10">
             {% for comment in thisProject.comments%}
+            {% if comment.username == thisProject.username%}
+            <span><i class="fa-solid fa-star"></i><a id="host-comment" href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
+                {{comment.date}}</span>
+                <br>
+            {%else%}    
             <span><a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
              {{comment.date}}</span>
+             <br>
+            {%endif%} 
             {%endfor%}
         </div>
         <form class="" method="POST" action="{{ url_for('add_comment', thisProject = thisProject._id) }}">
             <div class="input-field col s12">
-                <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-comment prefix light-blue-text text-darken-4"></i>
                 <textarea id="addComment" name="addComment" type="text" minlength="5"
                     maxlength="300" required></textarea>
                 <label for="addComment">Write a comment</label>

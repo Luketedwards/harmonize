@@ -307,3 +307,12 @@ body{
 #comments-panel{
     padding: 5px;
 }
+
+#comment-container{
+    overflow: scroll;
+    height: 30vh;
+}
+
+#host-comment{
+    color: green;
+}

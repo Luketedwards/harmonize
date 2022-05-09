@@ -1,6 +1,11 @@
 {% extends 'base.html'%}
 {% block content %}
+{% if projectsImInNumber == 0%}
+<h1 class="center">You are not a member in any projects.</h1>
+{%else%}
 {% for projects in projectsImIn%}
+
 <h1 class="card-panel center"><a href="{{url_for('project_hub', thisProject = projects._id)}}">{{projects.projectTitle}}</a></h1>
 {%endfor%}
+{%endif%}
 {%endblock%}

@@ -124,13 +124,14 @@ def profile(username):
     user = (session["user"])   
     user_notifications = mongo.db.users.find_one({'username':user}) 
     listOfUsers = mongo.db.users.find()
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     
          
     if session["user"]:
         user = (session["user"])
         current_user = mongo.db.users.find_one({'username':user})
 
-        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames)
+        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
     return redirect(url_for("login"))
 
@@ -460,8 +461,8 @@ def apply_to_project(thisProject, usernameOther):
     return render_template('apply-to-project.html', user=user, user_notifications=user_notifications,thisProject=thisProject, usernameOther=usernameOther, listOfUsers=listOfUsers)
 
 
-@app.route('/accept_application/<applicant>/<applicantInstrument>/<thisProject>/', methods=["GET", "POST"])
-def accept_application(applicant,applicantInstrument,thisProject,):
+@app.route('/accept_application/<applicant>/<applicantInstrument>/<thisProject>/<thisProjectTitle>/', methods=["GET", "POST"])
+def accept_application(applicant,applicantInstrument,thisProject,thisProjectTitle):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
     username = mongo.db.users.find_one(
@@ -471,7 +472,7 @@ def accept_application(applicant,applicantInstrument,thisProject,):
     current_user = mongo.db.users.find_one({'username':user})
     thisProject= thisProject
     applicantInstrument=applicantInstrument
-
+    thisProjectTitle=thisProjectTitle
     
     user_notifications = mongo.db.users.find_one({'username':user}) 
     
@@ -489,6 +490,7 @@ def accept_application(applicant,applicantInstrument,thisProject,):
     { '$pull': { 'applications': { 'applicantUsername': applicant } } },
 
     );   
+    mongo.db.users.update_one({ "username" : applicant },{ '$push': { "notifications": "your application to " + thisProjectTitle + " was approved."} })
     flash("Application Approved")
         
     return redirect(request.referrer)
@@ -518,7 +520,7 @@ def deny_application(applicant,thisProject):
 
     );    
       
-    
+    mongo.db.users.update_one({ "username" : applicant },{ '$push': { "notifications": "your application to " + thisProjectTitle + " was denied."} })
     flash("Application Denied") 
     return redirect(request.referrer)
      
@@ -561,9 +563,10 @@ def projects_im_in():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     projectsImIn = mongo.db.projects.find({'projectMembers.memberUsername':username})
+    projectsImInNumber = mongo.db.projects.count_documents({'projectMembers.memberUsername':username})
     
 
-    return render_template('projects-im-in.html', listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,user=user,user_notifications=user_notifications,projectsImIn=projectsImIn)
+    return render_template('projects-im-in.html', listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,user=user,user_notifications=user_notifications,projectsImIn=projectsImIn,projectsImInNumber=projectsImInNumber)
 
 
 
@@ -589,7 +592,9 @@ def add_comment(thisProject):
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     thisProject = thisProject
-
+    thisProjectTitle = mongo.db.projects.find_one({'_id':ObjectId(thisProject)})['projectTitle']
+    
+    projectHost = mongo.db.projects.find_one({'_id': ObjectId(thisProject)})['username']
     newComment = {
         'userComment': request.form.get('addComment'),
         'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
@@ -597,6 +602,8 @@ def add_comment(thisProject):
     }    
 
     mongo.db.projects.update_one({ '_id': ObjectId(thisProject)},{ '$push': { "comments": newComment }})
+    mongo.db.users.update_one({ "username" : projectHost },{ '$push': {"notifications": "New comment on project: " + thisProjectTitle} })
+    
     flash("Comment Added")
     return redirect(request.referrer)
 
