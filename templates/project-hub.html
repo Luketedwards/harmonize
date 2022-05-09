@@ -1,4 +1,62 @@
 {% extends 'base.html'%}
 {% block content %}
+<div class="row s12 card-panel">
+<h1 class="center">{{thisProject.projectTitle|capitalize}}</h1>
 
+<h5 class="center">Host: <a href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
+
+<div class="row s12">
+    
+    
+        <div class="col card-panel s6 ">
+            
+            <h2 class="center">Project Information</h2>
+            <div class="row s12">
+            <div class="left">
+            <h4>Project Description</h4>
+            <p>"{{thisProject.projectDescription}}"</p>
+            </div>
+            <div class="right">
+            <h4 class="">Project Members</h4>
+            {% if members|length == 0%}
+                    <h4 class="">No current members.</h4>
+                {%else%}
+                {% for member in members%}   
+                <div class="panel">
+                    <a href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4>{{member.memberUsername}}</h4></a>
+                    <span>{{member.memberInstrument}}</span>
+                </div>
+                {%endfor%}
+            {%endif%} 
+        </div>
+        
+        </div> 
+        
+    </div>
+    <div id="comments-panel" class="col card-panel s5 right">
+        <h3 class="center">Comments</h3>
+        <hr>
+        <div class="col s10">
+            {% for comment in thisProject.comments%}
+            <span><a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
+             {{comment.date}}</span>
+            {%endfor%}
+        </div>
+        <form class="" method="POST" action="{{ url_for('add_comment', thisProject = thisProject._id) }}">
+            <div class="input-field col s12">
+                <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                <textarea id="addComment" name="addComment" type="text" minlength="5"
+                    maxlength="300" required></textarea>
+                <label for="addComment">Write a comment</label>
+            </div>
+            <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
+                Comment <i class="fas fa-sign-in-alt"></i>
+            </button>
+        </form>    
+    </div>
+            
+        </div>
+
+
+</div>
 {%endblock%}

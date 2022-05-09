@@ -7,6 +7,8 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from PIL import Image
 import pathlib
+import datetime
+from datetime import datetime, timedelta, date
 
 if os.path.exists("env.py"):
     import env
@@ -559,6 +561,7 @@ def projects_im_in():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     projectsImIn = mongo.db.projects.find({'projectMembers.memberUsername':username})
+    
 
     return render_template('projects-im-in.html', listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,user=user,user_notifications=user_notifications,projectsImIn=projectsImIn)
 
@@ -573,9 +576,29 @@ def project_hub(thisProject):
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
 
-    thisProject = mongo.db.projects.find_one({'_id': thisProject})   
+    thisProject = mongo.db.projects.find_one({'_id': ObjectId(thisProject)})   
+    thisProjectTitle = thisProject['projectTitle']
+    members = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectMembers']
 
-    return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject ) 
+    return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members ) 
+
+
+@app.route('/add_comment/<thisProject>', methods=["GET", "POST"])
+def add_comment(thisProject):
+    user = (session["user"])   
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+    thisProject = thisProject
+
+    newComment = {
+        'userComment': request.form.get('addComment'),
+        'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
+        'username': username
+    }    
+
+    mongo.db.projects.update_one({ '_id': ObjectId(thisProject)},{ '$push': { "comments": newComment }})
+    flash("Comment Added")
+    return redirect(request.referrer)
 
 @app.route('/new_notification/')
 def new_notification():
