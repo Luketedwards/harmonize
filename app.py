@@ -18,7 +18,9 @@ app = Flask(__name__)
 
 
 UPLOAD_FOLDER = 'static/images/user-images/'
+UPLOAD_FOLDER_PROJECT = 'static/project-files/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER_PROJECT'] = UPLOAD_FOLDER_PROJECT
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
@@ -631,6 +633,41 @@ def clear_notifications():
     mongo.db.users.update_one( { "username" : user },{ '$set':{'notifications' : []}})
 
     return redirect(request.referrer)
+
+
+@app.route('/upload_project_files/<thisProject>/', methods=['GET', 'POST'])
+def upload_project_files(thisProject):
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    user = (session["user"])   
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+
+    thisProject= mongo.db.projects.find_one({'_id': ObjectId(thisProject)})["_id"]
+    thisProjectTitle = mongo.db.projects.find_one({'_id': ObjectId(thisProject)})["projectTitle"]
+    members = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectMembers']
+    
+    if request.method == 'POST':
+        if 'file1' not in request.files:
+            return 'there is no file1 in form!'   
+        file1 = request.files['file1']
+        userChosenName = request.form.get('file-name')
+        newFileName = userChosenName + "-" + user 
+        path = os.path.join(app.config['UPLOAD_FOLDER_PROJECT'], file1.filename)
+        ext = pathlib.Path(path).suffix
+        newPath = os.path.join(app.config['UPLOAD_FOLDER_PROJECT'], newFileName + ext)
+        file1.save(newPath)
+        project_file_update = {
+                'projectFiles': '/' + newPath
+            }
+        
+        mongo.db.projects.update_one({'_id': ObjectId(thisProject)},{ '$push': { "projectFiles": project_file_update }}) 
+        flash("Project file uploaded")
+
+        return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members ) 
+        
+    return render_template('project-file-upload.html',listOfUsers=listOfUsers,user_notifications=user_notifications,thisProject=thisProject,thisProjectTitle=thisProjectTitle)   
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

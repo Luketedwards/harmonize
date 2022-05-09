@@ -5,24 +5,24 @@
 
 <h5 class="center">Host: <a href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
 
-<div class="row s12">
+<div class="row l6 m12 s12">
     
     
-        <div class="col card-panel s6 ">
+        <div class="col card-panel l6 m12 s12">
             
             <h2 class="center">Project Information</h2>
             <div class="row s12">
-            <div class="left">
+            <div class="center">
             <h4>Project Description</h4>
             <p>"{{thisProject.projectDescription}}"</p>
             </div>
-            <div class="right">
+            <div class="center">
             <h4 class="">Project Members</h4>
             {% if members|length == 0%}
                     <h4 class="">No current members.</h4>
                 {%else%}
                 {% for member in members%}   
-                <div class="panel">
+                <div class="">
                     <a href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4>{{member.memberUsername}}</h4></a>
                     <span>{{member.memberInstrument}}</span>
                 </div>
@@ -33,18 +33,20 @@
         </div> 
         
     </div>
-    <div id="comments-panel" class="col card-panel s5 right">
+    <div id="comments-panel" class="col card-panel l5 m12 s12 right">
         <h3 class="center">Comments</h3>
         <hr>
-        <div id="comment-container" class="col s10">
+        <div id="comment-container" class="col s12">
             {% for comment in thisProject.comments%}
             {% if comment.username == thisProject.username%}
             <span><i class="fa-solid fa-star"></i><a id="host-comment" href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
-                {{comment.date}}</span>
+                <span class="comment-date">{{comment.date}}</span> </span>
+                <hr>
                 <br>
             {%else%}    
             <span><a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
-             {{comment.date}}</span>
+             <span class="comment-date">{{comment.date}}</span> </span>
+             <hr>
              <br>
             {%endif%} 
             {%endfor%}
@@ -63,6 +65,7 @@
     </div>
             
         </div>
+        <a class="btn" href="{{url_for('upload_project_files', thisProject=thisProject._id)}}">Upload Files</a>
 
 
 </div>

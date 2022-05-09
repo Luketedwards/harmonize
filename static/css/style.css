@@ -316,3 +316,27 @@ body{
 #host-comment{
     color: green;
 }
+
+.comment-date{
+    color: rgba(0, 0, 0, 0.33) !important;
+    float: right !important;
+}
+
+.grid{
+    display: contents;
+}
+
+#project-image-upload{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+}
+
+#project-image-upload input{
+    border: 2px solid black;
+    background-color: white;
+    padding-left: 8px;
+    border-radius: 5px;
+    width: 45vw;
+}
