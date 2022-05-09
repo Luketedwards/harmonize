@@ -562,6 +562,21 @@ def projects_im_in():
 
     return render_template('projects-im-in.html', listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,user=user,user_notifications=user_notifications,projectsImIn=projectsImIn)
 
+
+
+@app.route('/project_hub/<thisProject>/')    
+def project_hub(thisProject):
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    user = (session["user"])   
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+
+    thisProject = mongo.db.projects.find_one({'_id': thisProject})   
+
+    return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject ) 
+
 @app.route('/new_notification/')
 def new_notification():
     user = (session['user'])
