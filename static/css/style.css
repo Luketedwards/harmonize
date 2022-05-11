@@ -330,7 +330,7 @@ body{
     width: 60%;
     margin-left: auto;
     margin-right: auto;
-    height: 200px;
+    height: fit-content;
 }
 
 #project-image-upload input{
@@ -339,4 +339,10 @@ body{
     padding-left: 8px;
     border-radius: 5px;
     width: 45vw;
+}
+
+#file-panel{
+    width: fit-content;
+    display: inline-grid;
+    margin: 5px;
 }

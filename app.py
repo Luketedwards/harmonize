@@ -584,8 +584,10 @@ def project_hub(thisProject):
     thisProject = mongo.db.projects.find_one({'_id': ObjectId(thisProject)})   
     thisProjectTitle = thisProject['projectTitle']
     members = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectMembers']
+    projectFiles = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectFiles']
+    projectFilesNumber = mongo.db.projects.count_documents({'projectFiles': projectFiles})
 
-    return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members ) 
+    return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles,projectFilesNumber=projectFilesNumber ) 
 
 
 @app.route('/add_comment/<thisProject>', methods=["GET", "POST"])
@@ -647,6 +649,8 @@ def upload_project_files(thisProject):
     thisProject= mongo.db.projects.find_one({'_id': ObjectId(thisProject)})["_id"]
     thisProjectTitle = mongo.db.projects.find_one({'_id': ObjectId(thisProject)})["projectTitle"]
     members = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectMembers']
+    projectFiles = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectFiles']
+    projectFilesNumber = mongo.db.projects.count_documents({'projectFiles': projectFiles})
     
     if request.method == 'POST':
         if 'file1' not in request.files:
@@ -659,13 +663,17 @@ def upload_project_files(thisProject):
         newPath = os.path.join(app.config['UPLOAD_FOLDER_PROJECT'], newFileName + ext)
         file1.save(newPath)
         project_file_update = {
-                'projectFiles': '/' + newPath
+                'file': '/' + newPath,
+                'displayName': request.form.get('file-name') + ext,
+                'fileDescription': request.form.get('file-description'),
+                'uploader': username,
+                'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             }
         
         mongo.db.projects.update_one({'_id': ObjectId(thisProject)},{ '$push': { "projectFiles": project_file_update }}) 
         flash("Project file uploaded")
 
-        return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members ) 
+        return redirect(url_for('project_hub',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles, projectFilesNumber=projectFilesNumber ) )
         
     return render_template('project-file-upload.html',listOfUsers=listOfUsers,user_notifications=user_notifications,thisProject=thisProject,thisProjectTitle=thisProjectTitle)   
 

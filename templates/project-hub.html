@@ -65,7 +65,27 @@
     </div>
             
         </div>
+        <div class="row s12">
+        <div class="card-panel">
+            <h2 class="center">Project Files</h2>
+            {% if projectFilesNumber < 1%}
+            <h4 class="center">There are currently no files for this project.</h4>
+            {%else%}
+            {% for file in projectFiles%}
+            <div id="file-panel" class="card-panel">
+            <a href="{{file.file}}" target="_blank">{{file.displayName}}</a>
+            <p>"{{file.fileDescription}}"</p>
+            <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=file.uploader )}}">{{file.uploader}}</a></p>
+            <p class="comment-date">{{file.date}}</p>
+            </div>
+            {%endfor%}
+            
+            {%endif%}
+        <div>  
         <a class="btn" href="{{url_for('upload_project_files', thisProject=thisProject._id)}}">Upload Files</a>
+        </div>  
+    </div>
+</div>
 
 
 </div>
