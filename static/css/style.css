@@ -338,11 +338,15 @@ body{
     background-color: white;
     padding-left: 8px;
     border-radius: 5px;
-    width: 45vw;
+    
 }
 
 #file-panel{
     width: fit-content;
     display: inline-grid;
     margin: 5px;
+}
+
+#folder-type{
+    margin-top: 22px !important;
 }

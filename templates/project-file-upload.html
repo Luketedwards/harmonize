@@ -7,14 +7,31 @@
             <label id="file-upload-label" for="file-upload" type="file" class="btn">Choose File</label>
         <input required class="btn" id="file-upload" type="file" name="file1" accept=".jpg,.png,.gp,.etf,.mp3,.mp4,.wav,.flac,.pdf">
         <button id="image-submit-btn" class='btn' type="submit">Submit</button>
-        <br>
-        <label  type="text" for="file-name">Name Your File</label>
-        <br>
-        <input required pattern="[^' ']+" id="file-name" name="file-name" type="text" placeholder="seperate each word with a hyphen ( - ) and don't include any blank spaces.">
+        <div class="row s12">
+        <div class="col s6">
+        <label  type="text" for="file-name">Name Your File</label>  
+        <input  required pattern="[^' ']+" id="file-name" name="file-name" type="text" placeholder="seperate each word with '-', no blank spaces.">
+        </div>
+        <div id="folder-type" class="input-field col s6">
+            <select id="file-folder" name="file-folder" required >
+              <option value="Audio">Audio</option>
+              <option value="Image">Image</option>
+              <option value="PDF">PDF/Sheet music</option>
+              <option value="IMF">Interactive Music File</option>
+              <option value="Other">Other</option>
+              
+              
+            </select>
+            
+            <label for="file-folder">What type of file is this?</label>
+                
+          </div>
+        </div>
         <br>
         <label  type="text" for="file-description">File Description</label>
         <br>
         <input required id="file-description" name="file-description" type="text" placeholder="Summarise your file.">
+        
         
         
         </form>

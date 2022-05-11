@@ -667,6 +667,7 @@ def upload_project_files(thisProject):
                 'file': '/' + newPath,
                 'displayName': request.form.get('file-name') + ext,
                 'fileDescription': request.form.get('file-description'),
+                'folder': request.form.get('file-folder'),
                 'uploader': username,
                 'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             }
