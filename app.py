@@ -180,6 +180,8 @@ def delete_account():
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
+    user = (session["user"])    
+    user_notifications = mongo.db.users.find_one({'username':user}) 
     listOfUsers = mongo.db.users.find()
     if request.method == "POST":
         edit = { '$set': {
@@ -191,8 +193,7 @@ def edit_profile():
                 "bio": request.form.get("bio")
                 
             }}
-        user = (session["user"])    
-        user_notifications = mongo.db.users.find_one({'username':user}) 
+        
         current_user = mongo.db.users.find_one({'username':user})
         user_id = mongo.db.users.find_one({'username':user})['_id']
         
