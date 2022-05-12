@@ -68,93 +68,124 @@
         <div class="row s12">
         <div class="card-panel">
             <h2 class="center">Project Files</h2>
-            {% if projectFilesNumber < 1%}
+            {% if projectFilesNumber|count == 0%}
             <h4 class="center">There are currently no files for this project.</h4>
             {%else%}
             
-            {% if projectFiles.folder == "Audio"%}
-                <ul id="user-info-collapse" class="collapsible s6 ">
+           
+        
+            <div class="col l4 m12 s12">
+                <ul  class="collapsible file-panel">
                     <li> 
-                    <div class="collapsible-header  "><i class="material-icons"></i>Audio</div>
-                    <div class="collapsible-body  "><span>
-                        <div id="file-panel" class="card-panel">
-                            <a href="{{file.file}}" target="_blank">{{file.displayName}}</a>
-                            <p>"{{file.fileDescription}}"</p>
-                            <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=file.uploader )}}">{{file.uploader}}</a></p>
-                            <p class="comment-date">{{file.date}}</p>
-                            </div>
+                    <div class="collapsible-header center "><div class="center">Audio</div></div>
+                    <div class="collapsible-body  ">
+                        {% for audioFile in projectFiles%}   
+                            {% if audioFile.folder == "Audio" %}
+                            <div class="card-panel files">
+                                <a href="{{audioFile.file}}" target="_blank">{{audioFile.displayName}}</a>
+                                <p>"{{audioFile.fileDescription}}"</p>
+                                <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=audioFile.uploader )}}">{{audioFile.uploader}}</a></p>
+                                <p class="file-date">{{audioFile.date}}</p>
+                                </div>
+                            {%endif%}
+                        {%endfor%}     
+                    <span>
+                      
                     </span></div>
                     </li>
                 </ul>
-            {%endif%}
-            
-            <ul id="user-info-collapse" class="collapsible s6 ">
-                <li> 
-                <div class="collapsible-header  center-align ">Images</div>
-                {% for file in projectFiles%}
-                <div class="collapsible-body  "><span>
-                    <div id="file-panel" class="card-panel">
-                        <a href="{{file.file}}" target="_blank">{{file.displayName}}</a>
-                        <p>"{{file.fileDescription}}"</p>
-                        <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=file.uploader )}}">{{file.uploader}}</a></p>
-                        <p class="comment-date">{{file.date}}</p>
-                        </div>
-                </span></div>
-                </li>
-                {%endfor%}
-            </ul>
-            
-            {% if projectFiles.folder == "PDF"%}
-            <ul id="user-info-collapse" class="collapsible s6 ">
-                <li> 
-                <div class="collapsible-header  "><i class="material-icons"></i>Sheet Music/PDF</div>
-                <div class="collapsible-body  "><span>
-                    <div id="file-panel" class="card-panel">
-                        <a href="{{file.file}}" target="_blank">{{file.displayName}}</a>
-                        <p>"{{file.fileDescription}}"</p>
-                        <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=file.uploader )}}">{{file.uploader}}</a></p>
-                        <p class="comment-date">{{file.date}}</p>
-                        </div>
-                </span></div>
-                </li>
-            </ul>
-            {%endif%}
-            {% if projectFiles.folder == "IMF"%}
-            <ul id="user-info-collapse" class="collapsible s6 ">
-                <li> 
-                <div class="collapsible-header  "><i class="material-icons"></i>Interactive Music Files</div>
-                <div class="collapsible-body  "><span>
-                    <div id="file-panel" class="card-panel">
-                        <a href="{{file.file}}" target="_blank">{{file.displayName}}</a>
-                        <p>"{{file.fileDescription}}"</p>
-                        <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=file.uploader )}}">{{file.uploader}}</a></p>
-                        <p class="comment-date">{{file.date}}</p>
-                        </div>
-                </span></div>
-                </li>
-            </ul>
-            {%endif%}
-            {% if projectFiles.folder == "Other"%}
-            <ul id="user-info-collapse" class="collapsible s6 ">
-                <li> 
-                <div class="collapsible-header  "><i class="material-icons"></i>Other</div>
-                <div class="collapsible-body  "><span>
-                    <div id="file-panel" class="card-panel">
-                        <a href="{{file.file}}" target="_blank">{{file.displayName}}</a>
-                        <p>"{{file.fileDescription}}"</p>
-                        <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=file.uploader )}}">{{file.uploader}}</a></p>
-                        <p class="comment-date">{{file.date}}</p>
-                        </div>
-                </span></div>
-                </li>
-            </ul>
-            {%endif%}
-            
-            
-            
+            </div>  
+            <div class="col l4 m12 s12">
+                <ul class="collapsible file-panel">
+                    <li> 
+                    <div class="collapsible-header center ">Images</div>
+                    <div class="collapsible-body  ">
+                    {% for imageFile in projectFiles%}   
+                        {% if imageFile.folder == "Image" %}
+                        <div class="card-panel files">
+                            <a href="{{imageFile.file}}" target="_blank">{{imageFile.displayName}}</a>
+                            <p>"{{imageFile.fileDescription}}"</p>
+                            <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=imageFile.uploader )}}">{{imageFile.uploader}}</a></p>
+                            <p class="file-date">{{imageFile.date}}</p>
+                            </div>
+                        {%endif%}
+                    {%endfor%}  
+                    <span>
+                      
+                    </span></div>
+                    </li>
+                </ul>
+            </div>  
+            <div class="col l4 m12 s12">
+                <ul  class="collapsible  file-panel">
+                    <li> 
+                    <div class="collapsible-header center ">PDF</div>
+                    <div class="collapsible-body  ">
+                    {% for pdfFile in projectFiles%}   
+                        {% if pdfFile.folder == "PDF" %}
+                        <div class="card-panel files">
+                            <a href="{{pdfFile.file}}" target="_blank">{{pdfFile.displayName}}</a>
+                            <p>"{{pdfFile.fileDescription}}"</p>
+                            <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=pdfFile.uploader )}}">{{pdfFile.uploader}}</a></p>
+                            <p class="file-date">{{pdfFile.date}}</p>
+                            </div>
+                        {%endif%}
+                    {%endfor%}     
+                    <span>
+                      
+                    </span></div>
+                    </li>
+                </ul>
+            </div>  
+            <div class="row">
+            <div class="col l6 m12 s12">
+                <ul  class="collapsible  file-panel">
+                    <li> 
+                    <div class="collapsible-header center ">Interactive Music File</div>
+                    <div class="collapsible-body  ">
+                    {% for imfFile in projectFiles%}   
+                        {% if imfFile.folder == "IMF" %}
+                        <div class="card-panel files">
+                            <a href="{{imfFile.file}}" target="_blank">{{imfFile.displayName}}</a>
+                            <p>"{{imfFile.fileDescription}}"</p>
+                            <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=imfFile.uploader )}}">{{imfFile.uploader}}</a></p>
+                            <p class="file-date">{{imfFile.date}}</p>
+                            </div>
+                        {%endif%}
+                    {%endfor%}     
+                    <span>
+                      
+                    </span></div>
+                    </li>
+                </ul>
+            </div>  
+            <div class="col l6 m12 s12">
+                <ul  class="collapsible  file-panel">
+                    <li> 
+                    <div class="collapsible-header center ">Other</div>
+                    <div class="collapsible-body  ">
+                    {% for otherFile in projectFiles%}   
+                        {% if otherFile.folder == "Other" %}
+                        <div class="card-panel files">
+                            <a href="{{otherFile.file}}" target="_blank">{{otherFile.displayName}}</a>
+                            <p>"{{otherFile.fileDescription}}"</p>
+                            <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=otherFile.uploader )}}">{{otherFile.uploader}}</a></p>
+                            <p class="file-date">{{otherFile.date}}</p>
+                            </div>
+                        {%endif%}
+                    {%endfor%} 
+                    <span>
+                      
+                    </span></div>
+                    </li>
+                </ul>
+            </div>    
+        </div>
+                
+                
             {%endif%}
         <div>  
-        <a class="btn" href="{{url_for('upload_project_files', thisProject=thisProject._id)}}">Upload Files</a>
+        <a id="upload-project-files-btn" class="btn" href="{{url_for('upload_project_files', thisProject=thisProject._id)}}">Upload Files</a>
         </div>  
     </div>
 </div>

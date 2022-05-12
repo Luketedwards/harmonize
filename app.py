@@ -586,7 +586,7 @@ def project_hub(thisProject):
     thisProjectTitle = thisProject['projectTitle']
     members = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectMembers']
     projectFiles = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectFiles']
-    projectFilesNumber = mongo.db.projects.count_documents({'projectFiles': projectFiles})
+    projectFilesNumber = thisProject['projectFiles']
 
     return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles,projectFilesNumber=projectFilesNumber ) 
 

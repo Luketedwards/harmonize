@@ -321,6 +321,10 @@ body{
     color: rgba(0, 0, 0, 0.33) !important;
     float: right !important;
 }
+.file-date{
+    color: rgba(0, 0, 0, 0.33) !important;
+    
+}
 
 .grid{
     display: contents;
@@ -341,12 +345,33 @@ body{
     
 }
 
-#file-panel{
-    width: fit-content;
-    display: inline-grid;
+.file-panel{
+    
+    
     margin: 5px;
+    
 }
 
 #folder-type{
     margin-top: 22px !important;
+}
+
+.files{
+    width: 100%;
+    height: fit-content;
+}
+
+.file-panel .collapsible-body{
+    padding: 0 !important;
+    overflow: scroll;
+    max-height: 206px;
+}
+.file-panel .collapsible-header{
+    display: block !important;
+}
+
+#upload-project-files-btn{
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
 }
