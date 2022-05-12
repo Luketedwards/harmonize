@@ -141,6 +141,8 @@ def profile(username):
 @app.route("/settings/<username>", methods=["GET", "POST"])
 def settings(username):
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
 
     # grab the session user's username from db
     username = mongo.db.users.find_one(
@@ -152,7 +154,7 @@ def settings(username):
         user = (session["user"])
         current_user = mongo.db.users.find_one({'username':user})
 
-        return render_template("settings.html", username=username, current_user=current_user, user_notifications=user_notifications)
+        return render_template("settings.html", username=username, current_user=current_user, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
     return redirect(url_for("login"))    
 
@@ -161,7 +163,8 @@ def settings(username):
 @app.route("/delete_account", methods=["GET", "POST"])
 def delete_account():
     listOfUsers = mongo.db.users.find()
-
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     username = (session["user"]) 
     mongo.db.users.delete_one({"username": username})
     mongo.db.users.update_many(
@@ -183,6 +186,8 @@ def edit_profile():
     user = (session["user"])    
     user_notifications = mongo.db.users.find_one({'username':user}) 
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     if request.method == "POST":
         edit = { '$set': {
                 "fname": request.form.get("first_nameEdit"),
@@ -205,7 +210,7 @@ def edit_profile():
         current_user = mongo.db.users.find_one({'username':user})
         
 
-    return render_template("edit-profile.html", current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications)
+    return render_template("edit-profile.html", current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
 
 
@@ -213,6 +218,8 @@ def edit_profile():
 @app.route('/upload_file', methods=['GET', 'POST'])
 def upload_file():
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
@@ -236,14 +243,16 @@ def upload_file():
         mongo.db.users.update_one({'_id':ObjectId(user_id)},profile_pic_update) 
         flash("Profile Picture Updated!")
 
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications))
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))
         
-    return render_template("upload_file.html", listOfUsers=listOfUsers, user_notifications=user_notifications)
+    return render_template("upload_file.html", listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
 
 @app.route("/other_users")    
 def other_users():
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     users = mongo.db.users.find()
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
@@ -253,13 +262,14 @@ def other_users():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications)
+    return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
 
 @app.route('/other_profile/<usernameOther>', methods=["GET", "POST"])
 def other_profile(usernameOther):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     listOfProjects = mongo.db.projects.distinct("projectTitle")
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     projects = mongo.db.projects.find({'username':usernameOther})
@@ -272,8 +282,8 @@ def other_profile(usernameOther):
     current_user = mongo.db.users.find_one({'username':user}) 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames)    
-    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following, user_notifications=user_notifications))  
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)    
+    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
 
 
 @app.route('/other_profile_search/', methods=["GET", "POST"])
@@ -284,6 +294,7 @@ def other_profile_search():
     project_number = mongo.db.projects.count_documents({'username':usernameOther})  
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     
@@ -296,17 +307,19 @@ def other_profile_search():
     if usernameOther not in allCurrentUsernames:
         flash("That user doesn't exist")
         username=user
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications,project_number=project_number)  
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)  
     username = user      
-    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
+    return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
 
 @app.route('/follow-user/<usernameOther>', methods=["GET", "POST"])    
 def follow_user(usernameOther):
     listOfUsers = mongo.db.users.distinct('username')
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
@@ -321,13 +334,15 @@ def follow_user(usernameOther):
     mongo.db.users.update_one( { "username" : usernameOther },{ '$push': { "followers": user } })
     flash("You are now following " + selectedUser['username'])
 
-    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications))
+    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))
 
 
 
 @app.route('/unfollow-user/<usernameOther>', methods=["GET", "POST"])    
 def unfollow_user(usernameOther):
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     mongo.db.users.find_one({'username': usernameOther})
     selectedUser = mongo.db.users.find_one({'username': usernameOther})
     user = (session["user"])
@@ -343,12 +358,14 @@ def unfollow_user(usernameOther):
     flash("You are no longer following " + selectedUser['username'])
 
         
-    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications))
+    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))
 
 
 @app.route("/following/")   
 def following():
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     users = mongo.db.users.find()
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
@@ -358,12 +375,14 @@ def following():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("following.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications)
+    return render_template("following.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
 
 @app.route("/followers/")   
 def followers():
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     users = mongo.db.users.find()
     user = (session["user"])
     user_notifications = mongo.db.users.find_one({'username':user}) 
@@ -373,7 +392,7 @@ def followers():
     user_id = mongo.db.users.find_one({'username':user})['_id']
     
 
-    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications)   
+    return render_template("followers.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)   
 
 
 
@@ -381,6 +400,8 @@ def followers():
 def create_a_project():
     user = (session['user'])
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
 
     user_notifications = mongo.db.users.find_one({'username':user}) 
     projects = mongo.db.projects.find({'username':user})
@@ -403,7 +424,10 @@ def create_a_project():
             "email": request.form.get("email"),
             "instruments": request.form.getlist("instruments"),
             "genres": request.form.getlist("genres"),
-            "completed": False
+            "completed": False,
+            "projectFiles": [],
+            "projectMembers": []
+
 
         }
 
@@ -411,8 +435,8 @@ def create_a_project():
         
     
         flash("Project successfully created!")
-        return redirect(url_for('my_projects', user = user, projects=projects, user_notifications=user_notifications))
-    return render_template('create-a-project.html', user=user, user_notifications=user_notifications)  
+        return redirect(url_for('my_projects', user = user, projects=projects, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))
+    return render_template('create-a-project.html', user=user, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)  
 
 
 
@@ -420,13 +444,15 @@ def create_a_project():
 def my_projects():
     user = (session['user'])
     listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
 
     user_notifications = mongo.db.users.find_one({'username':user}) 
     projects = mongo.db.projects.find({'username':user})
     project_number = mongo.db.projects.count_documents({'username':user})
     username = mongo.db.users.find_one({'username': user})
 
-    return render_template('my-projects.html', user = user, projects=projects, username=username, user_notifications=user_notifications,project_number=project_number)
+    return render_template('my-projects.html', user = user, projects=projects, username=username, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
 
 
@@ -434,6 +460,7 @@ def my_projects():
 def apply_to_project(thisProject, usernameOther):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     user = (session["user"])   
@@ -460,14 +487,15 @@ def apply_to_project(thisProject, usernameOther):
         mongo.db.projects.update_one({ '_id': thisProjectId },{ '$push': { "applications": new_project_apply } })
         flash("Your application to " + thisProject['projectTitle'] + " has been submitted.")
         
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,usernameOther=usernameOther))  
-    return render_template('apply-to-project.html', user=user, user_notifications=user_notifications,thisProject=thisProject, usernameOther=usernameOther, listOfUsers=listOfUsers)
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,usernameOther=usernameOther,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
+    return render_template('apply-to-project.html', user=user, user_notifications=user_notifications,thisProject=thisProject, usernameOther=usernameOther, listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
 
 @app.route('/accept_application/<applicant>/<applicantInstrument>/<thisProject>/<thisProjectTitle>/', methods=["GET", "POST"])
 def accept_application(applicant,applicantInstrument,thisProject,thisProjectTitle):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     user = (session["user"])   
@@ -505,6 +533,7 @@ def accept_application(applicant,applicantInstrument,thisProject,thisProjectTitl
 def deny_application(applicant,thisProject):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     user = (session["user"])   
@@ -534,6 +563,7 @@ def deny_application(applicant,thisProject):
 def manage_project(thisProject):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     user = (session["user"])   
@@ -552,8 +582,8 @@ def manage_project(thisProject):
         
        
         
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications))  
-    return render_template('manage-projects.html', user=user, user_notifications=user_notifications,thisProject=thisProject, listOfUsers=listOfUsers, applications=applications, members=members) 
+        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
+    return render_template('manage-projects.html', user=user, user_notifications=user_notifications,thisProject=thisProject, listOfUsers=listOfUsers, applications=applications, members=members,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames) 
 
 
 
@@ -561,6 +591,7 @@ def manage_project(thisProject):
 def projects_im_in():
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     user = (session["user"])   
     user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
@@ -569,7 +600,7 @@ def projects_im_in():
     projectsImInNumber = mongo.db.projects.count_documents({'projectMembers.memberUsername':username})
     
 
-    return render_template('projects-im-in.html', listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,user=user,user_notifications=user_notifications,projectsImIn=projectsImIn,projectsImInNumber=projectsImInNumber)
+    return render_template('projects-im-in.html', listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,user=user,user_notifications=user_notifications,projectsImIn=projectsImIn,projectsImInNumber=projectsImInNumber,listOfProjectNames=listOfProjectNames)
 
 
 
@@ -577,6 +608,7 @@ def projects_im_in():
 def project_hub(thisProject):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     user = (session["user"])   
     user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
@@ -588,7 +620,7 @@ def project_hub(thisProject):
     projectFiles = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectFiles']
     projectFilesNumber = thisProject['projectFiles']
 
-    return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles,projectFilesNumber=projectFilesNumber ) 
+    return render_template('project-hub.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles,projectFilesNumber=projectFilesNumber,listOfProjectNames=listOfProjectNames ) 
 
 
 @app.route('/add_comment/<thisProject>', methods=["GET", "POST"])
@@ -642,6 +674,7 @@ def clear_notifications():
 def upload_project_files(thisProject):
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     user = (session["user"])   
     user_notifications = mongo.db.users.find_one({'username':user}) 
     username = mongo.db.users.find_one(
@@ -675,9 +708,9 @@ def upload_project_files(thisProject):
         mongo.db.projects.update_one({'_id': ObjectId(thisProject)},{ '$push': { "projectFiles": project_file_update }}) 
         flash("Project file uploaded")
 
-        return redirect(url_for('project_hub',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles, projectFilesNumber=projectFilesNumber ) )
+        return redirect(url_for('project_hub',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles, projectFilesNumber=projectFilesNumber,listOfProjectNames=listOfProjectNames ) )
         
-    return render_template('project-file-upload.html',listOfUsers=listOfUsers,user_notifications=user_notifications,thisProject=thisProject,thisProjectTitle=thisProjectTitle)   
+    return render_template('project-file-upload.html',listOfUsers=listOfUsers,user_notifications=user_notifications,thisProject=thisProject,thisProjectTitle=thisProjectTitle,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)   
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
