@@ -138,7 +138,7 @@
                 </ul>
             </div>  
             <div class="row">
-            <div class="col l6 m12 s12">
+            <div class="col l4 m12 s12">
                 <ul  class="collapsible  file-panel">
                     <li> 
                     <div class="collapsible-header center ">Interactive Music File</div>
@@ -159,7 +159,28 @@
                     </li>
                 </ul>
             </div>  
-            <div class="col l6 m12 s12">
+            <div class="col l4 m12 s12">
+                <ul  class="collapsible  file-panel">
+                    <li> 
+                    <div class="collapsible-header center ">Videos</div>
+                    <div class="collapsible-body  ">
+                    {% for videoFile in projectFiles%}   
+                        {% if videoFile.folder == "Video" %}
+                        <div class="card-panel files">
+                            <a href="{{videoFile.file}}" target="_blank">{{videoFile.displayName}}</a>
+                            <p>"{{videoFile.fileDescription}}"</p>
+                            <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=videoFile.uploader )}}">{{videoFile.uploader}}</a></p>
+                            <p class="file-date">{{videoFile.date}}</p>
+                            </div>
+                        {%endif%}
+                    {%endfor%}     
+                    <span>
+                      
+                    </span></div>
+                    </li>
+                </ul>
+            </div> 
+            <div class="col l4 m12 s12">
                 <ul  class="collapsible  file-panel">
                     <li> 
                     <div class="collapsible-header center ">Other</div>
