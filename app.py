@@ -733,6 +733,67 @@ def upload_project_files(thisProject):
         
     return render_template('project-file-upload.html',listOfUsers=listOfUsers,user_notifications=user_notifications,thisProject=thisProject,thisProjectTitle=thisProjectTitle,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)   
 
+
+@app.route('/messages/<usernameToContact>')
+def messages(usernameToContact):
+    usernameToContact=usernameToContact
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user})
+    messages = mongo.db.users.find_one({'username':usernameToContact})['receivedMessages']
+
+    
+
+    return render_template('messages.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, user_notifications=user_notifications, messages=messages )
+
+
+@app.route('/contact/<usernameToContact>', methods=['GET', 'POST'])
+def contact(usernameToContact):
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username':user})
+    usernameToContact=usernameToContact
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+    selectedUser= mongo.db.users.find_one({'username':usernameToContact})    
+    messages = mongo.db.users.find_one({'username':usernameToContact})['receivedMessages']
+
+    if request.method == 'POST':
+        
+        
+        conversation = {
+            'username': username,
+            'message': request.form.get('message'),
+            'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+        }
+        
+        convoExists1 = mongo.db.messages.count_documents({'members':[username,usernameToContact]})
+        convoExists2 = mongo.db.messages.count_documents({'members':[usernameToContact,username]})
+
+        if convoExists1 == 0 and convoExists2 == 0 :
+            mongo.db.messages.insert_one({ 'members':[username,usernameToContact]})
+            mongo.db.messages.update_one({'members':[username,usernameToContact] },{'$push':{'messages': conversation}})
+
+            
+        else:    
+            mongo.db.messages.update_one({'members':[username,usernameToContact] },{'$push':{'messages': conversation}})
+            mongo.db.messages.update_one({'members':[usernameToContact,username] },{'$push':{'messages': conversation}})
+
+               
+        
+        flash('Message Sent')
+
+        
+
+        return redirect(url_for('messages', selectedUser=selectedUser, listOfUsers=listOfUsers, user=user, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames, messages=messages, usernameToContact=usernameToContact))
+    
+
+    return render_template('contact.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, user_notifications=user_notifications,usernameToContact=usernameToContact )        
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
