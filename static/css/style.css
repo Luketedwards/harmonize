@@ -375,3 +375,8 @@ body{
     display: block;
     width: fit-content;
 }
+
+#search-users-panel{
+    width: 70%;
+    margin-left: 15%;
+}

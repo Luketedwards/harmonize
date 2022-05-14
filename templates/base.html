@@ -48,6 +48,10 @@
       <li><a href="#!">Browse Projects</a></li>
       <li><a href="{{url_for('projects_im_in')}}">Projects I'm In</a></li>
     </ul>
+    <ul id="dropdown-users" class="dropdown-content">
+      <li><a href="{{ url_for('other_users') }}">All Users</a></li>
+      <li><a href="{{ url_for('filter_users') }}">Find Users by type</a></li>
+    </ul>
     
     <ul id="dropdown-notifications" class="dropdown-content">
 
@@ -125,7 +129,7 @@
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects" href="#!">Projects<i
               class="right fa-solid fa-circle-down"></i></a></li>
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
-        <li><a href="{{ url_for('other_users') }}">Users</a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users" href="#!">Users</a></li>
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections<i
               class="right fa-solid fa-circle-down"></i></a></li>
 

@@ -265,6 +265,27 @@ def other_users():
     return render_template("other-users.html", user=user, username=username, current_user=current_user, user_id=user_id, users=users, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)
 
 
+
+@app.route("/filter_users", methods=['GET', 'POST'])
+def filter_users():
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    user = (session["user"])
+    users = mongo.db.users.find()
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+
+    if request.method == "POST":
+        cityQuery = request.form.get('city')
+        instrumentsQuery = request.form.getlist('instruments')
+        genresQuery = request.form.getlist("genres")
+
+        return render_template("other-users-filter.html", listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames,user_notifications=user_notifications, cityQuery=cityQuery, instrumentsQuery=instrumentsQuery, genresQuery=genresQuery,users=users)
+
+
+    return render_template('user-filter.html', listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames,user_notifications=user_notifications )
+
+
 @app.route('/other_profile/<usernameOther>', methods=["GET", "POST"])
 def other_profile(usernameOther):
     listOfUsers = mongo.db.users.find()
