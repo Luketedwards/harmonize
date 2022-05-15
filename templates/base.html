@@ -65,6 +65,9 @@
       </li>
       {%elif notify in listOfProjectNames%}
       <li><a href="{{url_for('manage_project', thisProject=notify )}}">You have a new application to your project: {{notify}}</a></li>
+      {% elif 'message' in notify%}
+      <li><a href="{{url_for('convo_list') }}">{{notify}}</a></li>
+
       {%else%}
       <li><a href="{{url_for('my_projects', user=session['user']) }}">{{notify}}</a></li>
       {%endif%}
@@ -85,6 +88,9 @@
       {%if notify_side in listOfUsers%}
       <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}}</a>
       </li>
+      {% elif 'message' in notify_side%}
+      <li><a href="{{url_for('convo_list') }}">{{notify_side}}</a></li>
+
       {%else%}
       
       <li>You have a new application to your project: {{notify_side}}</li>

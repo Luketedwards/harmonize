@@ -766,6 +766,8 @@ def messages(usernameToContact):
             mongo.db.messages.update_one({'members':[username,usernameToContact]},{'$push':{'messages': conversation}})
             mongo.db.messages.update_one({ 'members':[usernameToContact,username]},{'$push':{'messages': conversation}})
             messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
+            notification = 'You have a new message from ' + username
+            mongo.db.users.update_one( { "username" : usernameToContact },{ '$push':{'notifications' : {'$each':[notification], '$position':0}}})
 
 
             
@@ -774,6 +776,8 @@ def messages(usernameToContact):
             mongo.db.messages.update_one({'members':[usernameToContact,username]},{'$push':{'messages': conversation}})
 
             messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
+            notification = 'You have a new message from ' + username
+            mongo.db.users.update_one( { "username" : usernameToContact },{ '$push':{'notifications' : {'$each':[notification], '$position':0}}})
                
         
         return render_template('messages.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, user_notifications=user_notifications,messages=messages,username=username,usernameToContact=usernameToContact )
@@ -810,42 +814,54 @@ def contact(usernameToContact):
     usernameToContact=usernameToContact
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
-    selectedUser= mongo.db.users.find_one({'username':usernameToContact})    
-    
+    selectedUser= mongo.db.users.find_one({'username':usernameToContact})  
+    conversationExists = mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
 
-    if request.method == 'POST':
-        
-        
-        conversation = {
-            'username': username,
-            'message': request.form.get('message'),
-            'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-        }
-        
-        convoExists1 = mongo.db.messages.count_documents({'members':[username,usernameToContact]})
-        convoExists2 = mongo.db.messages.count_documents({'members':[usernameToContact,username]})
-
-        if convoExists1 == 0 and convoExists2 == 0 :
-            mongo.db.messages.insert_one({ 'members':[username,usernameToContact]})
-            mongo.db.messages.insert_one({ 'members':[usernameToContact,username]})
-            mongo.db.messages.update_one({'members':[username,usernameToContact]},{'$push':{'messages': conversation}})
-            mongo.db.messages.update_one({ 'members':[usernameToContact,username]},{'$push':{'messages': conversation}})
-            messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
-
-
-            
-        else:    
-            mongo.db.messages.update_one({'members':[username,usernameToContact]},{'$push':{'messages': conversation}})
-            mongo.db.messages.update_one({'members':[usernameToContact,username]},{'$push':{'messages': conversation}})
-
-            messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
-               
-        
-        flash('Message Sent')
-
-        
+    if conversationExists:
+        messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
 
         return redirect(url_for('messages', selectedUser=selectedUser, listOfUsers=listOfUsers, user=user, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames, usernameToContact=usernameToContact, username=username, messages=messages))
+    
+    else:
+        if request.method == 'POST':
+            
+            
+            conversation = {
+                'username': username,
+                'message': request.form.get('message'),
+                'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            }
+            
+            convoExists1 = mongo.db.messages.count_documents({'members':[username,usernameToContact]})
+            convoExists2 = mongo.db.messages.count_documents({'members':[usernameToContact,username]})
+
+            if convoExists1 == 0 and convoExists2 == 0 :
+                mongo.db.messages.insert_one({ 'members':[username,usernameToContact]})
+                mongo.db.messages.insert_one({ 'members':[usernameToContact,username]})
+                mongo.db.messages.update_one({'members':[username,usernameToContact]},{'$push':{'messages': conversation}})
+                mongo.db.messages.update_one({ 'members':[usernameToContact,username]},{'$push':{'messages': conversation}})
+                messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
+
+                notification = 'You have a new message from ' + username
+                mongo.db.users.update_one( { "username" : usernameToContact },{ '$push':{'notifications' : {'$each':[notification], '$position':0}}})
+
+
+                
+            else:    
+                mongo.db.messages.update_one({'members':[username,usernameToContact]},{'$push':{'messages': conversation}})
+                mongo.db.messages.update_one({'members':[usernameToContact,username]},{'$push':{'messages': conversation}})
+
+                messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
+
+                notification = 'You have a new message from ' + username
+                mongo.db.users.update_one( { "username" : usernameToContact },{ '$push':{'notifications' : {'$each':[notification], '$position':0}}})
+                
+            
+            flash('Message Sent')
+
+            
+
+            return redirect(url_for('messages', selectedUser=selectedUser, listOfUsers=listOfUsers, user=user, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames, usernameToContact=usernameToContact, username=username, messages=messages))
     
 
     return render_template('contact.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, user_notifications=user_notifications,usernameToContact=usernameToContact )        
