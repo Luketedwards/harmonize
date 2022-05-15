@@ -1,13 +1,33 @@
 {% extends 'base.html'%}
 {%block content%}
+<h1 class="center">Conversations</h1>
+<div class="row  ">
+<div id="convo-panel" class="card-panel"> 
 {% for chats in myConversations%}
 {% if username == chats.members[0]%}
     {% if username == chats.members[0]%}
-    <a href="{{url_for('messages', usernameToContact=chats.members[1])}}"><li>{{chats.members[0]}} + {{chats.members[1]}}</li></a>
+    <div id="convo-wrapper" class="center">
+        <div class="row valign-wrapper">
+    <div class="col s5">
+    <a  href="{{url_for('messages', usernameToContact=chats.members[1])}}"><h3 id="convo-username" class="left ">{{chats.members[1]}}</h3></a>
+    </div>
+    <div class="col s5">
+    <span id="message-count">{{chats.messages|length}} <i class="fa-solid fa-message"></i></span>
+    </div>
+    </div>
+    </div>
+    <hr>
     {%else%}
-    <a href="{{url_for('messages', usernameToContact=chats.members[0])}}"><li>{{chats.members[0]}} + {{chats.members[1]}}</li></a>
+        {% for use in users%}
+        {% if chats.members[1] == use.username %}
+        <img id="user-images" class="responsive-img  " src="{{use.profile_pic}}" alt="">
+        {%endif%}
+        {%endfor%}
+        <a href="{{url_for('messages', usernameToContact=chats.members[0])}}"><h2>{{chats.members[0]}}</h2></a>
     {%endif%}
 {%endif%}    
 {%endfor%}
+</div>
+</div>   
 
 {%endblock%}

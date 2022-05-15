@@ -776,7 +776,7 @@ def messages(usernameToContact):
             messages= mongo.db.messages.find({'members':[username,usernameToContact],'members':[usernameToContact,username] })
                
         
-        return redirect(request.referrer)
+        return render_template('messages.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, user_notifications=user_notifications,messages=messages,username=username,usernameToContact=usernameToContact )
     
     
     
@@ -791,12 +791,13 @@ def convo_list():
     allCurrentUsernames = mongo.db.users.distinct("username")
     listOfProjectNames = mongo.db.projects.distinct('projectTitle')
     user = (session["user"])
+    users = mongo.db.users.find()
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"] 
     user_notifications = mongo.db.users.find_one({'username':user})
     myConversations = mongo.db.messages.find({'members': username})
 
-    return render_template('convo-list.html',listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames,user_notifications=user_notifications,myConversations=myConversations, username=username ) 
+    return render_template('convo-list.html',listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames,user_notifications=user_notifications,myConversations=myConversations, username=username,users=users ) 
 
 
 @app.route('/contact/<usernameToContact>', methods=['GET', 'POST'])
