@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+{%block content%}
+{% for chats in myConversations%}
+{% if username == chats.members[0]%}
+    {% if username == chats.members[0]%}
+    <a href="{{url_for('messages', usernameToContact=chats.members[1])}}"><li>{{chats.members[0]}} + {{chats.members[1]}}</li></a>
+    {%else%}
+    <a href="{{url_for('messages', usernameToContact=chats.members[0])}}"><li>{{chats.members[0]}} + {{chats.members[1]}}</li></a>
+    {%endif%}
+{%endif%}    
+{%endfor%}
+
+{%endblock%}

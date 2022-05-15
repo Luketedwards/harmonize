@@ -1,6 +1,23 @@
 {% extends 'base.html'%}
 {%block content%}
-{% for message in messages%}
-<li>{{message.message}}</li>
+<div id="direct-messaging-panel" class="row s12 card-panel">
+    <h2 class="center">Messages</h2>
+<div id="message-container" class="col s12 center">   
+{% for conversation in messages%}
+    {% for message in conversation.messages%}
+    <a href="{{url_for('other_profile', usernameOther=message.username )}}" id="message-profile-link">{{message.username}}:</a>
+    <span class="direct-message flow-text">{{message.message}}</span>
+    <span class="comment-date" >{{message.date}}</span>
+    <hr>
+    
+    {%endfor%}
 {%endfor%}
+</div> 
+<form method="POST" action="">
+    <textarea name="message" id="message" cols="30" rows="10"></textarea>
+    <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
+        Send Message <i class="fas fa-sign-in-alt"></i>
+    </button>
+</form>   
+</div>
 {%endblock%}

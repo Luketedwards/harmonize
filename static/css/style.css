@@ -328,6 +328,17 @@ body{
     height: 30vh;
 }
 
+#message-container{
+    overflow: scroll;
+    height: 30vh;
+    border: 1px solid rgba(0, 0, 0, 0.33);
+    padding-top: 5px;
+}
+
+#message-profile-link{
+    font-size: 1.2em;
+}
+
 #host-comment{
     color: green;
 }
@@ -339,6 +350,11 @@ body{
 .file-date{
     color: rgba(0, 0, 0, 0.33) !important;
     
+}
+
+.direct-message{
+    font-size: 1.2em;
+    padding-left: 10px;
 }
 
 .grid{
@@ -395,3 +411,9 @@ body{
     width: 70%;
     margin-left: 15%;
 }
+
+#direct-messaging-panel{
+    width: 70%;
+    margin-left: 15%;
+}
+
