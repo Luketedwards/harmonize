@@ -1,21 +1,23 @@
 {% extends "base.html"%}
 
 {% block content %}
-<div class="col s12 m8 offset-m2 l6 offset-l3">
+<div class="">
   <div class=" grey lighten-5 z-depth-1 ">
-    <div class="row valign-wrapper ">
+    <div class="row  ">
       <div id="profile-header" class="col s12 ">
 
-        <div class="row s12">
-          <img id="profile-image" src="{{selectedUser.profile_pic}}" alt="" id="profile-image" class="circle  s12 left responsive-img ">
+        <div class="row ">
+          <div class="col s12 l4 l-left center-m">
+          <img id="profile-image" src="{{selectedUser.profile_pic}}" alt="" id="profile-image" class="circle responsive-img ">
           <!-- notice the "circle" class -->
+          </div>
 
-          <div id="bio-container" class="col s8 center m6">
+          <div class="col l8 s12 center l6">
 
-            <div class="container">
+            <div id="bio-container" class="container">
               <div class="row">
                 <div class="col s12">
-                  <h2>About {{selectedUser.username}}</h2>
+                  <h2>About {{selectedUser.username|capitalize}}</h2>
                   
                   <span class="follower">Following: {{selectedUser.following|length}}</span>
                   <span class="follower">Followers: {{selectedUser.followers|length}}</span>
@@ -73,40 +75,58 @@
 
 </div>
 <div class="row">
-  <h2 class="center-align">{{selectedUser.username}}'s Projects</h2>
+  <h2 class="center-align">{{selectedUser.username|capitalize}}'s Projects</h2>
   {%if project_number > 0%}
-    <h2 class="center-align">{{selectedUser.username}} has {{project_number}} existing projects.</h2>
+    <h3 class="center-align">{{selectedUser.username|capitalize}} has {{project_number}} existing projects.</h3>
   {%endif%}
   {% for project in projects%}
-
+  {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
     <div id="my-projects-panel" class="card-panel blue-grey darken-1">
         {%if project.completed == false%}
                 <span class="">This project is still active!<i id="my-projects-panel-tick"  class="fa-solid fa-check"></i></span>
                 {%else%}
-                <span class=""> This project is no longer active.<i id="my-projects-panel-cross" class="fa-solid fa-circle-xmark "></i></span>
-                {%endif%}
+                <span class=""> This project is no longer active.<i id="my-projects-panel-cross" class="fa-solid fa-circle-xmark "></i></span>  
+        {%endif%}
+        <div class="row right">
+          {% if project.completed == true%}
+          <div id="projects-panel-apply-closed" class="col s12 right ">
+            <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
+          </div>
+          {%else%}
+            
+              {% if myUsername in members %}
+              <div id="projects-panel-apply" class="col s12 right">
+                <span><a href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn">View</a></span>      
+              </div>
+              {%else%}
+                <div id="projects-panel-apply" class="col s12 right">
+                  <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=selectedUser.username)}}" class="waves-effect waves-light btn">Apply</a></span>      
+                </div>
+              {%endif%}
+              
+          {%endif%}
+          </div>
+        <br>
+        {% if myUsername in members%}
+        <span>You are a member of this project!</span>
+        {%endif%}
         <div class="row">     
-        <h2 class="center-align">{{project.projectTitle}}</h2>
-        <div id="contact-chip" class="chip">
+        <h2 id="other-profile-projects-title" class="center-align center">{{project.projectTitle|title}}</h2>
+        <div class="row center">
+        <div class="chip s12">
             <img src="{{selectedUser.profile_pic}}" alt="{{selectedUser.username}}'s profile photo">
         <span> Created by: <a href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
-        </div>    
         </div>   
-        
-                <div class="row ">
-                    <div class="col s12 center-align">
-                        <h4>About the project</h4>
-                        <p>{{project.projectDescription}}</p>
-                        <p>Project location: {{project.city}}</p>
-                    </div>
-                </div>
+      </div> 
+        </div>   
+      
         <div class="row">
-            <div class="col s4">
+            <div class="col l6 m6 s12 push-l1 left-align left">
                 <h4>About the project</h4>
-                <p>{{project.projectDescription}}</p>
-                <p>{{project.city}}</p>
+                <p>"{{project.projectDescription}}"</p>
+                <p>Location: {{project.city}}</p>
             </div>
-            <div class="col s4">
+            <div class="col l6 m6 s12 push-l1 left-align right-l left-s">
                 <h4>Instruments & Genre</h4>
                 <p>
                     I am looking for:
@@ -119,25 +139,14 @@
                     {%endfor%}
                 </p>
             </div>
-            <div class="row s4 right">
-              {% if project.completed == true%}
-              <div id="projects-panel-apply-closed" class="col s4">
-                <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
-              </div>
-              {%else%}
-            <div id="projects-panel-apply" class="col s4">
-              <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=selectedUser.username)}}" class="waves-effect waves-light btn">Apply</a></span>
-                
-                   
-            </div>
-            {%endif%}
-            </div>
+            
+            
         </div>
         
     </div>
     
     {% else %} 
-    <h2 class="center-align">{{selectedUser.username}} has no projects.</h2>
+    <h3 class="center-align">{{selectedUser.username|capitalize}} has no projects.</h3>
     
 {%endfor%}   
 
@@ -148,5 +157,7 @@
 </div>
 </span>
 </div>
-
+<footer class="page-footer center navbar-color">
+  © 2022 Luke Edwards
+</footer>
 {% endblock %}

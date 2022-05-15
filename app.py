@@ -296,6 +296,11 @@ def other_profile(usernameOther):
     projects = mongo.db.projects.find({'username':usernameOther})
     project_number = mongo.db.projects.count_documents({'username':usernameOther})
     user = (session["user"])
+    myUsername = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    projectsImIn = mongo.db.projects.find({'projectMembers.memberUsername':username})
     user_notifications = mongo.db.users.find_one({'username':user}) 
     current_user = mongo.db.users.find_one({'username':user}) 
     following = mongo.db.users.find_one({'username':user},{"following"})
@@ -303,7 +308,7 @@ def other_profile(usernameOther):
     current_user = mongo.db.users.find_one({'username':user}) 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)    
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames,projectsImIn=projectsImIn,myUsername=myUsername)    
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user,following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
 
 
@@ -316,6 +321,11 @@ def other_profile_search():
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
     listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    myUsername = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    projectsImIn = mongo.db.projects.find({'projectMembers.memberUsername':username})
     
     selectedUser= mongo.db.users.find_one({'username':usernameOther})
     
@@ -332,7 +342,7 @@ def other_profile_search():
 
     
     if usernameOther != user:
-        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)  
+        return render_template('other-profile.html', selectedUser=selectedUser,following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user,projects=projects, user_notifications=user_notifications,project_number=project_number,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames,projectsImIn=projectsImIn,myUsername=myUsername)  
     username = user      
     return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
 

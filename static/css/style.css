@@ -2,6 +2,18 @@
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer{
+    padding-bottom: 15px;
+    font-size: 1.1em;
+    margin-top: auto;
+}
+
 .flashes h4 {
     line-height: 2;
 }
@@ -97,7 +109,7 @@ body{
 }
 
 #bio-container{
-    margin-left: 80px;
+    margin-top: 90px;
 }
 
 
@@ -157,6 +169,7 @@ body{
     margin-left: 6vw
 }
 
+
 #other-users-link{
     font-size: 2.5vw;
     margin-left: 20%;
@@ -192,7 +205,7 @@ body{
 .follower{
     font-family: 'Source Serif Pro', serif;
     font-weight: 600;
-    font-size: 1.5vw;
+    font-size: 1.5em;
     padding-right: 2vw;
     margin-left: 2vw;
 
@@ -232,28 +245,25 @@ body{
 }
 
 #my-projects-panel h2{
-    margin-top: 0;
+    
     text-align: center !important;
 }
 
 #projects-panel-apply-closed a{
-    width: max-content;
-    font-size: 1.1vw;
-    padding: 0;
-    top: 85px;
-    right: 7vw;
+    width: fit-content;
+    font-size: 1em;
     text-align: center;
-    padding: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
     background-color: red !important;
 }
 
 #projects-panel-apply a{
-    width: 6vw;
-    font-size: 1.5vw;
-    padding:0;
-    top: 85px;
-    right: 7vw;
+    width: fit-content;
+    font-size: 1.3em;
     text-align: center;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 #my-projects-panel-tick {
@@ -277,9 +287,6 @@ body{
     padding: 2px;
 }
 
-#contact-chip{
-    margin-left: 43%;
-}
 
 #dropdown-notifications{
     width: 30vw !important;
@@ -449,3 +456,42 @@ body{
     padding-left: 8%;
     display: block;
 }
+
+@media screen and (max-width: 1150px){
+    #my-projects-panel{
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    #other-profile-projects-title{
+        width: 50%;
+        margin: 0 auto;
+        margin-bottom: 15px;
+        margin-top: 40px;
+    }
+    #profile-image{
+        margin: 0 auto;
+    }
+
+    #bio-container{
+        margin-top: 0;
+    }
+    a.sidenav-trigger {
+        display: block !important;
+      }
+    
+      .hide-on-med-and-down {
+        display: none !important;
+      }
+    
+      nav .brand-logo {
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+    
+      nav a.button-collapse {
+        display: block;
+      }
+}
+

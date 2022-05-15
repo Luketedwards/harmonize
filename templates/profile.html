@@ -1,23 +1,23 @@
 {% extends "base.html"%}
 
 {% block content %}
-<div class="col s12 m8 offset-m2 l6 offset-l3">
+<div class="">
   <div class=" grey lighten-5 z-depth-1 ">
-    <div class="row valign-wrapper ">
+    <div class="row  ">
       <div id="profile-header" class="col s12 ">
 
         <div class="row ">
-          <div class="col  s4">
-          <img src="{{current_user.profile_pic}}" alt="" id="profile-image" class="circle left responsive-img ">
+          <div class="col s12 l4 l-left center-m">
+          <img src="{{current_user.profile_pic}}" alt="" id="profile-image" class="circle responsive-img ">
           <!-- notice the "circle" class -->
         </div>
 
-          <div id="bio-container" class="col s8 center  ">
+          <div  class="col l8 s12 center l6 ">
 
-            <div class="container">
+            <div id="bio-container" class="container">
               
-                <div class="">
-                  <h2>About {{username}}</h2>
+                <div class="col s12">
+                  <h2>About {{username|capitalize}}</h2>
                   <span class="follower">Following: {{current_user.following|length}}</span>
                   <span class="follower">Followers: {{current_user.followers|length}}</span>
                   <div class="card">
@@ -61,7 +61,6 @@
         <div class="center-align row s12">
           <a href="{{ url_for('edit_profile') }}" class=" waves-effect waves-light btn">Edit Profile</a>
           <a href="{{ url_for('upload_file') }}" class=" waves-effect waves-light btn">Change Picture</a>
-          <a href="{{ url_for('new_notification') }}" class=" waves-effect waves-light btn">Create Notification</a>
         </div>
       </div>
 
@@ -77,5 +76,8 @@
 </div>
 </span>
 </div>
+<footer class="page-footer center navbar-color">
+  © 2022 Luke Edwards
+</footer>
 
 {% endblock %}

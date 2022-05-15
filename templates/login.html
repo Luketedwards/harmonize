@@ -2,7 +2,7 @@
 {% block content %}
 <h3 class="center-align">Log In</h3>
 
-    <div class="row">
+    <div class="container">
         <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
             <div class="card-panel">
                 <!-- username -->
@@ -41,5 +41,7 @@
             </p>
         </div>
     </div>
-
+    <footer class="page-footer center navbar-color">
+        © 2022 Luke Edwards
+      </footer>
 {% endblock %}

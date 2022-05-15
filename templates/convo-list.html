@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {%block content%}
 <h1 class="center">Conversations</h1>
-<div class="row  ">
+<div class="  ">
 <div id="convo-panel" class="card-panel"> 
 {% for chats in myConversations%}
 {% if username == chats.members[0]%}
@@ -29,5 +29,7 @@
 {%endfor%}
 </div>
 </div>   
-
+<footer class="page-footer center navbar-color">
+    © 2022 Luke Edwards
+  </footer>
 {%endblock%}

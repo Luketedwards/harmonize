@@ -3,9 +3,26 @@
 {% if projectsImInNumber == 0%}
 <h1 class="center">You are not a member in any projects.</h1>
 {%else%}
+<h1 class="center">Projects I'm In</h1>
 {% for projects in projectsImIn%}
-
-<h1 class="card-panel center"><a href="{{url_for('project_hub', thisProject = projects._id)}}">{{projects.projectTitle}}</a></h1>
+<div id="convo-wrapper" class="center card-panel">
+    <div class="row valign-wrapper l12 m4">
+        <div class="col l2 pull-l1 m12">
+            <h2 class="left"><a
+                    href="{{url_for('project_hub', thisProject = projects._id)}}">{{projects.projectTitle|title}}</a></h2>                  
+        </div>
+        <div class="col l4 m12 push-m1 left-align">
+            <h5>Project Description</h5>
+            <span id="projects-im-in-desc" class="left">"{{projects.projectDescription}}"</span>
+        </div>
+        <div class="col l2 m12 right-align">
+            <span id="message-count">{{projects.projectMembers|length}} <i class="fa-solid fa-people-group"></i></span>
+        </div>
+    </div>
+</div>
 {%endfor%}
 {%endif%}
+<footer class="page-footer center navbar-color">
+    © 2022 Luke Edwards
+  </footer>
 {%endblock%}

@@ -32,7 +32,7 @@
 </head>
 
 <body>
-  <nav>
+  <nav class="collapse-large">
 
     <ul id="dropdown-connections" class="dropdown-content">
       <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
@@ -221,6 +221,7 @@
   {% block content %}
 
   {% endblock %}
+  
   {% block scripts %}
   {% endblock %}
   
