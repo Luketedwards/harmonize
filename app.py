@@ -603,6 +603,21 @@ def deny_application(applicant,thisProject):
     return redirect(request.referrer)
      
 
+@app.route('/browse_projects/')
+def browse_projects():
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    user = (session["user"])   
+    user_notifications = mongo.db.users.find_one({'username':user}) 
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"] 
+    projects = mongo.db.projects.find()   
+    myProfile = mongo.db.users.find_one({'username': username}) 
+    
+
+
+    return render_template('browse-projects.html',listOfUsers=listOfUsers,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames,user_notifications=user_notifications,username=username,projects=projects,myProfile=myProfile )
 
 
 @app.route('/manage_project/<thisProject>/', methods=["GET", "POST"])

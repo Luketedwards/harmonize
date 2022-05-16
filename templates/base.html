@@ -45,13 +45,15 @@
     <ul id="dropdown-projects" class="dropdown-content">
       <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
       <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
-      <li><a href="#!">Browse Projects</a></li>
+      <li><a href="#!">Browse All Projects</a></li>
+      <li><a href="{{ url_for('browse_projects') }}">Projects Relevant To Me</a></li>
       <li><a href="{{url_for('projects_im_in')}}">Projects I'm In</a></li>
     </ul>
     <ul id="dropdown-users" class="dropdown-content">
       <li><a href="{{ url_for('other_users') }}">All Users</a></li>
       <li><a href="{{ url_for('filter_users') }}">Find Users by type</a></li>
     </ul>
+    
     
     <ul id="dropdown-notifications" class="dropdown-content">
 
