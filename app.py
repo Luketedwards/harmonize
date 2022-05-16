@@ -559,6 +559,21 @@ def accept_application(applicant,applicantInstrument,thisProject,thisProjectTitl
     
 
 
+@app.route('/remove_member/<thisProject>/<member>/<thisProjectTitle>')
+def remove_member(thisProject,member, thisProjectTitle):
+    thisProject=thisProject
+    member=member
+    thisProjectTitle = thisProjectTitle
+
+
+    mongo.db.projects.update_one({'_id': ObjectId(thisProject)},{'$pull':{'projectMembers':{'memberUsername':member} } } )
+    mongo.db.users.update_one({'username': member}, {'$push':{'notifications': 'You were removed from ' + thisProjectTitle}})
+    flash(member + ' removed from project.')
+
+    return redirect(request.referrer)
+
+
+
 
 @app.route('/deny_application/<applicant>/<thisProject>/', methods=["GET", "POST"])
 def deny_application(applicant,thisProject):

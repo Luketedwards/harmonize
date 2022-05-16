@@ -495,3 +495,10 @@ body{
       }
 }
 
+#my-projects-title{
+    padding-top: 50px;
+}
+
+#view-btn{
+    margin-top: 10px;
+}
