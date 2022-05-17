@@ -427,6 +427,7 @@ body{
 
 #convo-panel{
     padding: 0.5%;
+    
 }
 
 #convo-username{
@@ -444,6 +445,20 @@ body{
     width: 9vw;
     border-radius: 50%;
     margin-left: 6vw
+}
+
+#convo-wrapper{
+    border: 2px white solid;
+    border-radius: 5px;
+    color: white;
+}
+
+#convo-wrapper a{
+    color: white;
+}
+
+#convo-wrapper span{
+    color: white;
 }
 
 #message-count{
@@ -501,4 +516,18 @@ body{
 
 #view-btn{
     margin-top: 10px;
+}
+
+#relevantInstrument span{
+    background-color: green;
+    width: fit-content;
+}
+
+#relevantUserInstrument {
+    color:  green;
+    width: fit-content;
+}
+
+#results-header{
+    
 }

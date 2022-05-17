@@ -1,13 +1,12 @@
 {% extends 'base.html'%}
 {%block content%}
-<h1 class="center">Relevant Projects</h1>
+<h1 class="center">All Projects</h1>
 <div class="">
   {%set myInstrumentsList = myProfile.instruments%}
     {% for project in projects%}
     {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
-    {%set projectInstrumentsString = project.instruments|join(' ')%}
-    {% for relevantInstrument in project.instruments %}
-      {% if relevantInstrument in myInstrumentsList %}
+    
+      
       
         <div id="my-projects-panel" class="card-panel blue-grey darken-1">
             {%if project.completed == false%}
@@ -59,12 +58,8 @@
                     <h4>Instruments & Genre</h4>
                     <p>
                         I am looking for:
-                        {%for instrument in project.instruments%}
-                        {% if relevantInstrument == instrument%}
-                      <li id="relevantInstrument" ><span>{{instrument}}</span></li> 
-                      {%else%}
-                      <li>{{instrument}}</li> 
-                      {%endif%}
+                        {%for instrument in project.instruments%}                    
+                      <li>{{instrument}}</li>                      
                         {%endfor%}
                         The main genre(s) are:
                         {%for genre in project.genres%}
@@ -77,10 +72,7 @@
             </div>
             
         </div>
-     
-      
-      {%endif%}
-  {%endfor%}   
+    
   {%endfor%}   
   
   

@@ -45,7 +45,7 @@
     <ul id="dropdown-projects" class="dropdown-content">
       <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
       <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
-      <li><a href="#!">Browse All Projects</a></li>
+      <li><a href="{{ url_for('browse_all_projects') }}">Browse All Projects</a></li>
       <li><a href="{{ url_for('browse_projects') }}">Projects Relevant To Me</a></li>
       <li><a href="{{url_for('projects_im_in')}}">Projects I'm In</a></li>
     </ul>
@@ -61,7 +61,7 @@
       {% if user_notifications.notifications|length == 0%}
       <li>You have no notifications</li>
       {%else%}
-      {% for notify in user_notifications.notifications[0:10] %}
+      {% for notify in user_notifications.notifications[0:10]|reverse %}
       {%if notify in allCurrentUsernames  %}
       <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a>
       </li>
