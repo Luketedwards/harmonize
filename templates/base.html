@@ -80,31 +80,45 @@
       {%endif%}
       {%endif%}
     </ul>
-    <ul id="dropdown-notifications-side" class="dropdown-content">
+
+
+    <div id="modal1" class="modal">
+      <div class="modal-content black-text">
+        <h4 class="center">Notifications</h4>
+        <div class="col s6 push-s4">
+        <li id="modal-clear-notifications" class="btn left ">  <a href="{{url_for('clear_notifications')}}">Clear</a></li>
+        </div>
+        <div class="col s6 pull-s4">
+        <a href="#!" class="modal-close waves-effect waves-green btn right black-text">Close</a>
+      </div>
+        <ul id="" class="">
      
-      {%if session.user%}
+          {%if session.user%}
       {% if user_notifications.notifications|length == 0%}
       <li>You have no notifications</li>
       {%else%}
-      {% for notify_side in user_notifications.notifications[0:10] %}
-      {%if notify_side in listOfUsers%}
+      {% for notify_side in user_notifications.notifications|reverse %}
+      {%if notify_side in allCurrentUsernames  %}
       <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}}</a>
       </li>
+      {%elif notify_side in listOfProjectNames%}
+      <li><a href="{{url_for('manage_project', thisProject=notify_side )}}">You have a new application to your project: {{notify_side}}</a></li>
       {% elif 'message' in notify_side%}
       <li><a href="{{url_for('convo_list') }}">{{notify_side}}</a></li>
 
       {%else%}
-      
-      <li>You have a new application to your project: {{notify_side}}</li>
-
+      <li><a href="{{url_for('my_projects', user=session['user']) }}">{{notify_side}}</a></li>
       {%endif%}
 
 
       {%endfor%}
-      <li><a href="{{url_for('clear_notifications')}}">Clear All Notifications</a></li>
+      
       {%endif%}
       {%endif%}
-    </ul>
+        </ul>
+        </div> 
+    </div>
+
     <div class="nav-wrapper navbar-color">
 
       <a href="#!" id="logo" class="brand-logo">Harmonize</a>
@@ -164,7 +178,8 @@
     <ul id="dropdown-projects-side" class="dropdown-content">
       <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
       <li><a href="{{url_for('my_projects', user=session['user']) }}">My Projects</a></li>
-      <li><a href="#!">Browse Projects</a></li>
+      <li><a href="{{ url_for('browse_all_projects') }}">Browse All Projects</a></li>
+      <li><a href="{{ url_for('browse_projects') }}">Projects Relevant To Me</a></li>
       <li><a href="{{url_for('projects_im_in')}}">Projects I'm In</a></li>
     </ul>
     {% if not session.user%}
@@ -184,8 +199,8 @@
         </datalist>
       </form>
 
-    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-    <li><a data-target="dropdown-notifications-side" class="dropdown-trigger" href="#!">Notifications<i
+    <li><a href="{{ url_for('logout') }}">Log Out</a></li> 
+    <li><a class=" modal-trigger" href="#modal1">Notifications<i
           class="right fa-solid fa-bell"></i>
         {% if user_notifications.notifications|length > 0%}
         <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
@@ -194,9 +209,10 @@
           class="right fa-solid fa-circle-down"></i></a></li>
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile-side" href="#!">My Account<i
       class="right fa-solid fa-circle-down"></i></a></li>
-    <li><a href="{{ url_for('other_users') }}">Users</a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users" href="#!">Users</a></li>
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections-side" href="#!">My Connections<i
           class="right fa-solid fa-circle-down"></i></a></li>
+          <li><a href="{{url_for('convo_list')}}">Messages</a></li>      
 
 
     {%endif%}

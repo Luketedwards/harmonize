@@ -8,6 +8,7 @@
     $(".dropdown-trigger").dropdown();
     $(".dropdown-trigger-side").dropdown();
     $('input#input_text, textarea#project-description').characterCounter();
+    $('.modal').modal();
   });
  
       

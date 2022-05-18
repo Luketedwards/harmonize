@@ -315,7 +315,7 @@ def other_profile(usernameOther):
 @app.route('/other_profile_search/', methods=["GET", "POST"])
 def other_profile_search():
     user = (session["user"])
-    usernameOther = request.form.get("user-search-input")
+    usernameOther = request.form.get("user-search-input").lower()
     projects = mongo.db.projects.find({'username':usernameOther})  
     project_number = mongo.db.projects.count_documents({'username':usernameOther})  
     listOfUsers = mongo.db.users.find()
