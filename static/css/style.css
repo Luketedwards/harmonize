@@ -541,6 +541,18 @@ body{
         margin-left: 5px;
         margin-right: 5px;
     }
+
+    #edit-profile-container{
+        width: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    #create-project-panel{
+        width: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 }
 
 #my-projects-title{
@@ -585,4 +597,27 @@ body{
 #modal-clear-notifications a{
     color: black !important;
    
+}
+
+#project-hub-member-panel {
+    
+    margin: 5px;
+}
+
+#project-hub-members-container {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card{
+    
+    flex-grow: 3;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+}
+
+.card p{
+    padding-bottom: 4px;
 }

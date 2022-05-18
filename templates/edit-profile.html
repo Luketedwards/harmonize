@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+<h1>{{current_user.instruments}}</h1>
 <h3 class="center-align">Edit Profile</h3>
 
-<div class="row">
+<div id="edit-profile-container" class="container">
     <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_profile') }}">
         <div class="card-panel">
             
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
-                    <input id="bio" name="bio" placeholder="{{current_user.bio}}" type="text" minlength="5"
+                    <input id="bio" name="bio" value="{{current_user.bio}}" type="text" minlength="5"
                         maxlength="500" required>
                     <label for="bio">Bio</label>
                 </div>
@@ -24,18 +25,18 @@
               </div>
         
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col l6 m6 s12">
                       <input id="cityEdit" value="{{current_user.city}}" name="cityEdit" type="text" class="validate">
                       <label for="cityEdit">City</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col l6 m6 s12">
                         <input id="email" value="{{current_user.email}}" name="email" type="email" class="validate">
                         <label for="email">Email</label>
                     </div>
                 </div>
             <div class="input-field col s12">
                 <select id="instrumentsEdit" name="instrumentsEdit" multiple>
-                  <option value="" disabled selected>Choose your option</option>
+                  
                   <option value="Guitar">Guitar</option>
                   <option value="Bass Guitar">Bass Guitar</option>
                   <option value="Mandolin">Mandolin</option>
@@ -58,7 +59,7 @@
               </div>
               <div class="input-field col s12">
                 <select id="genreEdit" name="genreEdit" multiple>
-                  <option value="" disabled selected>Choose your option</option>
+                  
                   <option value="Rock">Rock</option>
                   <option value="Pop">Pop</option>
                   <option value="Classical">Classical</option>

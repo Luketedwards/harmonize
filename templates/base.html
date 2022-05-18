@@ -71,7 +71,7 @@
       <li><a href="{{url_for('convo_list') }}">{{notify}}</a></li>
 
       {%else%}
-      <li><a href="{{url_for('my_projects', user=session['user']) }}">{{notify}}</a></li>
+      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}}</a></li>
       {%endif%}
 
 

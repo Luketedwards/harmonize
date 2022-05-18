@@ -1,42 +1,39 @@
 {% extends 'base.html'%}
 {% block content %}
-<h3 class="center-align">Manage Project: {{thisProject.projectTitle}}</h3>
+<h3 class="center-align">Manage Project: {{thisProject.projectTitle|title}}</h3>
 
-
-
-
-<div id="create-project-panel" class="row card-panel s8">
+<div id="create-project-panel" class=" card-panel">
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
         <div class="row">
             <div id="project-username-div" class="row">
-                <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                
                     <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
                         maxlength="300" >
                     <label for="project-username">username</label>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
-                    <input id="project-title" name="project-title" placeholder="{{thisProject.projectTitle}}" type="text" minlength="5"
+                    
+                    <input id="project-title" name="project-title" value="{{thisProject.projectTitle}}" type="text" minlength="5"
                         maxlength="300" required>
                     <label for="project-title">Project Title</label>
                 </div>
             </div>
             <div class="input-field col s12">
                 <div class="input-field col s12">
-                    <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
-                    <textarea id="project-description" name="project-description" placeholder="Describe your project." type="text" minlength="5"
-                        maxlength="3000" required></textarea>
+                    
+                    <input id="project-description" name="project-description" value="{{thisProject.projectDescription}}" type="text" minlength="5"
+                        maxlength="3000" required></input>
                     <label for="project-description">Project Description</label>
                 </div>
         
                 <div class="row">
-                    <div class="input-field col s6">
-                      <input id="city" name="city" type="text" class="validate">
+                    <div class="input-field col l6 m6 s12">
+                      <input id="city" name="city" type="text" value="{{thisProject.city}}" class="validate">
                       <label for="city">City</label>
                     </div>
-                    <div class="input-field col s6">
-                        <input id="email" value="{{user.email}}" name="email" type="email" class="validate">
+                    <div class="input-field col l6 m6 s12">
+                        <input id="email" value="{{user.email}}" name="email" value="{{thisProject.email}}" type="email" class="validate">
                         <label for="email">Contact Email</label>
                     </div>
                 </div>
@@ -84,7 +81,7 @@
               
               <div class="row">
                 <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
-                    Create Project <i class="fas fa-sign-in-alt"></i>
+                    Make Changes <i class="fas fa-sign-in-alt"></i>
                 </button>
             
             </div>
@@ -96,6 +93,7 @@
                     </p>
                 </div>
             </div>
+            <hr>
             <h3 class="center">Project Members</h3>
             {% if members|length == 0%}
                     <h4 class="center card-panel">No current members.</h4>
@@ -134,5 +132,32 @@
             {%endif%}    
             <footer class="page-footer center navbar-color">
                 © 2022 Luke Edwards
-              </footer>            
+              </footer>    
+              
+              
+<script>
+    var instrumentsArray = {{thisProject.instruments|safe}}
+    var genreArray = {{thisProject.genres|safe}}
+    var optionsToSelect = instrumentsArray
+    var optionsToSelectGenre = genreArray
+    var select = document.getElementById('instruments')
+    var selectGenre = document.getElementById('genres')
+    for ( var i = 0, l = select.options.length, o; i < l; i++ )
+{
+o = select.options[i];
+if ( optionsToSelect.indexOf( o.text ) != -1 )
+{
+o.selected = true;
+}
+}
+
+for ( var i = 0, l = selectGenre.options.length, o; i < l; i++ )
+{
+o = selectGenre.options[i];
+if ( optionsToSelectGenre.indexOf( o.text ) != -1 )
+{
+o.selected = true;
+}
+}
+</script>   
 {%endblock%}

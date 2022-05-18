@@ -651,17 +651,29 @@ def manage_project(thisProject):
     
 
     user_notifications = mongo.db.users.find_one({'username':user}) 
-    thisProject= mongo.db.projects.find_one({'projectTitle':thisProject})
-    thisProjectId = thisProject['_id']
+    thisProject= mongo.db.projects.find_one({'_id': ObjectId(thisProject) })
     thisProjectTitle = thisProject['projectTitle']
+    thisProjectId= thisProject['_id']
     applications = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['applications']
     members = mongo.db.projects.find_one({'projectTitle':thisProjectTitle})['projectMembers']
 
     if request.method == "POST":
-        
        
+        mongo.db.projects.update_one(
+        {"_id": ObjectId(thisProjectId)},
+        {
+            '$set':{
+                "username": request.form.get("project-username"),
+                "projectTitle": request.form.get("project-title").lower(),
+                "projectDescription": request.form.get("project-description"),
+                "city": request.form.get("city"),
+                "email": request.form.get("email"),
+                "instruments": request.form.getlist("instruments"),
+                "genres": request.form.getlist("genres")
+            }
+        })
         
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
+        return redirect(request.referrer)  
     return render_template('manage-projects.html', user=user, user_notifications=user_notifications,thisProject=thisProject, listOfUsers=listOfUsers, applications=applications, members=members,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames) 
 
 
