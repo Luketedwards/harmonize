@@ -9,12 +9,17 @@ from PIL import Image
 import pathlib
 import datetime
 from datetime import datetime, timedelta, date
+import boto3, botocore
+import dropbox
+
+
 
 if os.path.exists("env.py"):
     import env
 
 
 app = Flask(__name__)
+BUCKET = 'harmonise'
 
 
 UPLOAD_FOLDER = 'static/images/user-images/'
@@ -26,12 +31,9 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 
-
 mongo = PyMongo(app)
 
 global user
-
-
 
 
 
@@ -226,6 +228,7 @@ def upload_file():
         {"username": session["user"]})["username"]
     current_user = mongo.db.users.find_one({'username':user})    
     user_id = mongo.db.users.find_one({'username':user})['_id']
+
     if request.method == 'POST':
         if 'file1' not in request.files:
             return 'there is no file1 in form!'   
@@ -786,7 +789,9 @@ def upload_project_files(thisProject):
         path = os.path.join(app.config['UPLOAD_FOLDER_PROJECT'], file1.filename)
         ext = pathlib.Path(path).suffix
         newPath = os.path.join(app.config['UPLOAD_FOLDER_PROJECT'], newFileName + ext)
-        file1.save(newPath)
+        dbx.files_upload(file1(newPath))
+        
+
         project_file_update = {
                 'file': '/' + newPath,
                 'displayName': request.form.get('file-name') + ext,
@@ -794,13 +799,14 @@ def upload_project_files(thisProject):
                 'folder': request.form.get('file-folder'),
                 'uploader': username,
                 'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-            }
-        
+                 }
         mongo.db.projects.update_one({'_id': ObjectId(thisProject)},{ '$push': { "projectFiles": project_file_update }}) 
         flash("Project file uploaded")
+        
+
 
         return redirect(url_for('project_hub',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, user=user, user_notifications=user_notifications, username=username, thisProject=thisProject, thisProjectTitle=thisProjectTitle, members=members,projectFiles=projectFiles, projectFilesNumber=projectFilesNumber,listOfProjectNames=listOfProjectNames ) )
-        
+        return str(output)
     return render_template('project-file-upload.html',listOfUsers=listOfUsers,user_notifications=user_notifications,thisProject=thisProject,thisProjectTitle=thisProjectTitle,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)   
 
 
@@ -935,6 +941,30 @@ def contact(usernameToContact):
     
 
     return render_template('contact.html',listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, user_notifications=user_notifications,usernameToContact=usernameToContact )        
+
+
+
+def upload_file_to_s3(file1, bucket_name, acl="public-read"):
+    """
+    Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
+    """
+    try:
+        s3.Bucket('harmonise').upload_fileobj(
+            file1,
+            bucket_name,
+            file1.filename,
+            ExtraArgs={
+                "ACL": acl,
+                "ContentType": file.content_type    #Set appropriate content type as per the file
+            }
+        )
+
+    except Exception as e:
+        print("Something Happened: ", e)
+        return e
+    return "{}{}".format(app.config["S3_LOCATION"], file1.filename)    
+
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
