@@ -54,7 +54,7 @@
                 <br>
             {%else%}    
             <span><a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
-             <span class="comment-date">{{comment.date}}</span> </span>
+             <span class="comment-date">{{comment.date|datetimeformat}}</span> </span>
              <hr>
              <br>
             {%endif%} 
@@ -94,7 +94,7 @@
                                 <a href="{{audioFile.file}}" target="_blank">{{audioFile.displayName}}</a>
                                 <p>"{{audioFile.fileDescription}}"</p>
                                 <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=audioFile.uploader )}}">{{audioFile.uploader}}</a></p>
-                                <p class="file-date">{{audioFile.date}}</p>
+                                <p class="file-date">{{audioFile.date|datetimeformat}}</p>
                                 </div>
                             {%endif%}
                         {%endfor%}     
@@ -115,7 +115,7 @@
                             <a href="{{imageFile.file}}" target="_blank">{{imageFile.displayName}}</a>
                             <p>"{{imageFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=imageFile.uploader )}}">{{imageFile.uploader}}</a></p>
-                            <p class="file-date">{{imageFile.date}}</p>
+                            <p class="file-date">{{imageFile.date|datetimeformat}}</p>
                             </div>
                         {%endif%}
                     {%endfor%}  
@@ -136,7 +136,7 @@
                             <a href="{{pdfFile.file}}" target="_blank">{{pdfFile.displayName}}</a>
                             <p>"{{pdfFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=pdfFile.uploader )}}">{{pdfFile.uploader}}</a></p>
-                            <p class="file-date">{{pdfFile.date}}</p>
+                            <p class="file-date">{{pdfFile.date|datetimeformat}}</p>
                             </div>
                         {%endif%}
                     {%endfor%}     
@@ -158,7 +158,7 @@
                             <a href="{{imfFile.file}}" target="_blank">{{imfFile.displayName}}</a>
                             <p>"{{imfFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=imfFile.uploader )}}">{{imfFile.uploader}}</a></p>
-                            <p class="file-date">{{imfFile.date}}</p>
+                            <p class="file-date">{{imfFile.date|datetimeformat}}</p>
                             </div>
                         {%endif%}
                     {%endfor%}     
@@ -179,7 +179,7 @@
                             <a href="{{videoFile.file}}" target="_blank">{{videoFile.displayName}}</a>
                             <p>"{{videoFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=videoFile.uploader )}}">{{videoFile.uploader}}</a></p>
-                            <p class="file-date">{{videoFile.date}}</p>
+                            <p class="file-date">{{videoFile.date|datetimeformat}}</p>
                             </div>
                         {%endif%}
                     {%endfor%}     
@@ -200,7 +200,7 @@
                             <a href="{{otherFile.file}}" target="_blank">{{otherFile.displayName}}</a>
                             <p>"{{otherFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=otherFile.uploader )}}">{{otherFile.uploader}}</a></p>
-                            <p class="file-date">{{otherFile.date}}</p>
+                            <p class="file-date">{{otherFile.date|datetimeformat}}</p>
                             </div>
                         {%endif%}
                     {%endfor%} 

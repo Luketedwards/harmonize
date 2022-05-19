@@ -11,6 +11,7 @@ import datetime
 from datetime import datetime, timedelta, date
 import boto3, botocore
 import dropbox
+from filters import datetimeformat, datetimeformatBucket
 
 
 
@@ -19,7 +20,8 @@ if os.path.exists("env.py"):
 
 
 app = Flask(__name__)
-BUCKET = 'harmonise'
+app.jinja_env.filters['datetimeformat'] = datetimeformat
+app.jinja_env.filters['datetimeformatBucket'] = datetimeformatBucket
 
 
 UPLOAD_FOLDER = 'static/images/user-images/'
@@ -29,9 +31,16 @@ app.config['UPLOAD_FOLDER_PROJECT'] = UPLOAD_FOLDER_PROJECT
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-
+S3_BUCKET = os.environ.get("S3_BUCKET")
+S3_KEY = os.environ.get("S3_KEY")
+S3_SECRET = os.environ.get("S3_SECRET")
 
 mongo = PyMongo(app)
+
+s3 = boto3.client(
+    's3',
+    aws_access_key_id=S3_KEY,
+    aws_secret_access_key=S3_SECRET)
 
 global user
 
@@ -66,6 +75,14 @@ def login():
 
     return render_template("login.html")
 
+
+@app.route('/files')
+def files():
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    summaries = my_bucket.objects.all()
+
+    return render_template("files.html", my_bucket=my_bucket, files=summaries)
 
     
 @app.route("/register", methods=["GET", "POST"])

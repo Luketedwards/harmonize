@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h3>Bucket Info</h3>
+            <p>Created: {{my_bucket.creation_date|datetimeformatBucket}}</p>
+
+            <hr>
+            {% for file in files %}
+                {{file.key}} <br>
+                {{file.last_modified|datetimeformatBucket}}
+            {% endfor%}
+        </div>
+    </div>
+</div>
