@@ -38,13 +38,24 @@ S3_SECRET = os.environ.get("S3_SECRET")
 
 mongo = PyMongo(app)
 
-s3 = boto3.client(
-    's3',
-    aws_access_key_id=S3_KEY,
-    aws_secret_access_key=S3_SECRET)
 
 global user
 
+def _get_s3_resource():
+    if S3_KEY and S3_SECRET:
+        return boto3.resource(
+            's3',
+            aws_access_key_id=S3_KEY,
+            aws_secret_access_key=S3_SECRET
+        )
+    else:
+        return boto3.resource('s3')    
+
+
+
+def get_bucket():
+    s3_resource = _get_s3_resource()
+    return s3_resource.Bucket(S3_BUCKET)
 
 
 @app.route("/")
@@ -988,8 +999,7 @@ def upload_file_to_s3(file1, bucket_name, acl="public-read"):
 def upload_s3():
     file = request.files['file-s3']
 
-    s3_resource = boto3.resource('s3')
-    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    my_bucket = get_bucket()
     my_bucket.Object(file.filename).put(Body=file)
 
     return redirect(url_for('files'))
@@ -999,8 +1009,7 @@ def upload_s3():
 def delete_s3():
     key = request.form['key']
 
-    s3_resource = boto3.resource('s3')
-    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    my_bucket = get_bucket()
     my_bucket.Object(key).delete()
 
     return redirect(url_for('files'))
@@ -1010,8 +1019,7 @@ def delete_s3():
 def download_s3():
     key = request.form['key']
 
-    s3_resource = boto3.resource('s3')
-    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    my_bucket = get_bucket()
     
     file_obj = my_bucket.Object(key).get()
 
