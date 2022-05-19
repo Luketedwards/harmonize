@@ -8,7 +8,23 @@
             {% for file in files %}
                 {{file.key}} <br>
                 {{file.last_modified|datetimeformatBucket}}
+                {{file.key|file_type}}
+                <form class="delete_form_s3" action="{{url_for('delete_s3')}}" method="post" enctype="multipart/form-data">
+                    <p><input type="hidden" name="key" value="{{file.key}}"> </p>
+                    <button class="btn" type="submit" name="s3-submit">delete</button>
+                </form>
+                <form class="download_form_s3" action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
+                    <p><input type="hidden" name="key" value="{{file.key}}"> </p>
+                    <button class="btn" type="submit" name="s3-submit">download</button>
+                </form>
             {% endfor%}
         </div>
+
+        <form class="upload_form_s3" action="/upload_s3" method="post" enctype="multipart/form-data">
+            <p><input type="file" name="file-s3"> </p>
+            <button class="btn" type="submit" name="s3-submit">Upload</button>
+        </form>
+        <hr>
+        
     </div>
 </div>

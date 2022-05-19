@@ -1,7 +1,7 @@
 import os
 from flask import (
     Flask, flash, render_template,
-    redirect, request, session, url_for)
+    redirect, request, session, url_for, Response)
 from flask_pymongo import PyMongo  
 from bson.objectid import ObjectId  
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,7 +11,7 @@ import datetime
 from datetime import datetime, timedelta, date
 import boto3, botocore
 import dropbox
-from filters import datetimeformat, datetimeformatBucket
+from filters import datetimeformat, datetimeformatBucket, file_type
 
 
 
@@ -22,6 +22,7 @@ if os.path.exists("env.py"):
 app = Flask(__name__)
 app.jinja_env.filters['datetimeformat'] = datetimeformat
 app.jinja_env.filters['datetimeformatBucket'] = datetimeformatBucket
+app.jinja_env.filters['file_type'] = file_type
 
 
 UPLOAD_FOLDER = 'static/images/user-images/'
@@ -980,6 +981,46 @@ def upload_file_to_s3(file1, bucket_name, acl="public-read"):
         print("Something Happened: ", e)
         return e
     return "{}{}".format(app.config["S3_LOCATION"], file1.filename)    
+
+
+
+@app.route('/upload_s3', methods=['POST'])
+def upload_s3():
+    file = request.files['file-s3']
+
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    my_bucket.Object(file.filename).put(Body=file)
+
+    return redirect(url_for('files'))
+
+
+@app.route('/delete_s3', methods=['post'])
+def delete_s3():
+    key = request.form['key']
+
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    my_bucket.Object(key).delete()
+
+    return redirect(url_for('files'))
+
+
+@app.route('/download_s3', methods=['post'])
+def download_s3():
+    key = request.form['key']
+
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    
+    file_obj = my_bucket.Object(key).get()
+
+    return Response(
+        file_obj['Body'].read(),
+        mimetype='text/plain',
+        headers={"Content-Disposition": 'attachment:filename={}'.format(key)}
+    )
+
 
 
 
