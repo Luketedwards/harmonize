@@ -267,9 +267,13 @@ def upload_file():
         path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
         ext = pathlib.Path(path).suffix
         newPath = os.path.join(app.config['UPLOAD_FOLDER'], newFileName + ext)
-        file1.save(newPath)
-        profile_pic_update = {'$set':{
-                'profile_pic': '/' + newPath
+
+        my_bucket = get_bucket()
+        my_bucket.Object(newPath).put(Body=file1)
+
+        profile_pic_update = {'$set' :{
+            
+                'profile_pic':  'https://harmonise.s3.eu-west-2.amazonaws.com/'+ newPath
             }
         }
         mongo.db.users.update_one({'_id':ObjectId(user_id)},profile_pic_update) 
@@ -1000,6 +1004,16 @@ def upload_file_to_s3(file1, bucket_name, acl="public-read"):
 
 @app.route('/upload_s3', methods=['POST'])
 def upload_s3():
+    file = request.files['file-s3']
+
+    my_bucket = get_bucket()
+    my_bucket.Object(file.filename).put(Body=file)
+
+    return redirect(url_for('files'))
+
+
+@app.route('/upload_s3_profile_pic', methods=['POST'])
+def upload_s3_profile_pic():
     file = request.files['file-s3']
 
     my_bucket = get_bucket()

@@ -61,7 +61,7 @@
       {% if user_notifications.notifications|length == 0%}
       <li>You have no notifications</li>
       {%else%}
-      {% for notify in user_notifications.notifications[0:10]|reverse %}
+      {% for notify in user_notifications.notifications|reverse %}
       {%if notify in allCurrentUsernames  %}
       <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a>
       </li>
@@ -247,6 +247,9 @@
   {% block scripts %}
   {% endblock %}
   
+  <footer class="page-footer center navbar-color">
+    © 2022 Luke Edwards
+  </footer>
 </body>
 <script>
   $(function () {

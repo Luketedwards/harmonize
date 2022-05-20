@@ -291,6 +291,7 @@ body{
 #dropdown-notifications{
     width: 30vw !important;
     white-space: initial;
+    height: 50vh;
     word-wrap: break-word;
     text-overflow: ellipsis;
 }
