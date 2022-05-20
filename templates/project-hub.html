@@ -28,7 +28,7 @@
                     
                 <section id="project-hub-member-panel" class="cards">
                     
-                    <article class="card">
+                    <article class="card-member">
                         {% if user == thisProject.username%}
                     <a href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}" class="red-text" method="post">
                         Remove from project <i class="fa-solid fa-trash-can"></i>

@@ -9,9 +9,20 @@
     $(".dropdown-trigger-side").dropdown();
     $('input#input_text, textarea#project-description').characterCounter();
     $('.modal').modal();
+    if(window.innerWidth < 1000){
+      $('#bio-container').removeClass('container');
+    }
+  });
+
+  $(window).resize(function(){
+    if(window.innerWidth < 1000){
+      $('#bio-container').removeClass('container');
+    }else{
+      $('#bio-container').addClass('container');
+    }
   });
  
-      
+  
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.fixed-action-btn');
