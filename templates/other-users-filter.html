@@ -17,13 +17,14 @@
 {%endif%}
 
 {% if cityQuery != ''%}
-  {% set cityQuery = cityQuery%}
+  {% set cityQueryLower = cityQuery|lower %}
+  {% set cityQueryUpper = cityQuery|capitalize%}
   {%else%}
   {% set cityQuery = "notACity" %}
 {%endif%}
     <ul>
         {% for use in users%}
-        {% if instrumentQuery in use.instruments|join or genresQuery in use.genres|join or cityQuery in use.city %}
+        {% if instrumentQuery in use.instruments|join or genresQuery in use.genres|join or cityQueryLower in use.city or cityQueryUpper in use.city%}
         
         <li>
             <div id="user-display-div" class="row s12">
