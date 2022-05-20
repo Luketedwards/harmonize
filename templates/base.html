@@ -134,7 +134,7 @@
           <form method="post" action="{{url_for('other_profile_search', username=username)}}">
             <input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input"
               list="user-search">
-
+              
             <datalist id="user-search">
               {%for user in listOfUsers%}
               <option value="{{user.username}}">{{user.username}}</option>
@@ -195,6 +195,7 @@
       <form method="post" action="{{url_for('other_profile_search', username=username)}}">
         <input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input"
           list="user-search">
+        
 
         <datalist id="user-search">
           {%for user in listOfUsers%}
