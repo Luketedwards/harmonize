@@ -182,6 +182,10 @@
       <li><a href="{{ url_for('browse_projects') }}">Projects Relevant To Me</a></li>
       <li><a href="{{url_for('projects_im_in')}}">Projects I'm In</a></li>
     </ul>
+    <ul id="dropdown-users-side" class="dropdown-content">
+      <li><a href="{{ url_for('other_users') }}">All Users</a></li>
+      <li><a href="{{ url_for('filter_users') }}">Find Users by type</a></li>
+    </ul>
     {% if not session.user%}
     <li><a href="{{ url_for('register') }}">Register</a></li>
     <li><a href="{{ url_for('login') }}">Log In</a></li>
@@ -209,7 +213,7 @@
           class="right fa-solid fa-circle-down"></i></a></li>
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile-side" href="#!">My Account<i
       class="right fa-solid fa-circle-down"></i></a></li>
-      <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users" href="#!">Users</a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users-side" href="#!">Users</a></li>
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections-side" href="#!">My Connections<i
           class="right fa-solid fa-circle-down"></i></a></li>
           <li><a href="{{url_for('convo_list')}}">Messages</a></li>      
