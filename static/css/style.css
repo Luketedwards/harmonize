@@ -313,6 +313,15 @@ body{
 
 #comments-panel{
     padding: 5px;
+    background-color: aliceblue;
+}
+
+#comments-panel textarea{
+    background-color: white;
+}
+
+#comments-panel label{
+    padding-left: 4px
 }
 
 #message-panel{
@@ -333,7 +342,10 @@ body{
 
 #comment-container{
     overflow: scroll;
-    height: 30vh;
+    height: 44.3vh;
+    background-color: white;
+    border: 1px solid black;
+    padding-top: 5px;
 }
 
 #message-container{
@@ -401,6 +413,7 @@ body{
 .files{
     width: 100%;
     height: fit-content;
+    font-size: 1.1em;
 }
 
 .file-panel .collapsible-body{
@@ -553,6 +566,17 @@ body{
         margin-left: 5px;
         margin-right: 5px;
     }
+
+    #comment-project-info-container{
+        width: 100%;
+    }
+
+    #project-hub-main-panel{
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}
+#project-hub-main-panel{
 }
 
 #my-projects-title{
@@ -620,4 +644,44 @@ body{
 
 .card p{
     padding-bottom: 4px;
+}
+
+.project-download-btn {
+    padding-bottom: 5px;
+    border: none;
+    color: blue;
+    background-color: transparent; 
+}
+
+.project-delete-btn {
+    padding-bottom: 5px;
+    border: none;
+    color: red;
+    background-color: transparent; 
+}
+
+.project-delete-btn:hover{
+    color: lightcoral;
+}
+
+.project-download-btn:hover{
+    color: lightblue;
+}
+
+.project-delete-btn i{
+    font-size: 1.5em;
+    padding: 0;
+}
+.project-download-btn i{
+    font-size: 1.5em;
+    padding: 0;
+}
+
+#project-hub-main-panel{
+    background-color: gainsboro;
+}
+
+#project-hub-main-panel .card-panel{
+    background-color: aliceblue;
+    
 }

@@ -818,11 +818,14 @@ def upload_project_files(thisProject):
         path = os.path.join(app.config['UPLOAD_FOLDER_PROJECT'], file1.filename)
         ext = pathlib.Path(path).suffix
         newPath = os.path.join(app.config['UPLOAD_FOLDER_PROJECT'], newFileName + ext)
-        dbx.files_upload(file1(newPath))
+        
+        
+        my_bucket = get_bucket()
+        my_bucket.Object(newPath).put(Body=file1)
         
 
         project_file_update = {
-                'file': '/' + newPath,
+                'file': newPath,
                 'displayName': request.form.get('file-name') + ext,
                 'fileDescription': request.form.get('file-description'),
                 'folder': request.form.get('file-folder'),
@@ -1005,28 +1008,49 @@ def upload_s3():
     return redirect(url_for('files'))
 
 
-@app.route('/delete_s3', methods=['post'])
-def delete_s3():
+@app.route('/delete_s3/<thisProject>', methods=['post'])
+def delete_s3(thisProject):
+    thisProject = thisProject
     key = request.form['key']
 
+
+    mongo.db.projects.update_one(
+        { '_id': ObjectId(thisProject) }, 
+        { '$pull': { 'projectFiles': { 'file': key } } }
+    )
     my_bucket = get_bucket()
     my_bucket.Object(key).delete()
+    
+    
+    flash("File deleted.")
 
-    return redirect(url_for('files'))
+
+    return redirect(request.referrer)
 
 
 @app.route('/download_s3', methods=['post'])
 def download_s3():
-    key = request.form['key']
+    key = request.form.get('key')
 
     my_bucket = get_bucket()
     
     file_obj = my_bucket.Object(key).get()
 
+    if '.pdf' in key:
+        typeOfFile = 'application/pdf'
+    elif '.jpg' in key or '.jpeg' in key:    
+        typeOfFile = 'image/jpeg'
+    elif '.mp3' in key:    
+        typeOfFile = 'audio/mpeg'
+    elif '.mp4' in key:    
+        typeOfFile = 'video/mp4'
+    elif '.png' in key:    
+        typeOfFile = 'image/png'        
+
     return Response(
         file_obj['Body'].read(),
-        mimetype='text/plain',
-        headers={"Content-Disposition": 'attachment:filename={}'.format(key)}
+        mimetype=typeOfFile,
+        headers={"Content-Disposition": 'attachment;filename={}'.format(key)}
     )
 
 
