@@ -11,10 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
-    rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Baskervville&family=Lusitana:wght@400;700&family=Playfair+Display&family=Satisfy&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;0,8..60,800;0,8..60,900;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600;1,8..60,700;1,8..60,800;1,8..60,900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -32,7 +31,7 @@
 </head>
 
 <body>
-  <nav class="collapse-large">
+  <nav id="navbar-color" class="collapse-large">
 
     <ul id="dropdown-connections" class="dropdown-content">
       <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
@@ -119,9 +118,9 @@
         </div> 
     </div>
 
-    <div class="nav-wrapper navbar-color">
+    <div id="navbar-color-side" class="nav-wrapper ">
 
-      <a href="#!" id="logo" class="brand-logo">Harmonize</a>
+      <a href="{{ url_for('profile', username=session['user']) }}" id="logo" class="brand-logo">Harmonize</a>
 
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
       <ul id="main-navbar" class="right hide-on-med-and-down">
@@ -146,14 +145,12 @@
         <li><a data-target="dropdown-notifications" class="dropdown-trigger" href="#!"><i
               class="right fa-solid fa-bell"></i>
             {% if user_notifications.notifications|length > 0%}
-            <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
+            <span id="notifications-badge" class="new badge">{{user_notifications.notifications|length}}</span></a></li>
         {%endif%}
-        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects" href="#!">Projects<i
-              class="right fa-solid fa-circle-down"></i></a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects" href="#!">Projects</a></li>
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users" href="#!">Users</a></li>
-        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections<i
-              class="right fa-solid fa-circle-down"></i></a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections</a></li>
         <li><a href="{{url_for('convo_list')}}">Messages</a></li>      
 
 
@@ -210,13 +207,10 @@
         {% if user_notifications.notifications|length > 0%}
         <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
     {%endif%}
-    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects-side" href="#!">Projects<i
-          class="right fa-solid fa-circle-down"></i></a></li>
-    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile-side" href="#!">My Account<i
-      class="right fa-solid fa-circle-down"></i></a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects-side" href="#!">Projects</a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile-side" href="#!">My Account</a></li>
       <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users-side" href="#!">Users</a></li>
-    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections-side" href="#!">My Connections<i
-          class="right fa-solid fa-circle-down"></i></a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections-side" href="#!">My Connections</a></li>
           <li><a href="{{url_for('convo_list')}}">Messages</a></li>      
 
 

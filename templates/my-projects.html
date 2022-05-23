@@ -1,7 +1,8 @@
 {% extends 'base.html'%}
 {%block content%}  
 <h1 class="center">My Projects</h1>
-<h2 class="center-align">You currently have {{project_number}} existing projects.</h2>
+<hr>
+<h3 class="center-align">You currently have {{project_number}} existing projects.</h3>
 {% for project in projects%}
 
     <div id="my-projects-panel" class="card-panel blue-grey darken-1">

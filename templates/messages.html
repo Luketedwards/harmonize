@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 {%block content%}
-<div id="direct-messaging-panel" class=" s12 card-panel center blue-grey darken-1 white-text">
+<div id="direct-messaging-panel" class=" s12 card-panel center  black-text">
     <h2 class="center">Messages: {{usernameToContact|capitalize}}</h2>
 <div id="message-container" class="col s12 white black-text ">   
 {% for conversation in messages%}
@@ -12,7 +12,7 @@
     <div  class="col s8">
     <span id="message-col" class="direct-message flow-text">{{message.message}}</span>
     </div>
-    <div class="col s3">
+    <div class="col s3 right">
     <span class="comment-date" >{{message.date|datetimeformat}}</span>
     </div>
     </div>
@@ -24,7 +24,7 @@
 <form method="POST" action="">
     <textarea name="message" id="message" cols="30" rows="10" class="white black-text"></textarea>
     <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
-        Send Message <i class="fas fa-sign-in-alt"></i>
+        Send
     </button>
 </form>   
 </div>

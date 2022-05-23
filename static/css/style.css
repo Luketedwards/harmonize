@@ -6,6 +6,7 @@ body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: white!important;
 }
 
 footer{
@@ -33,11 +34,11 @@ footer{
     margin-left: 20px;
     margin-right: auto;
     margin-top: 10px;
-    border: 8px solid black;
+    border: 2px solid black;
 }
 
 h1, h2, h3, h4{
-    font-family: 'Source Serif Pro', serif;
+    font-family: 'Helvetica', serif;
 }
 
 
@@ -83,7 +84,7 @@ h1, h2, h3, h4{
 }
 
 #profile-header{
-    background-color: #B1D0E0;
+    background-color: white;
 }
 
 .navbar-color{
@@ -161,18 +162,17 @@ body{
 }
 
 #user-images{
-    float: left;
+
     display: inline;
     height: 13vw;
     width: 12vw;
     border-radius: 50%;
-    margin-left: 6vw
+    
 }
 
 
 #other-users-link{
     font-size: 2.5vw;
-    margin-left: 20%;
     position: relative;
     top: 4.5vw !important;
 }
@@ -183,8 +183,6 @@ body{
 
 #user-info-collapse{
     width: 22vw;
-    margin-left: 74%;
-    margin-top: -3vw;
     font-family: 'Source Serif Pro', serif;
     text-align: center;
     font-size: 1.1vw;
@@ -239,9 +237,10 @@ body{
     margin-right: 10%;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 2px white solid;
+    border: 1px black solid;
     border-radius: 5px;
     color: white;
+    background-color: #F1B24A !important;
 }
 
 #my-projects-panel h2{
@@ -298,6 +297,7 @@ body{
 
 #main-navbar{
     padding-right: 15px;
+    color: black;
 }
 
 @media screen and (max-width: 1000px){
@@ -336,9 +336,9 @@ body{
 }
 
 #message{
-    height: 8rem;
+    height: 5rem;
     margin-top: 30px;
-    
+    border-radius: 5px;
 }
 
 #comment-container{
@@ -351,11 +351,22 @@ body{
 
 #message-container{
     overflow-x: scroll;
-    height: 30vh;
+    height: 37vh;
     border: 1px solid rgba(0, 0, 0, 0.33);
+    border-radius: 5px;
     padding-top: 5px;
     padding-left: 5px;
     padding-right: 5px;
+}
+#direct-messaging-panel button{
+    height: 54px;
+    border-radius: 5px;
+    font-size: 20px !important;
+    width: fit-content;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+
 }
 
 #message-profile-link{
@@ -439,8 +450,18 @@ body{
 
 #direct-messaging-panel{
     width: 60%;
+    border-radius: 5px;
     margin: 0 auto;
     margin-top: 15px;
+    padding: 6px 6px 6px 6px;
+    background-color: #F1B24A;
+}
+
+#direct-messaging-panel h2{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 3rem;
+    color: white;
 }
 
 #convo-panel{
@@ -466,7 +487,7 @@ body{
 }
 
 #convo-wrapper{
-    border: 2px white solid;
+    
     border-radius: 5px;
     color: white;
 }
@@ -490,7 +511,28 @@ body{
     display: block;
 }
 
-@media screen and (max-width: 1150px){
+@media screen and (max-width: 992px){
+    #other-users-link{
+        
+
+    }
+    #user-info-collapse{
+        margin-left: auto;
+        margin-right: auto;
+        width: 50vw;
+        float: right;
+    }
+
+    #user-images{
+        margin-right: auto;
+        margin-left: 34%;
+        position: relative;
+        height: 50%;
+    }
+}
+
+@media screen and (max-width: 1050px){
+    
     #my-projects-panel{
         width: 100%;
         margin-left: 0;
@@ -504,6 +546,7 @@ body{
     }
     #profile-image{
         margin: 0 auto;
+        margin-top: 10px;
     }
 
     #bio-container{
@@ -725,4 +768,58 @@ body{
 
 #filter-user-btn{
     border-radius: 5px;
+}
+
+#navbar-color{
+    background-color: white !important;
+}
+
+#navbar-color-side{
+    background-color: #4d774e !important;
+    border-bottom: 1px solid black;
+    
+}
+
+footer{
+    background-color: #4d774e !important;
+}
+
+#navbar-color-side a{
+    color: white;
+}
+#navbar-color-side ul li{
+    color: black !important;
+}
+
+#dropdown-profile li a {
+    color: black !important;
+}
+#dropdown-connections li a {
+    color: black !important;
+}
+#dropdown-projects li a {
+    color: black !important;
+}
+#dropdown-users li a {
+    color: black !important;
+}
+
+#dropdown-notifications li a {
+    color: black !important;
+}
+
+#main-navbar ul{
+    color: white;
+}
+
+#notifications-badge{
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.tab a {
+    color: white!important;
 }
