@@ -29,7 +29,7 @@
 <body>
   <nav class="collapse-large">
 
-    <div class="nav-wrapper navbar-color">
+    <div id="navbar-color-side" class="nav-wrapper ">
 
       <a href="#!" id="logo" class="brand-logo">Harmonize</a>
 
@@ -53,7 +53,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
+<div id="login-bg-image">
 
   <section>
     <!-- flash messages -->
@@ -73,7 +73,7 @@
 <h3 class="center-align">Log In</h3>
 
     <div class="container">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
+        <form id="login-container"  class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
             <div class="card-panel">
                 <!-- username -->
                 <div class="row">
@@ -99,19 +99,22 @@
                         Log In <i class="fas fa-sign-in-alt"></i>
                     </button>
                 </div>
-                
+                <div class="row">
+                  <div class="col s12">
+                      <p class="center-align">
+                          New Here?
+                          <a href="{{ url_for('register') }}" class="light-blue-text text-darken-4">Register Account</a>
+                      </p>
+                  </div>
+              </div>
             </div>
+            
         </form>
+        
     </div>
 
-    <div class="row">
-        <div class="col s12">
-            <p class="center-align">
-                New Here?
-                <a href="{{ url_for('register') }}" class="light-blue-text text-darken-4">Register Account</a>
-            </p>
-        </div>
-    </div>
+    
+  </div>
     <footer class="page-footer center navbar-color">
         © 2022 Luke Edwards
     </footer>

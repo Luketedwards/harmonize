@@ -115,7 +115,7 @@ body{
 
 
 .tabs{
-    background-color: #B1D0E0;
+    background-color: #F1B24A;
     
 }
 
@@ -466,7 +466,8 @@ body{
 
 #convo-panel{
     padding: 0.5%;
-    
+    padding-bottom: 0;
+    background-color: #F1B24A;
 }
 
 #convo-username{
@@ -822,4 +823,21 @@ footer{
 
 .tab a {
     color: white!important;
+}
+
+#clear-notifications-text{
+    color: white!important;
+}
+
+#login-bg-image{
+    background-image: url(/static/images/login-page-2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    height: 100vh;
+    width: 100vw;
+}
+
+#login-container .card-panel{
+    background:rgba(255,255,255, 0.9)!important;
 }
