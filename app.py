@@ -376,7 +376,7 @@ def other_profile_search():
     if usernameOther not in allCurrentUsernames:
         flash("That user doesn't exist")
         username=user
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))  
+        return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames)  
 
     
     if usernameOther != user:
