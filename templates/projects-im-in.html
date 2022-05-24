@@ -7,19 +7,21 @@
 <hr>
 {% for projects in projectsImIn%}
 <div id="convo-wrapper" class="center card-panel blue-grey darken-1 white-text">
-    <div class="row valign-wrapper l12 m4">
-        <div class="projects-im-in-element col l2 pull-l1 m12">
-            <h2 class="left white-text"><a
+    <div class="row l4 m12 s12 ">
+        <div class="projects-im-in-element  l2  m12">
+            <h2 class=" white-text col s12"><a
                     href="{{url_for('project_hub', thisProject = projects._id)}}">{{projects.projectTitle|title}}</a></h2>                  
         </div>
-        <div class="projects-im-in-element col l4 m12 push-m1 left-align">
-            <h5>Project Description</h5>
-            <span id="projects-im-in-desc" class="left">"{{projects.projectDescription}}"</span>
+        <div class="projects-im-in-element col l4 m6 s12  center">
+            <h5 class=" center">Project Description</h5>
+            <span id="projects-im-in-desc" class="center">"{{projects.projectDescription}}"</span>
         </div>
-        <div class="projects-im-in-element col l2 m12 right-align">
+        <div class="projects-im-in-element col m6 s12 right">
+            <div id="projects-im-in-counters" class="center">
             <span id="message-count">{{projects.projectMembers|length}} <i class="fa-solid fa-people-group white-text"></i></span>
             <br>
             <span id="message-count">{{projects.comments|length}} <i class="fa-solid fa-comment"></i></span>
+        </div>
         </div>
     </div>
 </div>

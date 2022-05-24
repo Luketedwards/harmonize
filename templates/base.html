@@ -131,7 +131,7 @@
         {%if session.user%}
         <li>
           <form method="post" action="{{url_for('other_profile_search', username=username)}}">
-            <input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input"
+            <input placeholder="Search" class="autocomplete white-text" type="text" id="user-search-input" name="user-search-input"
               list="user-search">
               
             <datalist id="user-search">
@@ -229,7 +229,7 @@
     {% if messages %}
     {% for message in messages %}
     <div class="row flashes">
-      <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
+      <h4 id="messages-flash" class=" center-align">{{ message }}</h4>
     </div>
     {% endfor %}
     {% endif %}

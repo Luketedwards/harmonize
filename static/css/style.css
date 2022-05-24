@@ -2,11 +2,27 @@
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+
+
+
+.btn{
+    background-color: #4d774e!important;
+}
+
 body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: white!important;
+    width: 100% !important;
 }
 
 footer{
@@ -21,6 +37,12 @@ footer{
 
 .btn-small {
     margin: 5px;
+}
+
+.collapsible-header{
+    background-color: #F1B24A !important;
+    color: white !important;
+    text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
 }
 
 .collapsible-header .col strong {
@@ -162,9 +184,9 @@ body{
 }
 
 #user-images{
-
+    border: solid 1px black;
     display: inline;
-    height: 13vw;
+    height: 16vw;
     width: 12vw;
     border-radius: 50%;
     
@@ -468,6 +490,8 @@ body{
     padding: 0.5%;
     padding-bottom: 0;
     background-color: #F1B24A;
+    width: 80%;
+    margin: 0 auto;
 }
 
 #convo-username{
@@ -488,7 +512,7 @@ body{
 }
 
 #convo-wrapper{
-    
+    background-color: #F1B24A!important;
     border-radius: 5px;
     color: white;
 }
@@ -512,27 +536,51 @@ body{
     display: block;
 }
 
-@media screen and (max-width: 992px){
-    #other-users-link{
+@media screen and (max-width: 500px){
+    #user-images{
         
+        width: 53vw !important;
+    }
+    #user-info-collapse{
+        width: 60vw !important;
+        margin: 0 auto;
+        }
+}
+
+@media screen and (max-width: 992px){
+    #convo-panel{
+        width: 100%;
+    }
+
+    #other-users-link{
+        font-size: 1.8rem;
+    position: relative;
+    margin: 0 auto;
+    margin-left: 0;
+    top: 0vw !important;
 
     }
     #user-info-collapse{
-        margin-left: auto;
-        margin-right: auto;
-        width: 50vw;
-        float: right;
+    width: 44vw;
+    margin: 0 auto;
     }
-
+    #user-info-collapse .collapsible-header{
+        font-size: 1.1rem;
+        }
+    #user-info-collapse .collapsible-body{
+            font-size: 1rem;
+            }
     #user-images{
-        margin-right: auto;
-        margin-left: 34%;
+        margin: 0 auto;
         position: relative;
         height: 50%;
+        width: 31vw;
     }
 }
 
 @media screen and (max-width: 1050px){
+
+    
     
     #my-projects-panel{
         width: 100%;
@@ -643,7 +691,7 @@ body{
 }
 
 #view-btn{
-    margin-top: 10px;
+    margin-left: 12px;
 }
 
 #relevantInstrument span{
@@ -737,11 +785,11 @@ body{
 }
 
 #project-hub-main-panel{
-    background-color: gainsboro;
+    background-color: white;
 }
 
 #project-hub-main-panel .card-panel{
-    background-color: aliceblue;
+    background-color: white;
     
 }
 
@@ -751,6 +799,9 @@ body{
 }
 
 @media screen and (max-width: 600px){
+    #projects-im-in-counters{
+        margin-top: 20px;
+    }
     #file-upload-label{
         margin-right: 0;
     
@@ -840,4 +891,36 @@ footer{
 
 #login-container .card-panel{
     background:rgba(255,255,255, 0.9)!important;
+}
+
+#all-users-row {
+    margin-bottom: 0;
+}
+
+#all-users-row div{
+    margin-bottom: 0;
+}
+
+#all-users-row hr{
+    margin-top: 0;
+}
+
+#filter-user-header{
+    font-size: 2.5rem;
+}
+
+#myProjects-buttons{
+    display: inline-flex;
+}
+
+#messages-flash{
+    background: rgba(255,255,255, 0.9)!important;
+}
+
+#projects-im-in-counters{
+    display: inline-flex;
+}
+
+#projects-im-in-counters span{
+    margin-left: 10px;
 }

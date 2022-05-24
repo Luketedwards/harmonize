@@ -313,6 +313,8 @@ def filter_users():
 
     if request.method == "POST":
         cityQuery = request.form.get('city')
+        if cityQuery == "":
+            cityQuery = " "
         instrumentsQuery = request.form.getlist('instruments')
         genresQuery = request.form.getlist("genres")
 
