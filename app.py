@@ -403,8 +403,7 @@ def follow_user(usernameOther):
     mongo.db.users.update_one( { "username" : usernameOther },{ '$push': { "followers": user } })
     flash("You are now following " + selectedUser['username'])
 
-    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))
-
+    return redirect(request.referrer)
 
 
 @app.route('/unfollow-user/<usernameOther>', methods=["GET", "POST"])    
@@ -427,7 +426,7 @@ def unfollow_user(usernameOther):
     flash("You are no longer following " + selectedUser['username'])
 
         
-    return redirect(url_for("other_profile", user=user, current_user=current_user, user_id=user_id, selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user_notifications=user_notifications,allCurrentUsernames=allCurrentUsernames,listOfProjectNames=listOfProjectNames))
+    return redirect(request.referrer)
 
 
 @app.route("/following/")   
