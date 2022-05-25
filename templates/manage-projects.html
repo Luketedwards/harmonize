@@ -11,6 +11,7 @@
                         maxlength="300" >
                     <label for="project-username">username</label>
             </div>
+        </div>    
             <div class="row">
                 <div class="input-field col s12">
                     
@@ -37,6 +38,7 @@
                         <label for="email">Contact Email</label>
                     </div>
                 </div>
+            </div>    
             <div class="input-field col s12">
                 <select id="instruments" name="instruments" required multiple>
                   <option value="Guitar">Guitar</option>
@@ -78,13 +80,14 @@
                 <label for="genres" >Genres Needed</label>
                     
                   
-              
-              <div class="row">
-                <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
-                    Make Changes <i class="fas fa-sign-in-alt"></i>
+              </div>
+            <div id="manage-project-btn" class="row">
+                <button type="submit" class="col s12 btn-large  text-shadow">
+                    Make Changes 
                 </button>
             
             </div>
+    </form>    
             <div class="row">
                 <div class="col s12">
                     <p class="center-align">
@@ -124,13 +127,14 @@
                         {% for instrument in apply.instruments%}
                         <p>{{instrument}}</p>
                         {%endfor%}
-                    </div>
+                    </div>    
+                </div>
                     <a href="{{url_for('accept_application', applicant=apply.applicantUsername,applicantInstrument=apply.instruments[0], thisProject=thisProject._id, thisProjectTitle= thisProject.projectTitle)}}" class="waves-effect waves-light green btn">Accept</a>
                     <a href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject._id)}}" class="waves-effect waves-light red btn">Deny</a>
                 </div>
                 {%endfor%}
             {%endif%}    
-            
+</div>            
               
               
 <script>

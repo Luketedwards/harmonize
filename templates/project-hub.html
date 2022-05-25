@@ -28,13 +28,13 @@
                     
                 <section id="project-hub-member-panel" class="cards">
                     
-                    <article class="card-member">
+                    <article class="card-member card-panel">
                         {% if user == thisProject.username%}
                     <a href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}" class="red-text" method="post">
                         Remove from project <i class="fa-solid fa-trash-can"></i>
                     </a>    
                 {%endif%} 
-                    <a href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4>{{member.memberUsername}}</h4></a>
+                    <a href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4 class="white-text">{{member.memberUsername}}</h4></a>
                     <br>
                     <p>{{member.memberInstrument}}</p>
                     </article>
@@ -75,9 +75,11 @@
                     maxlength="300" required></textarea>
                 <label for="addComment">Write a comment</label>
             </div>
-            <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
-                Comment <i class="fas fa-sign-in-alt"></i>
+            <div id="comment-btn" class="row">
+            <button  type="submit" class="col s12 btn-large  text-shadow">
+                Comment <i class="fa-solid fa-comment"></i>
             </button>
+            </div>
         </form>    
     </div>
             
