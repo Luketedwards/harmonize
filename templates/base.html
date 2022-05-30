@@ -27,7 +27,7 @@
   {% endblock %}
 
 
-  <title>Harmonize</title>
+  <title>Harmonise</title>
 </head>
 
 <body>
@@ -62,20 +62,20 @@
       {%else%}
       {% for notify in user_notifications.notifications %}
       {%if notify in allCurrentUsernames  %}
-      <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}}</a>
+      <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}} <i class="fa-solid fa-user"></i></a>
       </li>
       {%elif notify in listOfProjectNames%}
-      <li><a href="{{url_for('manage_project', thisProject=notify )}}">You have a new application to your project: {{notify}}</a></li>
+      <li><a href="{{url_for('manage_project', thisProject=notify )}}">You have a new application to your project: {{notify}} <i class="fa-solid fa-file-circle-check"></i></a></li>
       {% elif 'message' in notify%}
-      <li><a href="{{url_for('convo_list') }}">{{notify}}</a></li>
+      <li><a href="{{url_for('convo_list') }}">{{notify}} <i class="fa-solid fa-envelope"></i></a></li>
 
       {%else%}
-      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}}</a></li>
+      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class="fa-solid fa-comment"></i></a></li>
       {%endif%}
 
 
       {%endfor%}
-      <li  class="red"><a style="color: white !important;" href="{{url_for('clear_notifications')}}">Clear All Notifications</a></li>
+      <li  class="red"><a style="color: white !important;" href="{{url_for('clear_notifications')}}">Clear All Notifications <i class="fa-solid fa-trash-can right black-text"></i></a></li>
       {%endif%}
       {%endif%}
     </ul>
@@ -120,7 +120,7 @@
 
     <div id="navbar-color-side" class="nav-wrapper ">
 
-      <a href="{{ url_for('profile', username=session['user']) }}" id="logo" class="brand-logo">Harmonize</a>
+      <a href="{{ url_for('profile', username=session['user']) }}" id="logo" class="brand-logo">Harmonise</a>
 
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
       <ul id="main-navbar" class="right hide-on-med-and-down">

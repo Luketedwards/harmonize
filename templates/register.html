@@ -25,7 +25,7 @@
   <script src="{{ url_for('static', filename='js/select.js') }}"></script>
 
 
-  <title>Harmonize</title>
+  <title>Harmonise</title>
 </head>
 
 <body>
@@ -33,7 +33,7 @@
 
     <div id="navbar-color-side" class="nav-wrapper ">
 
-      <a href="#!" id="logo" class="brand-logo">Harmonize</a>
+      <a href="#!" id="logo" class="brand-logo">Harmonise</a>
 
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
       <ul id="main-navbar" class="right hide-on-med-and-down">
@@ -55,7 +55,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-<div id="login-bg-image">
+<div id="register-bg-image">
 
   <section>
     <!-- flash messages -->
@@ -72,7 +72,7 @@
 
 <h3 id="register-h3" class="center-align">Compose an Account</h3>
 
-<div class="row">
+<div id="register-container" class="row">
     <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
         <div class="card-panel">
             <!-- username -->
@@ -94,7 +94,7 @@
               </div>
             <!-- password -->
             
-                <div class="row s12">
+                <div class="row m12">
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s6">
@@ -162,24 +162,24 @@
                     
               </div>
             <!-- register -->
-            <div class="row">
-                <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
+            <div class="row center-align">
+              <div class=" col s12 center">
+                <button type="submit" class=" btn-large center text-shadow">
                     Register <i class="fas fa-sign-in-alt"></i>
                 </button>
+              </div>
             </div>
         </div>
 
     </form>
-</div>
-
-
-<div class="row">
-    <div class="col s12">
-        <p class="center-align white-text">
-            Already Registered?
-            <a href="{{url_for('login')}}" class="light-blue-text text-darken-4">Log In</a>
-        </p>
-    </div>
+    <div class="row">
+      <div class="col s12">
+          <p class="center-align white-text">
+              Already Registered?
+              <a href="{{url_for('login')}}" class="light-blue-text text-darken-4">Log In</a>
+          </p>
+      </div>
+  </div>
 </div>
 
 

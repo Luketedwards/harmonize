@@ -228,12 +228,10 @@ body{
 }
 
 .follower{
-    font-family: 'Source Serif Pro', serif;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 1.5em;
     padding-right: 2vw;
     margin-left: 2vw;
-
 }
 
 #register-background{
@@ -242,8 +240,8 @@ body{
 }
 
 #register-h3{
-    font-weight: 600;
-    font-size: 3.5vw;
+    font-weight: 500;
+    
 }
 
 #user-search-input{
@@ -255,8 +253,15 @@ body{
     margin: 0 auto;
 }
 
+#project-members-panel{
+    margin-top: 5px !important;
+    width: 70%;
+    margin: 0 auto;
+}
+
 #project-username-div{
     visibility: hidden;
+    height: 0px;
 }
 
 #my-projects-panel{
@@ -337,6 +342,10 @@ body{
         width: 450px !important;
     }
     
+    #register-container form{
+        width: 100%;
+        margin: 0;
+    }
 }
 
 #comments-panel{
@@ -529,10 +538,17 @@ body{
     background-color: #F1B24A!important;
     border-radius: 5px;
     color: white;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 14px;
 }
 
 #convo-wrapper a{
     color: white;
+}
+
+#convo-wrapper a:hover{
+    color: grey;
 }
 
 #convo-wrapper span{
@@ -562,6 +578,11 @@ body{
 }
 
 @media screen and (max-width: 992px){
+    #search-users-panel{
+        width: 100%;
+        margin: 0;
+    }
+
     #convo-panel{
         width: 100%;
     }
@@ -593,6 +614,10 @@ body{
 }
 
 @media screen and (max-width: 1050px){
+    #convo-wrapper{
+        width: 100%;
+    }
+
     .dropdown-content{
         transform: none!important;
     }
@@ -671,6 +696,12 @@ body{
     }
 
     #create-project-panel{
+        width: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    #project-members-panel{
         width: 100%;
         margin-left: 5px;
         margin-right: 5px;
@@ -829,10 +860,7 @@ body{
         margin-right: 0;
     }
 
-    #search-users-panel{
-        width: 100%;
-        margin: 0;
-    }
+    
 }
 
 #filter-user-btn{
@@ -915,9 +943,38 @@ footer{
     height: 100vh;
     width: 100vw;
 }
+#register-bg-image{
+    background-image: url(/static/images/login-page.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    height: 100vh;
+    width: 100vw;
+}
 
 #login-container .card-panel{
     background:rgba(255,255,255, 0.9)!important;
+}
+
+#register-container .card-panel{
+    background:rgba(255,255,255, 0.9)!important;
+}
+
+#register-container button{
+    width: fit-content;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#login-container{
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#login-container button{
+    width: fit-content;
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
 #all-users-row {
@@ -950,4 +1007,8 @@ footer{
 
 #projects-im-in-counters span{
     margin-left: 10px;
+}
+
+#dropdown-notifications i {
+    color: #4267B2;
 }
