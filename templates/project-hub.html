@@ -92,7 +92,7 @@
             {%else%}
             
            
-        
+        <div id="project-hub-files-row" class="row">
             <div class="col l4 m12 s12">
                 <ul  class="collapsible file-panel">
                     <li> 
@@ -105,16 +105,20 @@
                                 <p>"{{audioFile.fileDescription}}"</p>
                                 <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=audioFile.uploader )}}">{{audioFile.uploader}}</a></p>
                                 <p class="file-date">{{audioFile.date|datetimeformat}}</p>
+                                <div  class="row center project-hub-files-buttons">
                                 {% if user == audioFile.uploader or user == thisProject.username%}
-                                <form action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
+                                
+                                <form class="center" action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{audioFile.file}}">
-                                    <button class="project-delete-btn" type="submit" name="s3-submit"><i class="fa-solid fa-trash-can"></i></button>
+                                    <button class="project-delete-btn col center-align" type="submit" name="s3-submit"><i class="fa-solid fa-trash-can center"></i></button>
                                 </form>    
                                 {%endif%}    
-                                <form action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="key" value="{{audioFile.file}}">
-                                <button class="project-download-btn" type="submit" name="s3-submit"><i class="fa-solid fa-cloud-arrow-down"></i></button>
+                                <button class="project-download-btn col  center" type="submit" name="s3-submit"><i class="fa-solid fa-cloud-arrow-down center"></i></button>
                                 </form>
+                        
+                                </div>
                                 </div>
                                 
                             {%endif%}
@@ -132,21 +136,23 @@
                     <div class="collapsible-body  ">
                     {% for imageFile in projectFiles%}   
                         {% if imageFile.folder == "Image" %}
-                        <div class="card-panel files">
+                        <div class="card-panel files center">
                             <p>{{imageFile.displayName}}</p>
                             <p>"{{imageFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=imageFile.uploader )}}">{{imageFile.uploader}}</a></p>
                             <p class="file-date">{{imageFile.date|datetimeformat}}</p>
+                            <div  class="row center project-hub-files-buttons">
                             {% if user == imageFile.uploader or user == thisProject.username%}
-                                <form action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{imageFile.file}}">
                                     <button class="project-delete-btn" type="submit" name="s3-submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>    
                             {%endif%}  
-                                <form action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{imageFile.file}}">
                                     <button class="project-download-btn" type="submit" name="s3-submit"><i class="fa-solid fa-cloud-arrow-down"></i></button>
                                 </form>
+                            </div>
                         </div>
                         {%endif%}
                     {%endfor%}  
@@ -163,21 +169,23 @@
                     <div class="collapsible-body  ">
                     {% for pdfFile in projectFiles%}   
                         {% if pdfFile.folder == "PDF" %}
-                        <div class="card-panel files">
+                        <div class="card-panel files center">
                             <p>{{pdfFile.displayName}}</p>
                             <p>"{{pdfFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=pdfFile.uploader )}}">{{pdfFile.uploader}}</a></p>
                             <p class="file-date">{{pdfFile.date|datetimeformat}}</p>
+                            <div  class="row center project-hub-files-buttons">
                             {% if user == pdfFile.uploader or user == thisProject.username%}
-                                <form action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{pdfFile.file}}">
                                     <button class="project-delete-btn" type="submit" name="s3-submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>    
                             {%endif%}  
-                                <form action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{pdfFile.file}}">
                                     <button class="project-download-btn" type="submit" name="s3-submit"><i class="fa-solid fa-cloud-arrow-down"></i></button>
                                 </form>
+                            </div>
                         </div>
                         {%endif%}
                     {%endfor%}     
@@ -187,6 +195,7 @@
                     </li>
                 </ul>
             </div>  
+        </div>    
             <div class="row">
             <div class="col l4 m12 s12">
                 <ul  class="collapsible  file-panel">
@@ -195,21 +204,23 @@
                     <div class="collapsible-body  ">
                     {% for imfFile in projectFiles%}   
                         {% if imfFile.folder == "IMF" %}
-                        <div class="card-panel files">
+                        <div class="card-panel files center">
                             <p>{{imfFile.displayName}}</p>
                             <p>"{{imfFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=imfFile.uploader )}}">{{imfFile.uploader}}</a></p>
                             <p class="file-date">{{imfFile.date|datetimeformat}}</p>
+                            <div  class="row center project-hub-files-buttons">
                             {% if user == imfFile.uploader or user == thisProject.username%}
-                                <form action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{imfFile.file}}">
                                     <button class="project-delete-btn" type="submit" name="s3-submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>    
                             {%endif%}  
-                                <form action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{imfFile.file}}">
                                     <button class="project-download-btn" type="submit" name="s3-submit"><i class="fa-solid fa-cloud-arrow-down"></i></button>
                                 </form>
+                            </div>
                         </div>
                         {%endif%}
                     {%endfor%}     
@@ -226,21 +237,23 @@
                     <div class="collapsible-body  ">
                     {% for videoFile in projectFiles%}   
                         {% if videoFile.folder == "Video" %}
-                        <div class="card-panel files">
+                        <div class="card-panel files center">
                             <p>{{videoFile.displayName}}</p>
                             <p>"{{videoFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=videoFile.uploader )}}">{{videoFile.uploader}}</a></p>
                             <p class="file-date">{{videoFile.date|datetimeformat}}</p>
+                            <div  class="row center project-hub-files-buttons">
                             {% if user == videoFile.uploader or user == thisProject.username%}
-                                <form action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{videoFile.file}}">
                                     <button class="project-delete-btn" type="submit" name="s3-submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>    
                             {%endif%}  
-                                <form action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{videoFile.file}}">
                                     <button class="project-download-btn" type="submit" name="s3-submit"><i class="fa-solid fa-cloud-arrow-down"></i></button>
                                 </form>
+                            </div>
                         </div>
                         {%endif%}
                     {%endfor%}     
@@ -257,21 +270,23 @@
                     <div class="collapsible-body  ">
                     {% for otherFile in projectFiles%}   
                         {% if otherFile.folder == "Other" %}
-                        <div class="card-panel files">
+                        <div class="card-panel files center">
                             <p>{{otherFile.displayName}}</p>
                             <p>"{{otherFile.fileDescription}}"</p>
                             <p>Uploaded by: <a href="{{url_for('other_profile', usernameOther=otherFile.uploader )}}">{{otherFile.uploader}}</a></p>
                             <p class="file-date">{{otherFile.date|datetimeformat}}</p>
+                            <div  class="row center project-hub-files-buttons">
                             {% if user == otherFile.uploader or user == thisProject.username%}
-                                <form action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('delete_s3', thisProject=thisProject._id)}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{otherFile.file}}">
                                     <button class="project-delete-btn" type="submit" name="s3-submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>    
                             {%endif%}  
-                                <form action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
+                                <form class="center" action="{{url_for('download_s3')}}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="key" value="{{otherFile.file}}">
                                     <button class="project-download-btn" type="submit" name="s3-submit"><i class="fa-solid fa-cloud-arrow-down"></i></button>
                                 </form>
+                                </div>
                         </div>
                         {%endif%}
                     {%endfor%} 

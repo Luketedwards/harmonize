@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 {% block content %}
-<h1 class="center-align">Upload Project Files for {{thisProjectTitle}}</h1>
+<h1 class="center-align">Upload Project Files for {{thisProjectTitle|capitalize}}</h1>
 <div id="project-image-upload" class="card-panel center-align">
     <span id="file-selected"></span>
         <form method="post" enctype="multipart/form-data">

@@ -11,10 +11,18 @@ html,body
     overflow-x: hidden; 
 }
 
-
+.collapsible-header:hover{
+    background-color: #f6cd89!important;
+    color: black;
+}
 
 .btn{
     background-color: #4d774e!important;
+}
+
+.btn:hover{
+    background-color: white!important;
+    color: black;
 }
 
 body{
@@ -962,8 +970,8 @@ footer{
 
 #register-container button{
     width: fit-content;
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 11px;
+    padding-right: 11px;
 }
 
 #login-container{
@@ -973,8 +981,8 @@ footer{
 
 #login-container button{
     width: fit-content;
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 11px;
+    padding-right: 11px;
 }
 
 #all-users-row {
@@ -1011,4 +1019,20 @@ footer{
 
 #dropdown-notifications i {
     color: #4267B2;
+}
+
+#mobile-demo ul{
+    background-color: lightgray;
+}
+
+#project-hub-files-row{
+    margin-bottom: 0px;
+}
+
+.project-hub-files-buttons button{
+    width: fit-content;
+    display: inline-flex;
+}
+.project-hub-files-buttons {
+    display: inline-flex;
 }
