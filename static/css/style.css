@@ -330,7 +330,8 @@ body{
 #dropdown-notifications{
     width: 30vw !important;
     white-space: initial;
-    height: 50vh;
+    min-height: fit-content;
+    max-height: 50vh;
     word-wrap: break-word;
     text-overflow: ellipsis;
 }
@@ -1035,4 +1036,12 @@ footer{
 }
 .project-hub-files-buttons {
     display: inline-flex;
+}
+
+.card-content{
+    transition: 400ms ease-in-out !important;
+}
+
+#user-profile-div{
+    padding-top: 25px!important;
 }

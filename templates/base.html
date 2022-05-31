@@ -69,7 +69,7 @@
       {% elif 'message' in notify%}
       <li><a href="{{url_for('convo_list') }}">{{notify}} <i class="fa-solid fa-envelope"></i></a></li>
 
-      {%else%}
+      {%elif 'comment' in notify%}
       <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class="fa-solid fa-comment"></i></a></li>
       {%endif%}
 

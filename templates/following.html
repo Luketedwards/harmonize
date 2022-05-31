@@ -3,6 +3,7 @@
 {%block content%}
 <div class="">
   <h1 class="center">Following</h1>
+  {% if current_user.following|length > 0%}
   <ul>
       {% for use in users%}
       {%if use.username in current_user.following%}
@@ -57,7 +58,11 @@
       {%endif%}
       {% endfor%}
   </ul>
-  
+  {%else%}
+  <div class="row">
+  <h3 class="center">You aren't currently following anyone.</h3>
+  {%endif%}
+  </div>
 </div>
 
 {%endblock%}
