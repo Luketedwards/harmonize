@@ -638,10 +638,10 @@ body{
         margin-right: 0;
     }
     #other-profile-projects-title{
-        width: 50%;
+        width: 100%;
         margin: 0 auto;
         margin-bottom: 15px;
-        margin-top: 40px;
+        margin-top: 56px;
     }
     #profile-image{
         margin: 0 auto;
@@ -877,11 +877,25 @@ body{
     padding-left: 7px;
     padding-right: 7px;
 }
-
 #manage-project-btn{
     border-radius: 5px;
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#manage-project-btn button{
+    border-radius: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: fit-content;
+    margin: 0 auto;
+}
+#manage-project-btn a{
+    border-radius: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
     width: fit-content;
     margin: 0 auto;
 }
@@ -1044,4 +1058,24 @@ footer{
 
 #user-profile-div{
     padding-top: 25px!important;
+}
+
+#application-denied-btn{
+    background-color: #F44336 !important
+}
+
+#remove-member-btn{
+    background-color: #F44336 !important
+
+}
+
+.yellow-bg{
+    background-color: #F1B24A !important;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.border{
+    border: 1px solid black;
+    border-radius: 5px;
 }

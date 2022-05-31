@@ -4,10 +4,10 @@
 <div class="">
   {%set myInstrumentsList = myProfile.instruments%}
     {% for project in projects%}
-    {{project._id}}
+    
     {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
     {%set projectInstrumentsString = project.instruments|join(' ')%}
-    {% for relevantInstrument in project.instruments %}
+    {% if relevantInstrument in project.instruments %}
       {% if relevantInstrument in myInstrumentsList %}
       
         <div id="my-projects-panel" class="card-panel blue-grey darken-1">
@@ -51,12 +51,12 @@
             </div>   
           
             <div class="row">
-                <div class="col l6 m6 s12 push-l1 left-align left">
+                <div id="about-the-project" class="col l6 m6 s12 push-l1 left-align left">
                     <h4>About the project</h4>
                     <p>"{{project.projectDescription}}"</p>
                     <p>Location: {{project.city}}</p>
                 </div>
-                <div class="col l6 m6 s12 push-l1 left-align right-l left-s">
+                <div id="instruments-and-genre"  class="col l6 m6 s12 push-l1 left-align right-l left-s">
                     <h4>Instruments & Genre</h4>
                     <p>
                         I am looking for:
@@ -81,7 +81,7 @@
      
       
       {%endif%}
-  {%endfor%}   
+  {%endif%}   
   {%endfor%}   
   
   

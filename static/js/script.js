@@ -11,14 +11,21 @@
     $('.modal').modal();
     if(window.innerWidth < 1000){
       $('#bio-container').removeClass('container');
+      $('#about-the-project').addClass('center')
+      $('#instruments-and-genre').addClass('center')
+      
     }
   });
 
   $(window).resize(function(){
     if(window.innerWidth < 1000){
       $('#bio-container').removeClass('container');
+      $('#about-the-project').addClass('center')
+      $('#instruments-and-genre').addClass('center')
     }else{
       $('#bio-container').addClass('container');
+      $('#about-the-project').removeClass('center')
+      $('#instruments-and-genre').removeClass('center')
     }
   });
  
@@ -30,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     direction: 'left'
   });
 });
+
+
     
 
 

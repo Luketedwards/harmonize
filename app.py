@@ -555,10 +555,10 @@ def delete_project(thisProjectId,thisProjectTitle,noOfFiles):
 
     result1=[]
     result2=[]
-    i= 0
+    
     for nameOfFiles in mongo.db.projects.find({'_id': ObjectId(thisProjectId)}, {'projectFiles':{'file':True}}):
         
-        result1.append(nameOfFiles['projectFiles'][i])
+        result1.append(nameOfFiles['projectFiles'])
         for i in range(noOfFiles):
             result2.append(nameOfFiles['projectFiles'][i]['file'])
             
