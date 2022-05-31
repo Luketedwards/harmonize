@@ -1,7 +1,9 @@
 {% extends 'base.html'%}
 {% block content %}
 <h3 class="center-align">Manage Project: {{thisProject.projectTitle|title}}</h3>
-
+{{thisProject._id}}
+<h1>{{thisProject.projectFiles|length}}</h1>
+{% set noOfFiles = thisProject.projectFiles|length%}
 <div id="create-project-panel" class=" card-panel">
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
         <div class="row">
@@ -85,6 +87,9 @@
                 <button type="submit" class="col s12 btn-large  text-shadow">
                     Make Changes 
                 </button>
+                <a href="{{url_for('delete_project',thisProjectId=thisProject._id, thisProjectTitle=thisProject.projectTitle, noOfFiles=noOfFiles)}}" class="btn red">
+                    Delete Project
+                </a>
             
             </div>
     </form>    

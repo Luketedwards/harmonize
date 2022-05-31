@@ -4,6 +4,7 @@
 <div class="">
   {%set myInstrumentsList = myProfile.instruments%}
     {% for project in projects%}
+    {{project._id}}
     {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
     {%set projectInstrumentsString = project.instruments|join(' ')%}
     {% for relevantInstrument in project.instruments %}

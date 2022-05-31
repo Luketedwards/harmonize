@@ -13,6 +13,7 @@ import boto3
 import botocore
 import dropbox
 from filters import datetimeformat, datetimeformatBucket, file_type
+import bson
 
 
 if os.path.exists("env.py"):
@@ -536,6 +537,41 @@ def create_a_project():
     except:
         return render_template("login.html")
 
+
+@app.route('/delete_project/<thisProjectId>/<thisProjectTitle>/<noOfFiles>')
+def delete_project(thisProjectId,thisProjectTitle,noOfFiles):
+    user = (session['user'])
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    user_notifications = mongo.db.users.find_one({'username': user})
+    projects = mongo.db.projects.find({'username': user})
+    project_number = mongo.db.projects.count_documents({'username': user})
+    username = mongo.db.users.find_one({'username': user})
+    
+    thisProjectId=thisProjectId
+    thisProjectTitle=thisProjectTitle
+    noOfFiles= int(noOfFiles) 
+
+    result1=[]
+    result2=[]
+    i= 0
+    for nameOfFiles in mongo.db.projects.find({'_id': ObjectId(thisProjectId)}, {'projectFiles':{'file':True}}):
+        
+        result1.append(nameOfFiles['projectFiles'][i])
+        for i in range(noOfFiles):
+            result2.append(nameOfFiles['projectFiles'][i]['file'])
+            
+    mongo.db.projects.delete_one({'_id': ObjectId(thisProjectId)})
+    
+    for filename in result2:
+        key = str(filename)
+        my_bucket = get_bucket()
+        my_bucket.Object(key).delete()
+    
+    flash('Project Deleted.')
+
+    return redirect(url_for('my_projects',user=user, projects=projects, username=username, user_notifications=user_notifications, project_number=project_number, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames))
 
 @app.route('/my_projects/')
 def my_projects():
