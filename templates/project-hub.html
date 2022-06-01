@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% block content %}
 <div id="project-hub-main-panel" class="row s12 card-panel">
-<h1 class="center">{{thisProject.projectTitle|capitalize}}</h1>
+<h1 class="center">{{thisProject.projectTitle|title}}</h1>
 
 <h5 class="center">Host: <a href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
 
@@ -33,12 +33,17 @@
                     <a href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}" class="red-text" method="post">
                         Remove from project <i class="fa-solid fa-trash-can"></i>
                     </a>    
-                {%endif%} 
-                    <a href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4 class="white-text">{{member.memberUsername}}</h4></a>
+                        {%endif%} 
+                {% if member.memberUsername == user%}
+                    <a id="project-hub-member-username" href="{{url_for('profile', username=member.memberUsername )}}"><h4 class="white-text">{{member.memberUsername}}</h4></a>
+                    <br>
+                    <p>{{member.memberInstrument}}</p>
+                {%else%}
+                    <a id="project-hub-member-username" href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4 class="white-text">{{member.memberUsername}}</h4></a>
                     <br>
                     <p>{{member.memberInstrument}}</p>
                     </article>
-                    
+                {%endif%}    
                 </section>
                 </div>
                 
@@ -52,7 +57,7 @@
         
     </div>
     <div id="comments-panel" class="col card-panel l5 m12 s12 right">
-        <h3 class="center">Comments</h3>
+        <h3 class="center white-text">Comments</h3>
         <div id="comment-container" class="col s12">
             {% for comment in thisProject.comments%}
             {% if comment.username == thisProject.username%}
@@ -60,6 +65,11 @@
                 <span class="comment-date">{{comment.date|datetimeformat}}</span> </span>
                 <hr>
                 <br>
+            {% elif comment.username == user%}   
+            <span><a class="red-text" href="{{url_for('profile', username=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
+                <span class="comment-date">{{comment.date|datetimeformat}}</span> </span>
+                <hr>
+                <br> 
             {%else%}    
             <span><a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>: {{comment.userComment}}
              <span class="comment-date">{{comment.date|datetimeformat}}</span> </span>
@@ -70,13 +80,13 @@
         </div>
         <form class="" method="POST" action="{{ url_for('add_comment', thisProject = thisProject._id) }}">
             <div class="input-field col s12">
-                <i class="fa-solid fa-comment prefix light-blue-text text-darken-4"></i>
-                <textarea id="addComment" name="addComment" type="text" minlength="1"
+                <i class="fa-solid fa-comment prefix white-text text-shadow"></i>
+                <textarea class="border" id="addComment" name="addComment" type="text" minlength="1"
                     maxlength="300" required></textarea>
                 <label for="addComment">Write a comment</label>
             </div>
             <div id="comment-btn" class="row">
-            <button  type="submit" class="col s12 btn-large  text-shadow">
+            <button  type="submit" class="col s12 btn  text-shadow">
                 Comment <i class="fa-solid fa-comment"></i>
             </button>
             </div>
@@ -308,6 +318,7 @@
 
 
 </div>
+
 
 <script>
     var commentDiv = document.getElementById("comment-container");

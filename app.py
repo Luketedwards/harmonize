@@ -216,10 +216,12 @@ def delete_account():
         return render_template("login.html")
 
 
-@app.route("/edit_profile", methods=["GET", "POST"])
-def edit_profile():
-    try:
+@app.route("/edit_profile/<username>", methods=["GET", "POST"])
+def edit_profile(username):
+    try:    
+        username=username
         user = (session["user"])
+        current_user = mongo.db.users.find_one({'username': user})
         user_notifications = mongo.db.users.find_one({'username': user})
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
@@ -235,17 +237,19 @@ def edit_profile():
 
                     }}
 
-            current_user = mongo.db.users.find_one({'username': user})
+            
             user_id = mongo.db.users.find_one({'username': user})['_id']
 
             mongo.db.users.update_one({'_id': ObjectId(user_id)}, edit)
-            flash("success")
+            flash("Profile Updated!")
 
-        if session["user"]:
-            user = (session["user"])
-            current_user = mongo.db.users.find_one({'username': user})
+            if session["user"]:
+                user = (session["user"])
+                current_user = mongo.db.users.find_one({'username': user})
 
-        return render_template("edit-profile.html", current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames)
+            
+            return redirect(url_for('profile',username=username))
+        return render_template("edit-profile.html",username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames)
     except:
         return render_template("login.html")
 
@@ -370,7 +374,9 @@ def other_profile(usernameOther):
 def other_profile_search():
     
         user = (session["user"])
+
         usernameOther = request.form.get("user-search-input").lower().strip()
+
         projects = mongo.db.projects.find({'username': usernameOther})
         project_number = mongo.db.projects.count_documents(
             {'username': usernameOther})
@@ -393,13 +399,15 @@ def other_profile_search():
 
         if usernameOther not in allCurrentUsernames:
             flash("That user doesn't exist")
-            username = user
+            username = username
             return render_template("profile.html", username=username, current_user=current_user, listOfUsers=listOfUsers, user_notifications=user_notifications, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames)
 
-        if usernameOther != user:
+        if usernameOther != username:
             return render_template('other-profile.html', selectedUser=selectedUser, following=following, listOfUsers=listOfUsers, usernameOther=usernameOther, user=user, current_user=current_user, projects=projects, user_notifications=user_notifications, project_number=project_number, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, projectsImIn=projectsImIn, myUsername=myUsername)
-        username = user
-        return redirect(url_for("profile", username=username, current_user=current_user, listOfUsers=listOfUsers, user=user, following=following, user_notifications=user_notifications, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames))
+
+        if usernameOther == username:  
+            username = username
+            return redirect(url_for("profile", username=username))
     
 
 

@@ -89,39 +89,47 @@
     </ul>
 
 
-    <div id="modal1" class="modal">
-      <div class="modal-content black-text">
-        <h4 class="center">Notifications</h4>
+    <div style="width: 80%;" id="modal1" class="modal border">
+      <div style="padding: 0 ;" class="modal-content black-text">
+        <h4 id="side-modal-h4" class="center">Notifications</h4>
+        <div class="row">
         <div class="col s6 push-s4">
-        <li id="modal-clear-notifications" class="btn left red center white-text ">  <a href="{{url_for('clear_notifications')}}">Clear</a></li>
+        <li id="modal-clear-notifications" class="btn left red white-text center  ">  <a href="{{url_for('clear_notifications')}}">Clear</a></li>
         </div>
         <div class="col s6 pull-s4">
         <a href="#!" class="modal-close waves-effect waves-green btn right white-text center">Close</a>
       </div>
+    </div>
         <ul id="" class="">
      
           {%if session.user%}
-      {% if user_notifications.notifications|length == 0%}
-      <li>You have no notifications</li>
-      {%else%}
-      {% for notify_side in user_notifications.notifications|reverse %}
-      {%if notify_side in allCurrentUsernames  %}
-      <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}}</a>
-      </li>
-      {%elif notify_side in listOfProjectNames%}
-      <li><a href="{{url_for('manage_project', thisProject=notify_side )}}">You have a new application to your project: {{notify_side}}</a></li>
-      {% elif 'message' in notify_side%}
-      <li><a href="{{url_for('convo_list') }}">{{notify_side}}</a></li>
-
-      {%else%}
-      <li><a href="{{url_for('my_projects', user=session['user']) }}">{{notify_side}}</a></li>
-      {%endif%}
-
-
-      {%endfor%}
-      
-      {%endif%}
-      {%endif%}
+          {% if user_notifications.notifications|length == 0%}
+          <li>You have no notifications</li>
+          {%else%}
+          {% for notify_side in user_notifications.notifications|reverse %}
+          {%if notify_side in allCurrentUsernames  %}
+          <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}} <i class="fa-solid fa-user"></i></a>
+          </li>
+          {%elif notify_side in listOfProjectNames%}
+          <li><a href="{{url_for('manage_project_link', thisProject=notify_side )}}">You have a new application to your project: {{notify_side}} <i class="fa-solid fa-file-circle-check"></i></a></li>
+          {% elif 'message' in notify_side%}
+          <li><a href="{{url_for('convo_list') }}">{{notify_side}} <i class="fa-solid fa-envelope"></i></a></li>
+    
+          {%elif 'comment' in notify_side%}
+          <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i class="fa-solid fa-comment"></i></a></li>
+          {%elif 'denied' in notify_side%}
+          <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i class=" red-text fa-solid fa-circle-xmark"></i></a></li>
+    
+          {%elif 'approved' in notify_side%}
+          <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i class=" green-text fa-solid fa-circle-check"></i></a></li>
+          
+          {%endif%}
+    
+    
+          {%endfor%}
+          
+          {%endif%}
+          {%endif%}
         </ul>
         </div> 
     </div>

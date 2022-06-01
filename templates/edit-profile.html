@@ -3,7 +3,7 @@
 <h3 class="center-align">Edit Profile</h3>
 
 <div id="edit-profile-container" class="container">
-    <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_profile') }}">
+    <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_profile', username=username) }}">
         <div class="card-panel">
             
             <div class="row">
@@ -79,9 +79,11 @@
               
             <!-- register -->
             <div class="row">
-                <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
+            <div class="col s12 center">
+                <button type="submit" class=" btn ">
                     Update Profile <i class="fas fa-sign-in-alt"></i>
                 </button>
+            </div>
             
             </div>
         </div>
