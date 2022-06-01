@@ -138,7 +138,7 @@
                     </div>    
                 </div>
                     <a href="{{url_for('accept_application', applicant=apply.applicantUsername,applicantInstrument=apply.instruments[0], thisProject=thisProject._id, thisProjectTitle= thisProject.projectTitle)}}" class="waves-effect waves-light green btn">Accept</a>
-                    <a id="application-denied-btn" href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject._id)}}" class="waves-effect waves-light btn red">Deny</a>
+                    <a id="application-denied-btn" href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject._id,thisProjectTitle= thisProject.projectTitle)}}" class="waves-effect waves-light btn red">Deny</a>
                 </div>
                 {%endfor%}
             {%endif%}    

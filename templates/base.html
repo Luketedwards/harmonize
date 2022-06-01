@@ -62,17 +62,23 @@
       {% if user_notifications.notifications|length == 0%}
       <li>You have no notifications</li>
       {%else%}
-      {% for notify in user_notifications.notifications %}
+      {% for notify in user_notifications.notifications|reverse %}
       {%if notify in allCurrentUsernames  %}
       <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}} <i class="fa-solid fa-user"></i></a>
       </li>
       {%elif notify in listOfProjectNames%}
-      <li><a href="{{url_for('manage_project', thisProject=notify )}}">You have a new application to your project: {{notify}} <i class="fa-solid fa-file-circle-check"></i></a></li>
+      <li><a href="{{url_for('manage_project_link', thisProject=notify )}}">You have a new application to your project: {{notify}} <i class="fa-solid fa-file-circle-check"></i></a></li>
       {% elif 'message' in notify%}
       <li><a href="{{url_for('convo_list') }}">{{notify}} <i class="fa-solid fa-envelope"></i></a></li>
 
       {%elif 'comment' in notify%}
       <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class="fa-solid fa-comment"></i></a></li>
+      {%elif 'denied' in notify%}
+      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class=" red-text fa-solid fa-circle-xmark"></i></a></li>
+
+      {%elif 'approved' in notify%}
+      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class=" green-text fa-solid fa-circle-check"></i></a></li>
+      
       {%endif%}
 
 

@@ -8,7 +8,8 @@
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
         <div class="row">
             <div id="project-username-div" class="row">
-                <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                
+                <i class="fa-solid fa-circle-info prefix light-blue-text text-darken-4"></i>
                     <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
                         maxlength="300" >
                     <label for="project-username">username</label>
@@ -16,15 +17,15 @@
         </div>    
         <div class="row">
             <div id="" class="row">
-                <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
-                    <input id="project-id" name="project-id" value="{{thisProject._id}}" type="text" minlength="5"
+                
+                    <input hidden id="project-id" name="project-id" value="{{thisProject._id}}" type="text" minlength="5"
                         maxlength="300" >
-                    <label for="project-id">username</label>
+                    <label hidden for="project-id">username</label>
             </div>
         </div>  
             <div class="input-field col s12">
                 <div class="input-field col s12">
-                    <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                    <i class="fa-solid fa-circle-info prefix light-blue-text text-darken-4"></i>
                     <textarea id="project-message" name="project-message" placeholder="Write any details or messages you would like the project director to know." type="text" minlength="5"
                         maxlength="3000" required></textarea>
                     <label for="project-apply-message">Write a little about yourself.</label>

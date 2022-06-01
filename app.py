@@ -689,8 +689,8 @@ def remove_member(thisProject, member, thisProjectTitle):
         return render_template("login.html")
 
 
-@app.route('/deny_application/<applicant>/<thisProject>/', methods=["GET", "POST"])
-def deny_application(applicant, thisProject):
+@app.route('/deny_application/<applicant>/<thisProject>/<thisProjectTitle>', methods=["GET", "POST"])
+def deny_application(applicant, thisProject, thisProjectTitle):
     try:
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
@@ -701,6 +701,7 @@ def deny_application(applicant, thisProject):
         user_notifications = mongo.db.users.find_one({'username': user})
         current_user = mongo.db.users.find_one({'username': user})
         thisProject = thisProject
+        thisProjectTitle=thisProjectTitle
 
         user_notifications = mongo.db.users.find_one({'username': user})
 
@@ -718,9 +719,10 @@ def deny_application(applicant, thisProject):
         return render_template("login.html")
 
 
+
 @app.route('/browse_projects/')
 def browse_projects():
-    try:
+    
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
         listOfProjectNames = mongo.db.projects.distinct('projectTitle')
@@ -732,8 +734,7 @@ def browse_projects():
         myProfile = mongo.db.users.find_one({'username': username})
 
         return render_template('browse-projects.html', listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames, user_notifications=user_notifications, username=username, projects=projects, myProfile=myProfile)
-    except:
-        return render_template("login.html")
+    
 
 
 @app.route('/browse_all_projects/')
@@ -756,7 +757,7 @@ def browse_all_projects():
 
 @app.route('/manage_project/<thisProject>/', methods=["GET", "POST"])
 def manage_project(thisProject):
-    try:
+    
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
         listOfProjectNames = mongo.db.projects.distinct('projectTitle')
@@ -765,7 +766,7 @@ def manage_project(thisProject):
         user = (session["user"])
         user_notifications = mongo.db.users.find_one({'username': user})
         current_user = mongo.db.users.find_one({'username': user})
-
+        
         user_notifications = mongo.db.users.find_one({'username': user})
         thisProject = mongo.db.projects.find_one(
             {'_id': ObjectId(thisProject)})
@@ -794,9 +795,48 @@ def manage_project(thisProject):
 
             return redirect(request.referrer)
         return render_template('manage-projects.html', user=user, user_notifications=user_notifications, thisProject=thisProject, listOfUsers=listOfUsers, applications=applications, members=members, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames)
-    except:
-        return render_template("login.html")
+    
 
+@app.route('/manage_project_link/<thisProject>/', methods=["GET", "POST"])
+def manage_project_link(thisProject):
+    
+        listOfUsers = mongo.db.users.find()
+        allCurrentUsernames = mongo.db.users.distinct("username")
+        listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
+        user = (session["user"])
+        user_notifications = mongo.db.users.find_one({'username': user})
+        current_user = mongo.db.users.find_one({'username': user})
+        thisProject = mongo.db.projects.find_one({'projectTitle': thisProject})['_id']
+        user_notifications = mongo.db.users.find_one({'username': user})
+        thisProject = mongo.db.projects.find_one(
+            {'_id': ObjectId(thisProject)})
+        thisProjectTitle = thisProject['projectTitle']
+        thisProjectId = thisProject['_id']
+        applications = mongo.db.projects.find_one(
+            {'_id': thisProjectId})['applications']
+        members = mongo.db.projects.find_one({'_id': ObjectId(thisProjectId)})[
+            'projectMembers']
+
+        if request.method == "POST":
+
+            mongo.db.projects.update_one(
+                {"_id": ObjectId(thisProjectId)},
+                {
+                    '$set': {
+                        "username": request.form.get("project-username"),
+                        "projectTitle": request.form.get("project-title").lower(),
+                        "projectDescription": request.form.get("project-description"),
+                        "city": request.form.get("city"),
+                        "email": request.form.get("email"),
+                        "instruments": request.form.getlist("instruments"),
+                        "genres": request.form.getlist("genres")
+                    }
+                })
+
+            return redirect(request.referrer)
+        return render_template('manage-projects.html', user=user, user_notifications=user_notifications, thisProject=thisProject, listOfUsers=listOfUsers, applications=applications, members=members, allCurrentUsernames=allCurrentUsernames, listOfProjectNames=listOfProjectNames)
 
 @app.route('/projects_im_in/')
 def projects_im_in():
