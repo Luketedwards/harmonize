@@ -20,15 +20,25 @@
   $(window).resize(function(){
     if(window.innerWidth < 1000){
       $('#bio-container').removeClass('container');
-      $('#about-the-project').addClass('center')
-      $('#instruments-and-genre').addClass('center')
+     
     }else{
       $('#bio-container').addClass('container');
-      $('#about-the-project').removeClass('center')
-      $('#instruments-and-genre').removeClass('center')
+     
     }
+    
   });
- 
+  $(window).resize(function(){
+    if(window.innerWidth < 600){
+      
+      $('.about-the-project').addClass('center')
+      $('.instruments-and-genre').addClass('center')
+    }else{
+     
+      $('.about-the-project').removeClass('center')
+      $('.instruments-and-genre').removeClass('center')
+    }
+    
+  });
   
 
 document.addEventListener('DOMContentLoaded', function() {
