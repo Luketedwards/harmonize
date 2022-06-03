@@ -93,7 +93,7 @@
     </ul>
 
 
-    <div style="width: 98%;" id="modal1" class="modal border">
+    <div id="modal1" class="modal border">
       <div style="padding: 0 ;" class="modal-content black-text">
         <h4 id="side-modal-h4" class="center">Notifications</h4>
         <div class="row">
@@ -104,13 +104,14 @@
         <a href="#!" class="modal-close waves-effect waves-green btn right white-text center">Close</a>
       </div>
     </div>
+    <div>
         <ul id="" class="">
      
           {%if session.user%}
           {% if user_notifications.notifications|length == 0%}
           <li>You have no notifications</li>
           {%else%}
-          {% for notify_side in user_notifications.notifications|reverse %}
+          {% for notify_side in user_notifications.notifications %}
           {%if notify_side in allCurrentUsernames  %}
           <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}} <i class="fa-solid fa-user  "></i></a>
           </li>
@@ -135,6 +136,7 @@
           {%endif%}
           {%endif%}
         </ul>
+      </div>  
         </div> 
     </div>
 

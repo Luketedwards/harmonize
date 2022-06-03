@@ -1216,7 +1216,7 @@ def messages(usernameToContact):
                     {'members': [username, usernameToContact], 'members': [usernameToContact, username]})
                 notification = 'You have a new message from ' + username
                 mongo.db.users.update_one({"username": usernameToContact}, {
-                                          '$push': {'notifications': {'$each': [notification], '$position': 0}}})
+                                          '$push': {'notifications': notification}})
 
             else:
                 mongo.db.messages.update_one({'members': [username, usernameToContact]}, {
@@ -1228,7 +1228,7 @@ def messages(usernameToContact):
                     {'members': [username, usernameToContact], 'members': [usernameToContact, username]})
                 notification = 'You have a new message from ' + username
                 mongo.db.users.update_one({"username": usernameToContact}, {
-                                          '$push': {'notifications': {'$each': [notification], '$position': 0}}})
+                                          '$push': {'notifications': notification}})
 
             return render_template('messages.html',
             listOfUsers=listOfUsers,
@@ -1328,7 +1328,7 @@ def contact(usernameToContact):
 
                     notification = 'You have a new message from ' + username
                     mongo.db.users.update_one({"username": usernameToContact}, {
-                                              '$push': {'notifications': {'$each': [notification], '$position': 0}}})
+                                              '$push': {'notifications': notification}})
 
                 else:
                     mongo.db.messages.update_one({'members': [username, usernameToContact]}, {
@@ -1341,7 +1341,7 @@ def contact(usernameToContact):
 
                     notification = 'You have a new message from ' + username
                     mongo.db.users.update_one({"username": usernameToContact}, {
-                                              '$push': {'notifications': {'$each': [notification], '$position': 0}}})
+                                              '$push': {'notifications': notification}})
 
                 flash('Message Sent')
 

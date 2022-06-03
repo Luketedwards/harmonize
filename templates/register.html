@@ -81,7 +81,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
-                    <input id="username" name="username" type="text" minlength="5"
+                    <input id="username" name="username" type="text" minlength="3"
                         maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                     <label for="username">Username</label>
                 </div>
@@ -208,5 +208,8 @@
     function searchBar {
       window.location.href = "{{url_for('profile', username=username)}}";
     }
+
+
+
   </script>
   <script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>
