@@ -1,18 +1,18 @@
 {% extends 'base.html'%}
 {% block content %}
 <div id="project-hub-main-panel" class="row s12 card-panel">
-<h1 class="center">{{thisProject.projectTitle|title}}</h1>
+<h1 class="center white-text">{{thisProject.projectTitle|title}}</h1>
 
-<h5 class="center">Host: <a href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
+<h5 class="center white-text">Host: <a href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
 
 <div id="comment-project-info-container" class="row ">
     
     
-        <div class="col card-panel l6 m12 s12">
+        <div class="col card-panel l6 m12 s12 transparent-bg">
             
             <h2 class="center">Project Information</h2>
             <div class="row s12">
-            <div class="center">
+            <div class=" left-align">
             <h4>Project Description</h4>
             <p>"{{thisProject.projectDescription}}"</p>
             </div>
@@ -26,7 +26,7 @@
                 
                 <div>
                     
-                <section id="project-hub-member-panel" class="cards">
+                <section id="project-hub-member-panel" class="cards z-depth-2">
                     
                     <article class="card-member card-panel">
                         {% if user == thisProject.username%}
@@ -56,7 +56,7 @@
         </div> 
         
     </div>
-    <div id="comments-panel" class="col card-panel l5 m12 s12 right border">
+    <div id="comments-panel" class="col card-panel l5 m12 s12 right ">
         <h3 class="center white-text">Comments</h3>
         <div id="comment-container" class="col s12">
             {% for comment in thisProject.comments%}
@@ -81,7 +81,7 @@
         <form class="" method="POST" action="{{ url_for('add_comment', thisProject = thisProject._id) }}">
             <div class="input-field col s12">
                 <i class="fa-solid fa-comment prefix white-text text-shadow"></i>
-                <textarea class="border" id="addComment" name="addComment" type="text" minlength="1"
+                <textarea class="" id="addComment" name="addComment" type="text" minlength="1"
                     maxlength="300" required></textarea>
                 <label for="addComment">Write a comment</label>
             </div>
@@ -95,7 +95,7 @@
             
         </div>
         <div class="row s12">
-        <div class="card-panel">
+        <div class="card-panel transparent-bg">
             <h2 class="center">Project Files</h2>
             {% if projectFilesNumber|count == 0%}
             <h4 class="center">There are currently no files for this project.</h4>

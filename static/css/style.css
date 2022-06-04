@@ -1,4 +1,8 @@
 /* General */
+.transparent-bg{
+    background: rgba(255,255,255, 0.8)!important;
+}
+
 .card-content{
     transition: 400ms ease-in-out !important;
 }
@@ -80,7 +84,7 @@ footer{
 }
 
 .collapsible-header{
-    background-color: #F1B24A !important;
+    background-color: #e59612 !important;
     color: white !important;
     
 }
@@ -431,12 +435,12 @@ footer{
 }
 
 #convo-wrapper{
-    background-color: #F1B24A!important;
+    background-color: #e59612!important;
     border-radius: 5px;
     color: white;
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
-    margin-bottom: 14px;
+    margin-bottom: 30px;
 }
 
 #convo-wrapper a{
@@ -821,18 +825,19 @@ footer{
 }
 
 .card-member{
-    background-color: #F1B24A!important;
+    background-color: #e59612!important;
     flex-grow: 3;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 4px;
     color: white!important;
-    border: 1px solid black;
     min-width: 125px;
 }
 
 .card-member p{
     padding-bottom: 4px;
+    margin: 0;
+    padding: 0;
 }
 
 .project-download-btn {
@@ -867,8 +872,10 @@ footer{
 }
 
 #project-hub-main-panel{
-    background-color: white;
-    box-shadow: none!important;
+    background-image: url(/static/images/project-hub-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
 }
 
 #project-hub-main-panel .card-panel{
@@ -881,12 +888,25 @@ footer{
     margin-left: 10px;
 }
 
+#project-hub-bg{
+    
+}
 
-#project-hub-main-panel{
+#project-hub-main-panel h2{
+    margin-top: 8px;
+
+}
+#project-hub-member-panel article{
+    margin: 0;
+    padding-bottom: 10px;
 }
 
 #project-hub-member-username{
     color: white;
+}
+
+#project-hub-member-username h4{
+    margin: 0;
 }
 
 #project-hub-member-username h4:hover{
@@ -904,10 +924,7 @@ footer{
 }
 
 .file-panel{
-    border: 1px solid black;
-    
-    margin: 5px;
-    
+    margin: 5px;   
 }
 
 #folder-type{
@@ -956,7 +973,9 @@ footer{
 
 #comments-panel{
     padding: 5px;
-    background-color: #F1B24A!important;
+    background-color: #e59612!important;
+    padding-left: 11px;
+    padding-right: 11px;
 }
 
 #comments-panel textarea{
