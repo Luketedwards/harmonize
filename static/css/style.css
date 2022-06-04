@@ -3,6 +3,10 @@
     transition: 400ms ease-in-out !important;
 }
 
+.yellow{
+    background-color: #e59612!important;
+}
+
 .yellow-bg{
     background-color: #F1B24A !important;
     border: 1px solid black;
@@ -277,9 +281,35 @@ footer{
 }
 
 /* create-a-project.html */
+#create-project-bg-image{
+    background-image: url(/static/images/sheet-music.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    height: 100vh;
+    overflow: scroll;
+}
+
 #create-project-panel{
     width: 70%;
     margin: 0 auto;
+    margin-top: 40px;
+    background: rgba(255,255,255, 0.95)!important;
+}
+#create-project-panel h3{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+#create-project-desc{
+    padding: 0;
+}
+#create-project-desc div{
+    padding: 0;
+}
+
+#create-project-footer-link{
+    margin: 0;
+    padding: 0;
 }
 
 /* edit-profile.html */
@@ -491,11 +521,16 @@ footer{
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 20px;
-    margin-bottom: 20px;
-    border: 1px black solid;
+    margin-bottom: 40px;
     border-radius: 5px;
     color: white;
-    background-color: #F1B24A !important;
+    background-color: #e59612 !important;
+    padding-bottom: 0;
+    padding-top: 9px;
+}
+
+#my-projects-panel .row{
+    margin-bottom: 0!important;
 }
 
 #my-projects-panel h2{
@@ -521,9 +556,8 @@ footer{
 }
 
 #my-projects-panel-tick {
-    border: 2px solid black;
     border-radius: 50%;
-    background-color: green;
+    background-color: #39583a;
     color: white;
     font-size: 1.5vw;
     margin-left: 5px;
@@ -596,6 +630,11 @@ footer{
     font-size: 2.5rem;
 }
 /* profile.html */
+.card{
+    width: 119%;
+    margin-left: -17%;
+}
+
 #user-profile-div{
     padding-top: 25px!important;
 }
@@ -608,10 +647,13 @@ footer{
 #profile-image {
     height: 29vh; 
     display: block;
-    margin-left: 119px;
+    margin-left: 27%;
     margin-right: auto;
     margin-top: 12px;
-    border: 2px solid black;
+}
+
+#profile-followers{
+    margin-bottom: 0;
 }
 
 #test5 li{
@@ -713,6 +755,9 @@ footer{
 #bio-container-h2{
     display: inline;
     float: left;
+    margin-bottom: 5px;
+    font-size: 3.1rem;
+    font-weight: 600;
 }
 
 .edit-profile-btns{
@@ -720,8 +765,16 @@ footer{
     float: right;
 }
 .tabs{
-    background-color: #F1B24A;
+    background-color: #e59612;
     
+}
+
+.chip{
+    background-color: white!important;
+}
+
+.chip a{
+    color: #39583a;
 }
 
 .tab a{
@@ -1072,6 +1125,10 @@ footer{
         font-size: 2.5rem;
     }
     
+    #create-project-panel{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 
     #user-images{
         
@@ -1130,6 +1187,10 @@ footer{
 }
 
 @media screen and (max-width: 1050px){
+.card{
+    width: 100%;
+}
+
     #convo-wrapper{
         width: 100%;
     }
@@ -1214,9 +1275,8 @@ footer{
     }
 
     #create-project-panel{
-        width: 100%;
-        margin-left: 5px;
-        margin-right: 5px;
+        width: 96%;
+        
     }
 
     #project-members-panel{
@@ -1235,7 +1295,6 @@ footer{
     }
     .card{
         margin: 0 auto;
-        width: 92%;
     }
 
     #project-image-upload{
@@ -1270,5 +1329,18 @@ footer{
 @media screen and (max-width: 700px){
     #modal1{
         width: 98%!important;
+    }
+}
+
+@media screen and (min-width: 1051px){
+    #other-profile-title-and-btns{
+        margin-bottom: 0;
+        width: 119%;
+        margin-left: -19%;
+    }
+
+    #profile-followers{
+        width: 119%;
+        margin-left: -19%;
     }
 }

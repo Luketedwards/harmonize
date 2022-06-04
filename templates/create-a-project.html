@@ -1,9 +1,10 @@
 {% extends 'base.html'%}
 {%block content%}
+<div id="create-project-bg-image">
 
-<h3 class="center-align">Create a Project</h3>
 
 <div id="create-project-panel" class="row card-panel s8">
+    <h3 class="center-align">Create a Project</h3>
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
         <div class="row">
             <div id="project-username-div" class="row">
@@ -21,7 +22,7 @@
                     <label for="project-title">Project Title</label>
                 </div>
             </div>
-            <div class="col s12">
+            <div id="create-project-desc" class="col s12">
                 <div class="input-field col s12">
                     
                     <textarea id="project-description" name="project-description" placeholder="Describe your project." type="text" minlength="5"
@@ -39,7 +40,7 @@
                         <label for="email">Contact Email</label>
                     </div>
                 </div>
-            <div class="input-field col s12">
+            <div style="padding: 0;" class="input-field col s12">
                 <select id="instruments" name="instruments" required multiple>
                   <option value="Guitar">Guitar</option>
                   <option value="Bass Guitar">Bass Guitar</option>
@@ -61,7 +62,7 @@
                 <label for="instruments">Instruments Needed</label>
                     
               </div>
-              <div class="input-field col s12">
+              <div style="padding: 0;" class="input-field col s12">
                 <select id="genres" name="genres" required multiple>
                   <option value="Rock">Rock</option>
                   <option value="Pop">Pop</option>
@@ -84,20 +85,21 @@
               
                 <div class="row">
                     <div class="col s12 center">
-                    <button id="filter-user-btn" type="submit" class=" btn-large  text-shadow">
+                    <button id="filter-user-btn" type="submit" class="yellow btn-large  text-shadow">
                         Create  
                     </button>
                   </div>
                 </div>  
     </form> 
+    <div id="create-project-footer-link" class="row">
+        <div class="col s12">
+            <p class="center-align">
+                Changed your mind? 
+                <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Back to profile</a>
+            </p>
+        </div>
+    </div>
 </div>         
-            <div class="row">
-                <div class="col s12">
-                    <p class="center-align">
-                        Changed your mind? 
-                        <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Back to profile</a>
-                    </p>
-                </div>
-            </div>
-                      
+            
+</div>                 
 {%endblock%}
