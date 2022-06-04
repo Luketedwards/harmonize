@@ -33,7 +33,7 @@ html,body
 }
 
 .btn{
-    background-color: #4d774e!important;
+    background-color: #39583a!important;
 }
 
 .btn:hover{
@@ -194,13 +194,13 @@ h1, h2, h3, h4{
 }
 
 #navbar-color-side{
-    background-color: #4d774e !important;
+    background-color: #39583a !important;
     border-bottom: 1px solid black;
     
 }
 
 footer{
-    background-color: #4d774e !important;
+    background-color: #39583a !important;
 }
 
 #navbar-color-side a{
@@ -304,8 +304,26 @@ footer{
 
 
 #login-container{
-    max-width: 800px;
+    max-width: 500px;
     margin: 0 auto;
+    margin-top: 100px;
+}
+
+#login-container h3{
+    margin-top: 0;
+}
+
+#login-container .card-panel{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#login-card-panel-footer a{
+    color: grey!important;
+}
+
+#login-card-panel-footer{
+    margin-bottom: 0;
 }
 
 #login-container button{
