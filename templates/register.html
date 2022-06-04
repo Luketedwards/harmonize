@@ -72,15 +72,17 @@
     {% endwith %}
   </section>
 
-<h3 id="register-h3" class="center-align">Compose an Account</h3>
+
 
 <div id="register-container" class="row">
+  
     <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
         <div class="card-panel">
+          <h3 id="register-h3" class="center-align">Compose an Account</h3>
             <!-- username -->
             <div class="row">
-                <div class="input-field col s12">
-                    <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+                <div id="register-username" class="input-field col s12">
+                    
                     <input id="username" name="username" type="text" minlength="3"
                         maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                     <label for="username">Username</label>
@@ -90,7 +92,7 @@
                 <input  id="first_name" name="first_name" type="text" class="validate">
                 <label for="first_name">First Name</label>
               </div>
-              <div class="input-field col s6">
+              <div  class="input-field col s6">
                 <input id="last_name" name="last_name" type="text" class="validate">
                 <label for="last_name">Last Name</label>
               </div>
@@ -99,11 +101,11 @@
                 <div class="row m12">
                     <form class="col s12">
                         <div class="row">
-                            <div class="input-field col s6">
+                            <div id="register-password" class="input-field col s6">
                                 <input id="password" name="password"type="password" class="validate">
                                 <label for="password">Password</label>
                             </div>
-                            <div class="input-field col s6">
+                            <div id="register-password-confirm" class="input-field col s6">
                                 <input id="passwordConfirm" name="passwordConfirm" type="password">
                                 <label id="lblPasswordConfirm" for="passwordConfirm" data-error="Password not match" data-success="Password Match">Password (Confirm)</label>
                             </div>
@@ -111,11 +113,11 @@
                     </form>
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div id="register-city" class="input-field col s6">
                       <input id="city" name="city" type="text" class="validate">
                       <label for="city">City</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div id="register-email" class="input-field col s6">
                         <input id="email" name="email" type="email" class="validate">
                         <label for="email">Email</label>
                     </div>
@@ -171,17 +173,18 @@
                 </button>
               </div>
             </div>
+            <div class="row" style="margin-bottom: 0;">
+              <div class="col s12">
+                  <p class="center-align black-text" style="margin: 0;">
+                      Already Registered?
+                      <a href="{{url_for('login')}}" class="grey-text text-darken-4">Log In</a>
+                  </p>
+              </div>
+          </div>
         </div>
 
     </form>
-    <div class="row">
-      <div class="col s12">
-          <p class="center-align white-text">
-              Already Registered?
-              <a href="{{url_for('login')}}" class="light-blue-text text-darken-4">Log In</a>
-          </p>
-      </div>
-  </div>
+    
 </div>
 
 

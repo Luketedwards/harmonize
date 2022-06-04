@@ -36,6 +36,10 @@ html,body
     background-color: #39583a!important;
 }
 
+.green-icons{
+    color: #39583a!important;
+}
+
 .btn:hover{
     background-color: white!important;
     color: black !important;
@@ -195,8 +199,6 @@ h1, h2, h3, h4{
 
 #navbar-color-side{
     background-color: #39583a !important;
-    border-bottom: 1px solid black;
-    
 }
 
 footer{
@@ -876,6 +878,35 @@ footer{
 /* projects-im-in.html */
 
 /* register.html */
+#register-username{
+    width: 97%;
+    margin-left: 2%;
+}
+
+#register-password{
+    width: 47%;
+    margin-left: 3%;
+}
+
+#register-password-confirm{
+    width: 47%;
+    margin-left: 0;
+}
+
+#register-email{
+    width: 49%;
+    margin-left: 1%;
+}
+
+#register-city{
+    width: 47%;
+    margin-left: 2%;
+}
+
+#register-container{
+    padding-top: 50px;
+}
+
 #register-container .card-panel{
     background:rgba(255,255,255, 0.9)!important;
 }
@@ -902,6 +933,7 @@ footer{
 
 #register-h3{
     font-weight: 500;
+    margin-top: 0;
 }
 
 /* settings.html */
