@@ -145,10 +145,10 @@ def logout():
 # users personal profile
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    try:
+    
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
-
+        
         # grab the session user's username from db
         username = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
@@ -160,17 +160,17 @@ def profile(username):
         if session["user"]:
             user = (session["user"])
             current_user = mongo.db.users.find_one({'username': user})
-
+            userProjects = mongo.db.projects.count_documents({'username':current_user})
             return render_template("profile.html", username=username,
             current_user=current_user, listOfUsers=listOfUsers,
             user_notifications=user_notifications,
             allCurrentUsernames=allCurrentUsernames,
-            listOfProjectNames=listOfProjectNames)
+            listOfProjectNames=listOfProjectNames,
+            userProjects=userProjects)
 
         return redirect(url_for("login"))
 
-    except:
-        return render_template("login.html")
+   
 
 
 # Renders users setting page
