@@ -1,6 +1,10 @@
 /* General */
+.dropdown-content{
+    max-height: 400px!important;
+}
+
 img{
-    aspect-ratio: 1/1!important;
+    clip-path: circle();
 }
 
 span.badge.new{
@@ -28,6 +32,14 @@ span.badge.new{
 
 .transparent-bg{
     background: rgba(255,255,255, 0.8)!important;
+}
+
+.transparent-bg ul{
+    margin: 0;
+}
+
+.transparent-bg hr{
+    margin: 0;
 }
 
 .card-content{
@@ -139,7 +151,7 @@ h1, h2, h3, h4{
 }
 
 #dropdown-notifications{
-    width: 30vw !important;
+    width: 45vw !important;
     white-space: initial;
     min-height: fit-content;
     max-height: 50vh;
@@ -261,6 +273,14 @@ footer{
 #dropdown-projects li a {
     color: black !important;
 }
+
+#dropdown-projects{
+    min-width: 12vw!important;
+}
+#dropdown-users{
+    min-width: 10vw!important;
+}
+
 #dropdown-users li a {
     color: black !important;
 }
@@ -324,6 +344,14 @@ footer{
     margin: 0;
     height: 100vh;
     overflow: scroll;
+}
+
+#create-project-bg-image-no-scroll{
+    background-image: url(/static/images/sheet-music.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    
 }
 
 #create-project-panel{
@@ -649,7 +677,7 @@ footer{
     font-size: 2.5vw;
     position: relative;
     top: 4.5vw !important;
-    color: dimgray;
+    color: #39583a;
 }
 
 #other-user-instruments{
@@ -686,6 +714,8 @@ footer{
 
 #user-profile-div{
     padding-top: 25px!important;
+    position: relative;
+    display: block;
 }
 .follower{
     font-weight: 400;
@@ -777,7 +807,7 @@ footer{
 }
 
 #profile-header{
-    background-color: white;
+    
 }
 
 #profile-header a{
@@ -921,6 +951,23 @@ footer{
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
+    overflow: scroll;
+}
+
+#project-hub-host-pill{
+    background: rgba(255,255,255, 0.8)!important;
+    width: 15%;
+    margin: 0 auto;
+    border-radius: 13px;
+    height: fit-content;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    color: black !important;
+}
+
+#project-hub-host-pill a{
+    color: #39583a;
 }
 
 #project-hub-main-panel .card-panel{
@@ -1011,7 +1058,7 @@ footer{
 }
 
 #project-members-panel{
-    width: 70%;
+    width: 60%;
     margin: 0 auto;
     margin-top: 10px !important;
     margin-bottom: 10px;
@@ -1102,6 +1149,7 @@ footer{
     background-size: cover;
     background-position: top;
     width: 100vw;
+    overflow: scroll;
 }
 
 #register-background{
@@ -1359,13 +1407,10 @@ footer{
 
     #create-project-panel{
         width: 96%;
-        
     }
 
     #project-members-panel{
-        width: 100%;
-        margin-left: 5px;
-        margin-right: 5px;
+        width: 96%;
     }
 
     #comment-project-info-container{

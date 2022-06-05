@@ -3,7 +3,7 @@
 <div id="project-hub-main-panel" class="row s12 card-panel">
 <h1 class="center white-text">{{thisProject.projectTitle|title}}</h1>
 
-<h5 class="center white-text">Host: <a href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
+<h5 id="project-hub-host-pill" class="center white-text">Host: <a href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
 
 <div id="comment-project-info-container" class="row ">
     
@@ -12,10 +12,11 @@
             
             <h2 class="center">Project Information</h2>
             <div class="row s12">
-            <div class=" left-align">
+            <div class=" center">
             <h4>Project Description</h4>
             <p>"{{thisProject.projectDescription}}"</p>
             </div>
+            <hr>
             <div class="center">
             <h4 class="">Project Members</h4>
             {% if members|length == 0%}

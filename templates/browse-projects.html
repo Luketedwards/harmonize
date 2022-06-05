@@ -3,14 +3,18 @@
 <h1 class="center">Relevant Projects</h1>
 <div class="">
   {%set myInstrumentsList = myProfile.instruments%}
-  
-    {% for project in projects%}
-    
+  {% set ns = namespace(relevant=false) %}
+  {% for project in projects%}
+        {% for instrument in project.instruments%}
+          {% if instrument|join('') in myInstrumentsList %}
+          
+          {%endif%}
+        {%endfor%} 
+    {% set relevantInstruments = project.instruments%}
     {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
     {%set projectInstrumentsString = project.instruments|join(' ')%}
-    
-    {% for relevantInstrument in project.instruments %}
-      {% if relevantInstrument in myInstrumentsList %}
+  
+      {% if project.instruments[0] in myInstrumentsList or project.instruments[1] in myInstrumentsList or project.instruments[3] in myInstrumentsList or project.instruments[4] in myInstrumentsList %}
       
         <div id="my-projects-panel" class="card-panel blue-grey darken-1">
             {%if project.completed == false%}
@@ -69,7 +73,7 @@
                     <p>
                         I am looking for:
                         {%for instrument in project.instruments%}
-                        {% if relevantInstrument == instrument%}
+                        {% if instrument in myInstrumentsList%}
                       <li id="relevantInstrument" ><span>{{instrument}}</span></li> 
                       {%else%}
                       <li>{{instrument}}</li> 
@@ -89,7 +93,8 @@
      
       
       {%endif%}
-  {%endfor%}   
+      
+    
   {%endfor%}   
   
   

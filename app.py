@@ -148,7 +148,7 @@ def profile(username):
     
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
-        
+        projects = mongo.db.projects.find({'username': username})
         # grab the session user's username from db
         username = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
@@ -166,7 +166,7 @@ def profile(username):
             user_notifications=user_notifications,
             allCurrentUsernames=allCurrentUsernames,
             listOfProjectNames=listOfProjectNames,
-            userProjects=userProjects)
+            userProjects=userProjects,projects=projects)
 
         return redirect(url_for("login"))
 
@@ -413,12 +413,7 @@ def other_profile(usernameOther):
             listOfProjectNames=listOfProjectNames,
             projectsImIn=projectsImIn, myUsername=myUsername)
 
-        return redirect(url_for("profile", username=username,
-        current_user=current_user, listOfUsers=listOfUsers,
-        user=user, following=following,
-        user_notifications=user_notifications,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames))
+        return redirect(url_for("profile", username=username))
     except:
         return render_template("login.html")
 

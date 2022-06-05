@@ -1,9 +1,10 @@
 {% extends "base.html"%}
 
 {% block content %}
-<div id="user-profile-div">
-  <div class=" ">
-    <div class="row  ">
+<div id="create-project-bg-image-no-scroll">
+<div id="user-profile-div" class=" transparent-bg">
+  
+    <div style="margin-bottom: 0;" class="row  ">
       <div id="profile-header" class="col s12 ">
 
         <div class="row ">
@@ -74,18 +75,26 @@
           </div>
           
         </div>
+        
         <div class="center-align row s12">
           
         </div>
       </div>
+      </div>
+    
+      </div>
+    
 
     </div>
 
-  </div>
+  
 
-</div>
+
+
 <div class="">
-  <h2 class="center-align">{{selectedUser.username|capitalize}}'s Projects</h2>
+
+  <h3 class="center-align">{{selectedUser.username|capitalize}}'s Projects</h3>
+  <hr>
   
   {% for project in projects%}
   
@@ -155,7 +164,7 @@
     </div>
     
     {% else %} 
-    <h3 class="center-align">{{selectedUser.username|capitalize}} has no projects.</h3>
+    <h4 class="center-align">{{selectedUser.username|capitalize}} has no projects.</h4>
     
 {%endfor%}   
 

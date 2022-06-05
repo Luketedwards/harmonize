@@ -1,21 +1,21 @@
 {% extends 'base.html'%}
 
 {%block content%}
-
-<div class="">
+<div id="create-project-bg-image">
+<div class="transparent-bg">
     <ul>
         {% for use in users%}
         <div id="all-users-row" class="row">
           <div class="center row s12">
         <li>
             <div id="user-display-div" class="col l4 md12 s12 center">
-                <img id="user-images" class=" " src="{{use.profile_pic}}" alt="">
+                <img id="user-images" class=" " src="{{use.profile_pic}}" alt="{{use.username}}'s profile photo">
             </div>
             <div class="col l4 md12 s12">   
                 <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}" class=''>{{use.username}}</a>
             </div>
             <br>
-            <div class="col l4 md12 s12">    
+            <div class="col l4  md12 s12">    
                     <ul id="user-info-collapse" class="collapsible s12  ">
                         <li> 
                           <div class="collapsible-header  "><i class="material-icons"></i>Instruments</div>
@@ -57,6 +57,6 @@
     </ul>
     
 </div>
-
+</div>
 {%endblock%}
 
