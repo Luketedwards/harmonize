@@ -1,16 +1,16 @@
 {% extends 'base.html'%}
 {% block content %}
-<h3 class="center-align">Manage Project: {{thisProject.projectTitle|title}}</h3>
-
+<div id="create-project-bg-image">
 {% set noOfFiles = thisProject.projectFiles|length%}
 <div id="create-project-panel" class=" card-panel">
+    <h3 class="center-align">Manage Project: {{thisProject.projectTitle|title}}</h3>
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
         <div class="row">
             <div id="project-username-div" class="row">
                 
                     <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
                         maxlength="300" >
-                    <label for="project-username">username</label>
+                    <label class="black-text" for="project-username">username</label>
             </div>
         </div>    
             <div class="row">
@@ -18,29 +18,29 @@
                     
                     <input id="project-title" name="project-title" value="{{thisProject.projectTitle}}" type="text" minlength="5"
                         maxlength="300" required>
-                    <label for="project-title">Project Title</label>
+                    <label class="black-text" for="project-title">Project Title</label>
                 </div>
             </div>
             <div class="input-field col s12">
-                <div class="input-field col s12">
+                <div class="input-field col s12 create-project-label">
                     
                     <input id="project-description" name="project-description" value="{{thisProject.projectDescription}}" type="text" minlength="5"
                         maxlength="3000" required></input>
-                    <label for="project-description">Project Description</label>
+                    <label class="black-text" for="project-description">Project Description</label>
                 </div>
         
                 <div class="row">
                     <div class="input-field col l6 m6 s12">
                       <input id="city" name="city" type="text" value="{{thisProject.city}}" class="validate">
-                      <label for="city">City</label>
+                      <label class="black-text" for="city">City</label>
                     </div>
                     <div class="input-field col l6 m6 s12">
                         <input id="email" value="{{user.email}}" name="email" value="{{thisProject.email}}" type="email" class="validate">
-                        <label for="email">Contact Email</label>
+                        <label class="black-text" for="email">Contact Email</label>
                     </div>
                 </div>
             </div>    
-            <div class="input-field col s12">
+            <div class="input-field col s12 create-project-label">
                 <select id="instruments" name="instruments" required multiple>
                   <option value="Guitar">Guitar</option>
                   <option value="Bass Guitar">Bass Guitar</option>
@@ -59,10 +59,10 @@
                   
                 </select>
                 
-                <label for="instruments">Instruments Needed</label>
+                <label class="black-text" for="instruments">Instruments Needed</label>
                     
               </div>
-              <div class="input-field col s12">
+              <div class="input-field col s12 create-project-label">
                 <select id="genres" name="genres" required multiple>
                   <option value="Rock">Rock</option>
                   <option value="Pop">Pop</option>
@@ -78,15 +78,15 @@
                   
                 </select>
                 
-                <label for="genres" >Genres Needed</label>
+                <label class="black-text" for="genres" >Genres Needed</label>
                     
                   
               </div>
             <div id="manage-project-btn" class="row">
-                <button type="submit" class=" btn-large  text-shadow">
+                <button type="submit" class=" btn btn-large">
                     Make Changes 
                 </button>
-                <a id="projectDelete" href="#modal2" class="btn-large red modal-trigger">
+                <a id="projectDelete" href="#modal2" class="btn-large red-btn red modal-trigger">
                     Delete Project
                 </a>
             
@@ -109,11 +109,11 @@
                     <h5 class="center card-panel">No current members.</h5>
                 {%else%}
                 {% for member in members%}   
-                <div class="yellow-bg card-panel white-text">
+                <div id="manage-project-member-div" class="yellow-bg card-panel white-text">
                     <a class="white-text" href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4>{{member.memberUsername}}</h4></a>
                     
                     <span>{{member.memberInstrument}}</span>
-                    <a id="remove-member-btn" href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}" class="btn red right">Remove</a>
+                    <a id="remove-member-btn" href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}" class=" btn red red-btn right">Remove</a>
                    
                 </div>
                 {%endfor%}
@@ -160,7 +160,7 @@
 </div>
   </div>
               
-              
+</div>              
 <script>
     var instrumentsArray = {{thisProject.instruments|safe}}
     var genreArray = {{thisProject.genres|safe}}

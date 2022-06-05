@@ -1,4 +1,31 @@
 /* General */
+img{
+    aspect-ratio: 1/1!important;
+}
+
+span.badge.new{
+    background-color: #39583a!important;
+}
+.red-btn:hover{
+    border: 2px solid #F44336;
+    background-color: white !important;
+    color: black;
+}
+
+.red-btn{
+    border: 2px solid #F44336;
+    background-color: #F44336!important;
+}
+
+.navbar-green-color{
+    color: #39583a!important;
+}
+
+.side-nav-notifications-bell{
+    font-size: 1rem;
+    padding-top: 3px;
+}
+
 .transparent-bg{
     background: rgba(255,255,255, 0.8)!important;
 }
@@ -138,7 +165,12 @@ h1, h2, h3, h4{
 }
 
 #remove-member-btn{
-    background-color: #F44336 !important
+    background-color: #F44336 !important;
+    border-radius: 5px;
+    
+}
+#remove-member-btn:hover{
+    background-color: white !important
 
 }
 
@@ -166,7 +198,7 @@ h1, h2, h3, h4{
 }
 
 #modal1 a i{
-    color: #4267B2;
+    color: grey;
     margin: 0 !important;
     padding: 0;
     
@@ -245,7 +277,7 @@ footer{
     font-weight: 300;
     font-size: 0.8rem;
     color: black;
-    background-color: white;
+    background-color: white!important;
     border-radius: 5px;
 }
 
@@ -258,7 +290,7 @@ footer{
 }
 
 #dropdown-notifications i {
-    color: #4267B2;
+    color: grey;
 }
 
 #mobile-demo ul{
@@ -295,11 +327,23 @@ footer{
 }
 
 #create-project-panel{
-    width: 70%;
+    width: 60%;
     margin: 0 auto;
     margin-top: 40px;
+    padding-top: 10px;
+    padding-bottom: 0;
     background: rgba(255,255,255, 0.95)!important;
 }
+
+#project-apply-message{
+    width: 105%;
+    margin-left: -9px;
+}
+
+.create-project-label label{
+    left: 0!important;
+}
+
 #create-project-panel h3{
     margin-top: 0;
     margin-bottom: 0;
@@ -398,8 +442,8 @@ footer{
     border-radius: 5px;
     margin: 0 auto;
     margin-top: 15px;
-    padding: 6px 6px 6px 6px;
-    background-color: #F1B24A;
+    padding: 6px 11px 6px 11px;
+    background-color: #e59612;
 }
 
 #direct-messaging-panel h2{
@@ -412,7 +456,7 @@ footer{
 #convo-panel{
     padding: 0.5%;
     padding-bottom: 0;
-    background-color: #F1B24A;
+    background-color: #e59612;
     width: 80%;
     margin: 0 auto;
 }
@@ -494,6 +538,7 @@ footer{
 
 #message-profile-link{
     font-size: 1.2em;
+    color: #39583a;
 }
 /* my-projects.html */
 #myProjects-buttons{
@@ -594,7 +639,6 @@ footer{
 }
 
 #user-images{
-    border: solid 1px black;
     display: inline;
     height: 16vw;
     width: 12vw;
@@ -605,6 +649,7 @@ footer{
     font-size: 2.5vw;
     position: relative;
     top: 4.5vw !important;
+    color: dimgray;
 }
 
 #other-user-instruments{
@@ -966,9 +1011,24 @@ footer{
 }
 
 #project-members-panel{
-    margin-top: 5px !important;
     width: 70%;
     margin: 0 auto;
+    margin-top: 10px !important;
+    margin-bottom: 10px;
+    background: rgba(255,255,255, 0.95)!important;
+}
+
+#manage-project-member-div{
+    padding-top: 0;
+    padding-bottom: 20px;
+}
+
+#manage-project-member-div h4{
+    margin-top: 6px;
+}
+
+#manage-project-member-div h4:hover{
+    color: grey;
 }
 
 #comments-panel{
@@ -1144,6 +1204,10 @@ footer{
         font-size: 2.5rem;
     }
     
+    #direct-messaging-panel h2{
+        font-size: 2.1rem;
+    }
+
     #create-project-panel{
         margin-top: 5px;
         margin-bottom: 5px;

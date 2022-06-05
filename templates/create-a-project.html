@@ -11,7 +11,7 @@
                 
                     <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
                         maxlength="300" >
-                    <label for="project-username">username</label>
+                    <label class="black-text" for="project-username">username</label>
             </div>
         </div>    
             <div class="row">
@@ -19,28 +19,28 @@
                     
                     <input id="project-title" name="project-title" placeholder="Write a project title!" type="text" minlength="5"
                         maxlength="300" required>
-                    <label for="project-title">Project Title</label>
+                    <label class="black-text" for="project-title">Project Title</label>
                 </div>
             </div>
             <div id="create-project-desc" class="col s12">
-                <div class="input-field col s12">
+                <div class="input-field col s12 create-project-label">
                     
                     <textarea id="project-description" name="project-description" placeholder="Describe your project." type="text" minlength="5"
                         maxlength="3000" required></textarea>
-                    <label for="project-description">Project Description</label>
+                    <label class="black-text" for="project-description">Project Description</label>
                 </div>
             </div>    
                 <div class="row">
                     <div class="input-field col s6">
                       <input id="city" name="city" type="text" class="validate">
-                      <label for="city">City</label>
+                      <label class="black-text" for="city">City</label>
                     </div>
                     <div class="input-field col s6">
                         <input id="email" value="{{user.email}}" name="email" type="email" class="validate">
-                        <label for="email">Contact Email</label>
+                        <label class="black-text" for="email">Contact Email</label>
                     </div>
                 </div>
-            <div style="padding: 0;" class="input-field col s12">
+            <div style="padding: 0;" class="input-field col s12 create-project-label">
                 <select id="instruments" name="instruments" required multiple>
                   <option value="Guitar">Guitar</option>
                   <option value="Bass Guitar">Bass Guitar</option>
@@ -59,10 +59,10 @@
                   
                 </select>
                 
-                <label for="instruments">Instruments Needed</label>
+                <label class="black-text" for="instruments">Instruments Needed</label>
                     
               </div>
-              <div style="padding: 0;" class="input-field col s12">
+              <div style="padding: 0;" class="input-field col s12 create-project-label">
                 <select id="genres" name="genres" required multiple>
                   <option value="Rock">Rock</option>
                   <option value="Pop">Pop</option>
@@ -78,7 +78,7 @@
                   
                 </select>
                 
-                <label for="genres" >Genres Needed</label>
+                <label class="black-text" for="genres" >Genres Needed</label>
               </div>  
                     
                   

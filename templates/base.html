@@ -113,7 +113,7 @@
           {% if user_notifications.notifications|length == 0%}
           <li>You have no notifications</li>
           {%else%}
-          {% for notify_side in user_notifications.notifications %}
+          {% for notify_side in user_notifications.notifications|reverse %}
           {%if notify_side in allCurrentUsernames  %}
           <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}} <i class="fa-solid fa-user  "></i></a>
           </li>
@@ -167,7 +167,7 @@
 
         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
         <li><a data-target="dropdown-notifications" class="dropdown-trigger" href="#!"><i
-              class="right fa-solid fa-bell"></i>
+              class="right fa-solid fa-bell "></i>
             {% if user_notifications.notifications|length > 0%}
             <span id="notifications-badge" class="new badge">{{user_notifications.notifications|length}}</span></a></li>
         {%endif%}
@@ -226,10 +226,10 @@
       </form>
 
     <li><a href="{{ url_for('logout') }}">Log Out</a></li> 
-    <li><a class=" modal-trigger" href="#modal1">Notifications<i
-          class="right fa-solid fa-bell"></i>
+    <li><a class=" modal-trigger" href="#modal1">Notifications
         {% if user_notifications.notifications|length > 0%}
-        <span class="new badge">{{user_notifications.notifications|length}}</span></a></li>
+        <span class="new badge">{{user_notifications.notifications|length}} <i
+          class="right fa-solid fa-bell white-text side-nav-notifications-bell"></i></span></a></li>
     {%endif%}
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects-side" href="#!">Projects</a></li>
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile-side" href="#!">My Account</a></li>
