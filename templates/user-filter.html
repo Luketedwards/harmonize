@@ -1,11 +1,11 @@
 {% extends 'base.html'%}
 {% block content %}
-<h3 class="center-align">Search Users by Parameter</h3>
-
-<div id="search-users-panel" class="row card-panel s8">
+<div id="filter-users-bg-image">
+<div id="search-users-panel" class="row card-panel s8 transparent-bg">
+  <h3 class="center-align">Search Users by Parameter</h3>
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
         <div class="row">
-            <div id="project-username-div" class="row">
+            <div style="height: 0;" id="project-username-div" class="row">
                 <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
                     <input id="project-username" name="project-username" value="" type="text" minlength="5"
                         maxlength="300" >
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                       <input id="city" name="city" type="text" class="validate">
-                      <label for="city">City</label>
+                      <label class="black-text" for="city">City</label>
                     </div>
                 </div>
             </div>    
@@ -46,7 +46,7 @@
                   
                 </select>
                 
-                <label for="instruments">Instruments</label>
+                <label class="black-text" for="instruments">Instruments</label>
                     
             </div>
               <div class="input-field col s12">
@@ -66,7 +66,7 @@
                   
                 </select>
                 
-                <label for="genres" >Genres</label>
+                <label class="black-text" for="genres" >Genres</label>
               </div>  
                     
                   
@@ -89,7 +89,7 @@
       </div>
             
 </div>
-            
+</div>            
                    
             
 {% endblock %}

@@ -1,8 +1,9 @@
 {% extends 'base.html'%}
 
 {%block content%}
-<div class="">
-  <h1 class="center">Following</h1>
+<div id="create-project-bg-image">
+<div style="height: 100%;" class="transparent-bg">
+  <h1 id="follower-heading" class="center">Following</h1>
   {% if current_user.following|length > 0%}
   <ul>
       {% for use in users%}
@@ -64,6 +65,6 @@
   {%endif%}
   </div>
 </div>
-
+</div>
 {%endblock%}
 

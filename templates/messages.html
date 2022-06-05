@@ -1,6 +1,9 @@
 {% extends 'base.html'%}
 {%block content%}
+<div id="messages-bg-image"> 
+<div style="height: 100%; padding-top: 20px;" class="transparent-bg">   
 <div id="direct-messaging-panel" class=" s12 card-panel center  black-text">
+    
     <h2 class="center">Messages: {{usernameToContact|capitalize}}</h2>
 <div id="message-container" class="col s12 white black-text ">   
 {% for conversation in messages%}
@@ -27,6 +30,8 @@
         Send
     </button>
 </form>   
+</div>
+</div> 
 </div>
 <script>
     var messageDiv = document.getElementById("message-container");

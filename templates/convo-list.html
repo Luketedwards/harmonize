@@ -1,7 +1,9 @@
 {% extends 'base.html'%}
 {%block content%}
-<h1 class="center">Conversations</h1>
-<div class="  ">
+<div id="messages-bg-image">  
+<div style="height: 100%;" class="transparent-bg"> 
+<h1 style="margin-top:0;padding-top:20px;" class="center">Conversations</h1>
+<div class="">
 <div id="convo-panel" class="card-panel  white-text"> 
 {% for chats in myConversations%}
 {% if username == chats.members[0]%}
@@ -28,6 +30,7 @@
 {%endif%}    
 {%endfor%}
 </div>
-</div>   
-
+</div>  
+</div>    
+</div>
 {%endblock%}

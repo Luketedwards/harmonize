@@ -1,8 +1,8 @@
 {% extends 'base.html'%}
 
 {%block content%}
-
-<div class=" s12">
+<div id="create-project-bg-image">
+<div class=" transparent-bg s12">
   <h1 id="filter-user-header" class="center">Users matching: "{{cityQuery}} {{instrumentsQuery|join}} {{genresQuery|join}}"</h1>
   {% if instrumentsQuery != ['']%}
   {% set instrumentQuery = instrumentsQuery|join%}
