@@ -73,7 +73,7 @@
       <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}} <i class="fa-solid fa-user"></i></a>
       </li>
       {%elif notify in listOfProjectNames%}
-      <li><a href="{{url_for('manage_project_link', thisProject=notify )}}">You have a new application to your project: {{notify}} <i class="fa-solid fa-file-circle-check"></i></a></li>
+      <li><a href="{{url_for('manage_project_link', thisProject=notify )}}">New project application: {{notify}} <i class="fa-solid fa-file-circle-check"></i></a></li>
       {% elif 'message' in notify%}
       <li><a href="{{url_for('convo_list') }}">{{notify}} <i class="fa-solid fa-envelope"></i></a></li>
 
@@ -253,7 +253,7 @@
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
-    <div class="row flashes">
+    <div style="margin-bottom: 0;" class="row flashes transparent-bg">
       <h4 id="messages-flash" class=" center-align">{{ message }}</h4>
     </div>
     {% endfor %}

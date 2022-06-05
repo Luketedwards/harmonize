@@ -160,7 +160,7 @@ def profile(username):
         if session["user"]:
             user = (session["user"])
             current_user = mongo.db.users.find_one({'username': user})
-            userProjects = mongo.db.projects.count_documents({'username':current_user})
+            userProjects = mongo.db.projects.count_documents({'username':username})
             return render_template("profile.html", username=username,
             current_user=current_user, listOfUsers=listOfUsers,
             user_notifications=user_notifications,
@@ -782,8 +782,8 @@ def accept_application(applicant, applicantInstrument, thisProject, thisProjectT
 
         )
         mongo.db.users.update_one({"username": applicant}, {'$push': {
-                                  "notifications": "your application to "\
-                                    + thisProjectTitle + " was approved."}})
+                                  "notifications": "Application to "\
+                                    + thisProjectTitle + " approved."}})
 
         flash("Application Approved")
 
@@ -836,7 +836,7 @@ def deny_application(applicant, thisProject, thisProjectTitle):
         )
 
         mongo.db.users.update_one({"username": applicant}, {'$push': {
-                                  "notifications": "your application to "\
+                                  "notifications": "Application to "\
                                        + thisProjectTitle + " was denied."}})
         flash("Application Denied")
         return redirect(request.referrer)

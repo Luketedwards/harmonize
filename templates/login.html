@@ -65,7 +65,7 @@
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
-    <div class="row flashes">
+    <div style="margin-bottom: 0;" class="row flashes transparent-bg">
       <h4 id="messages-flash" class=" center-align">{{ message }}</h4>
     </div>
     {% endfor %}
@@ -102,8 +102,8 @@
                 <!-- login -->
                 <div class=" center-align">
                   <div class="  center">
-                    <button  type="submit" class="col s12 btn-large btn ">
-                        Log In <i class="fas fa-sign-in-alt"></i>
+                    <button  type="submit" class="col s12  btn ">
+                        Log In 
                     </button>
                   </div>
                 </div>

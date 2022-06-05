@@ -10,7 +10,6 @@
     $('input#input_text, textarea#project-description').characterCounter();
     $('.modal').modal();
     if(window.innerWidth < 1000){
-      $('#bio-container').removeClass('container');
       $('#about-the-project').addClass('center')
       $('#instruments-and-genre').addClass('center')
       
@@ -19,10 +18,10 @@
 
   $(window).resize(function(){
     if(window.innerWidth < 1000){
-      $('#bio-container').removeClass('container');
+      
      
     }else{
-      $('#bio-container').addClass('container');
+      
      
     }
     

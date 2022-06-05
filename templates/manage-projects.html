@@ -113,7 +113,7 @@
                     <a class="white-text" href="{{url_for('other_profile', usernameOther=member.memberUsername )}}"><h4>{{member.memberUsername}}</h4></a>
                     
                     <span>{{member.memberInstrument}}</span>
-                    <a id="remove-member-btn" href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}" class=" btn red red-btn right">Remove</a>
+                    <a id="remove-member-btn" style="border: 2px solid #F44336;" href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}" class=" btn red red-btn right">Remove</a>
                    
                 </div>
                 {%endfor%}
@@ -123,7 +123,7 @@
                     <h5 class="center card-panel red lighten-2 white-text border">No current applications.</h5>
                 {%else%}
                 {% for apply in applications%}   
-                <div class="card-panel center-align">
+                <div id="application-to-project" class="card-panel center-align">
                     <a href="{{url_for('other_profile', usernameOther=apply.applicantUsername )}}"><h4>{{apply.applicantUsername}}</h4></a>
                     <div class="row s12">
                     <div>
@@ -131,14 +131,14 @@
                         <p>{{apply.projectMessage}}</p>
                     </div>
                     <div>
-                        <h5>Instrument applied for.</h5>
+                        <h5>Instrument</h5>
                         {% for instrument in apply.instruments%}
                         <p>{{instrument}}</p>
                         {%endfor%}
                     </div>    
                 </div>
-                    <a href="{{url_for('accept_application', applicant=apply.applicantUsername,applicantInstrument=apply.instruments[0], thisProject=thisProject._id, thisProjectTitle= thisProject.projectTitle)}}" class="waves-effect waves-light green btn">Accept</a>
-                    <a id="application-denied-btn" href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject._id,thisProjectTitle= thisProject.projectTitle)}}" class="waves-effect waves-light btn red">Deny</a>
+                    <a href="{{url_for('accept_application', applicant=apply.applicantUsername,applicantInstrument=apply.instruments[0], thisProject=thisProject._id, thisProjectTitle= thisProject.projectTitle)}}" class="waves-effect waves-light  btn">Accept</a>
+                    <a id="application-denied-btn" href="{{url_for('deny_application', applicant=apply.applicantUsername, thisProject=thisProject._id,thisProjectTitle= thisProject.projectTitle)}}" class="waves-effect waves-light btn red red-btn">Deny</a>
                 </div>
                 {%endfor%}
             {%endif%}    

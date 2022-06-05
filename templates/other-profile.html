@@ -13,7 +13,7 @@
           <!-- notice the "circle" class -->
           </div>
 
-          <div style="margin-top: 19px;" class="col l8 s12 center l6">
+          <div  class="col l8 s12 center l6">
 
             <div id="bio-container" class="container">
               
@@ -139,23 +139,31 @@
         </div>   
       
         <div class="row">
-            <div class="col l6 m6 s12 push-l1 left-align left">
+            <div class="col l6 m6 s12 push-l1 left-align about-the-project left">
                 <h4>About the project</h4>
                 <p>"{{project.projectDescription}}"</p>
                 <p>Location: {{project.city}}</p>
             </div>
-            <div class="col l6 m6 s12 push-l1 left-align right-l left-s">
+            <div class="col l6 m6 s12 push-l1 left-align right-l left-s instruments-and-genre">
                 <h4>Instruments & Genre</h4>
-                <p>
+                <div class="row">
+                  <div class="col s6 ">
+                <p style="margin-bottom: 20px;">
                     I am looking for:
                     {%for instrument in project.instruments%}
                    <li>{{instrument}}</li> 
                     {%endfor%}
-                    The main genre(s) are:
+                </p>        
+                  </div>
+                  <div class="col s6 ">
+                <p style="margin-bottom: 0;">
+                    The genre(s) are:
                     {%for genre in project.genres%}
                    <li>{{genre}}</li> 
                     {%endfor%}
-                </p>
+                  </p>    
+                  </div>
+                  </div>
             </div>
             
             

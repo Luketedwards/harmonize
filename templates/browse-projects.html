@@ -70,20 +70,29 @@
                 </div>
                 <div   class="col l6 m6 s12 push-l1 left-align right-l instruments-and-genre left-s">
                     <h4>Instruments & Genre</h4>
-                    <p>
+                    <div class="row">
+                    
+                      <div class="col s6">
+                      <p style="margin-bottom: 20px;">
                         I am looking for:
                         {%for instrument in project.instruments%}
                         {% if instrument in myInstrumentsList%}
                       <li id="relevantInstrument" ><span>{{instrument}}</span></li> 
                       {%else%}
                       <li>{{instrument}}</li> 
-                      {%endif%}
+                      {%endif%}                     
                         {%endfor%}
+                      </p>
+                      </div>
+                      <div class="col s6">
+                      <p style="margin-bottom: 0;">
                         The main genre(s) are:
                         {%for genre in project.genres%}
                       <li>{{genre}}</li> 
                         {%endfor%}
+                      </div>    
                     </p>
+                  </div>
                 </div>
                 
                 
