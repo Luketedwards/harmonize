@@ -1,13 +1,14 @@
 {% extends 'base.html'%}
 {% block content %}
-<h1 class="center-align">Upload Project Files for {{thisProjectTitle|capitalize}}</h1>
-<div id="project-image-upload" class="card-panel center-align">
+<div id="project-file-upload-bg">
+<div id="project-image-upload" class="card-panel center-align transparent-bg">
+    <h3 class="center-align">Upload Project Files</h3>
     <span id="file-selected"></span>
         <form method="post" enctype="multipart/form-data">
             <label id="file-upload-label" for="file-upload" type="file" class="btn">Choose File</label>
         <input required class="btn" id="file-upload" type="file" name="file1" accept=".jpg,.png,.gp,.etf,.mp3,.mp4,.wav,.flac,.pdf">
         <button id="image-submit-btn" class='btn' type="submit">Submit</button>
-        <div class="row s12">
+        <div style="margin-top: 12px; padding-right: 10px; margin-bottom: 0" class="row s12">
         <div class="col l6 m6 s12">
         <label  type="text" for="file-name">Name Your File</label>  
         <input  required pattern="[^' '.]+" id="file-name" name="file-name" type="text" placeholder="seperate each word with '-', no blank spaces.">
@@ -28,7 +29,7 @@
                 
           </div>
         </div>
-        <br>
+        
         <label  type="text" for="file-description">File Description</label>
         
         <input required id="file-description" name="file-description" type="text" placeholder="Summarise your file.">
@@ -36,15 +37,16 @@
         
         
         </form>
-        
+        <div class="row">
+            <div class="col s12">
+                <p class="center-align">
+                    Changed your mind? 
+                    <a href="{{url_for('project_hub', thisProject = thisProject)}}" class="light-blue-text text-darken-4">Back to project</a>
+                </p>
+            </div>
+        </div>
 </div>    
-<div class="row">
-    <div class="col s12">
-        <p class="center-align">
-            Changed your mind? 
-            <a href="{{url_for('project_hub', thisProject = thisProject)}}" class="light-blue-text text-darken-4">Back to project</a>
-        </p>
-    </div>
+
 </div>
 
 {% endblock %}

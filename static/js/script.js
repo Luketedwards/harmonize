@@ -12,15 +12,26 @@
     if(window.innerWidth < 1000){
       $('#about-the-project').addClass('center')
       $('#instruments-and-genre').addClass('center')
-      
+      $('#about-the-project').removeClass('left')
+      $('#instruments-and-genre').removeClass('right')
+    }else{
+      $('#about-the-project').removeClass('center')
+      $('#instruments-and-genre').removeClass('center')
+      $('#about-the-project').addClass('left')
+      $('#instruments-and-genre').addClass('right')
     }
   });
 
   $(window).resize(function(){
     if(window.innerWidth < 1000){
-      
+      $('#about-the-project').addClass('center')
+      $('#instruments-and-genre').addClass('center')
      
     }else{
+      $('#about-the-project').removeClass('center')
+      $('#instruments-and-genre').removeClass('center')
+      $('#about-the-project').addClass('left')
+      $('#instruments-and-genre').addClass('right')
       
      
     }
