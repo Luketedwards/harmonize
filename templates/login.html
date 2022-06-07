@@ -4,7 +4,7 @@
   <!-- same as base.html code, but with user notifications function removed to fix error whilst user was not logged in.-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="description" content="A social media platform for connecting musicians.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     type="text/css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,25 +119,5 @@
     © 2022 Luke Edwards
   </footer>
 </body>
-<script>
-  $(function () {
-    var availableTags = [{
-        %
-        for user in listOfUsers %
-      }
-      "{{user}}",
-      {
-        %
-        endfor %
-      }
-    ];
-    $("#autocomplete-input").autocomplete({
-      source: availableTags
-    });
-  });
 
-  function searchBar {
-    window.location.href = "{{url_for('profile', username=username)}}";
-  }
-</script>
 <script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>
