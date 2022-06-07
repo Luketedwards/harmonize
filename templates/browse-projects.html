@@ -2,115 +2,124 @@
 {%block content%}
 <h1 class="center">Relevant Projects</h1>
 <div class="">
+  <!-- Sets variable of users own instruments to compare to search results and display them if relevant,
+   also conditionally renders buttons of projects based on if user is a member or the host. -->
+
   {%set myInstrumentsList = myProfile.instruments%}
   {% set ns = namespace(relevant=false) %}
   {% for project in projects%}
-        {% for instrument in project.instruments%}
-          {% if instrument|join('') in myInstrumentsList %}
-          
-          {%endif%}
-        {%endfor%} 
-    {% set relevantInstruments = project.instruments%}
-    {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
-    {%set projectInstrumentsString = project.instruments|join(' ')%}
-  
-      {% if project.instruments[0] in myInstrumentsList or project.instruments[1] in myInstrumentsList or project.instruments[3] in myInstrumentsList or project.instruments[4] in myInstrumentsList %}
-      
-        <div id="my-projects-panel" class="card-panel blue-grey darken-1">
-            {%if project.completed == false%}
-                    <span class="">This project is still active!<i id="my-projects-panel-tick"  class="fa-solid fa-check"></i></span>
-                    {%else%}
-                    <span class=""> This project is no longer active.<i id="my-projects-panel-cross" class="fa-solid fa-circle-xmark "></i></span>  
-            {%endif%}
-            <div class="row right">
-              {% if project.completed == true%}
-              <div id="projects-panel-apply-closed" class="col s12 right ">
-                <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
-              </div>
-              {%else%}
-              {% if username == project.username%}
-              <div id="projects-panel-apply" class="col s12 right">
-                <span><a href="{{url_for('manage_project', thisProject=project._id)}}" class="waves-effect waves-light btn">Manage</a></span>
-                <span><a href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn">View</a></span>      
-              </div>
-            {%else%}
-                {% if username in members %}
-                <div id="projects-panel-apply" class="col s12 right">
-                  <span><a href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn">View</a></span>      
-                </div>
-                {%else%}
-                  <div id="projects-panel-apply" class="col s12 right">
-                    <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=username)}}" class="waves-effect waves-light btn">Apply</a></span>      
-                  </div>
-                {%endif%}
-            {%endif%}    
-                  
-              {%endif%}
-              </div>
-            <br>
-            {% if username in members%}
-            <span>You are a member of this project!</span>
-            {%endif%}
-            
-            <div class="row">     
-            <h2 id="other-profile-projects-title" class="center-align center">{{project.projectTitle|title}}</h2>
-            <div class="row center">
-            <div class="chip s12">
-                
-            <span> Created by: <a href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
-            </div>   
-          </div> 
-            </div>   
-          
-            <div class="row">
-                <div  class="col l6 m6 s12 push-l1 left-align about-the-project left">
-                    <h4>About the project</h4>
-                    <p>"{{project.projectDescription}}"</p>
-                    <p>Location: {{project.city}}</p>
-                </div>
-                <div   class="col l6 m6 s12 push-l1 left-align right-l instruments-and-genre left-s">
-                    <h4>Instruments & Genre</h4>
-                    <div class="row">
-                    
-                      <div class="col s6">
-                      <p style="margin-bottom: 20px;">
-                        I am looking for:
-                        {%for instrument in project.instruments%}
-                        {% if instrument in myInstrumentsList%}
-                      <li id="relevantInstrument" ><span>{{instrument}}</span></li> 
-                      {%else%}
-                      <li>{{instrument}}</li> 
-                      {%endif%}                     
-                        {%endfor%}
-                      </p>
-                      </div>
-                      <div class="col s6">
-                      <p style="margin-bottom: 0;">
-                        The main genre(s) are:
-                        {%for genre in project.genres%}
-                      <li>{{genre}}</li> 
-                        {%endfor%}
-                      </div>    
-                    </p>
-                  </div>
-                </div>
-                
-                
-            </div>
-            
-        </div>
-     
-      
+  {% for instrument in project.instruments%}
+  {% if instrument|join('') in myInstrumentsList %}
+
+  {%endif%}
+  {%endfor%}
+  {% set relevantInstruments = project.instruments%}
+  {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
+  {%set projectInstrumentsString = project.instruments|join(' ')%}
+
+  {% if project.instruments[0] in myInstrumentsList or project.instruments[1] in myInstrumentsList or project.instruments[3] in myInstrumentsList or project.instruments[4] in myInstrumentsList %}
+
+  <div id="my-projects-panel" class="card-panel blue-grey darken-1">
+    {%if project.completed == false%}
+    <span class="">This project is still active!<i id="my-projects-panel-tick" class="fa-solid fa-check"></i></span>
+    {%else%}
+    <span class=""> This project is no longer active.<i id="my-projects-panel-cross"
+        class="fa-solid fa-circle-xmark "></i></span>
+    {%endif%}
+    <div class="row right">
+      {% if project.completed == true%}
+      <div id="projects-panel-apply-closed" class="col s12 right ">
+        <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
+      </div>
+      {%else%}
+      {% if username == project.username%}
+      <div id="projects-panel-apply" class="col s12 right">
+        <span><a href="{{url_for('manage_project', thisProject=project._id)}}"
+            class="waves-effect waves-light btn">Manage</a></span>
+        <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
+            class="waves-effect waves-light btn">View</a></span>
+      </div>
+      {%else%}
+      {% if username in members %}
+      <div id="projects-panel-apply" class="col s12 right">
+        <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
+            class="waves-effect waves-light btn">View</a></span>
+      </div>
+      {%else%}
+      <div id="projects-panel-apply" class="col s12 right">
+        <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=username)}}"
+            class="waves-effect waves-light btn">Apply</a></span>
+      </div>
       {%endif%}
-      
-    
-  {%endfor%}   
-  
-  
-  
+      {%endif%}
+
+      {%endif%}
+    </div>
+    <br>
+    {% if username in members%}
+    <span>You are a member of this project!</span>
+    {%endif%}
+
+    <div class="row">
+      <h2 id="other-profile-projects-title" class="center-align center">{{project.projectTitle|title}}</h2>
+      <div class="row center">
+        <div class="chip s12">
+
+          <span> Created by: <a
+              href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col l6 m6 s12 push-l1 left-align about-the-project left">
+        <h4>About the project</h4>
+        <p>"{{project.projectDescription}}"</p>
+        <p>Location: {{project.city}}</p>
+      </div>
+      <div class="col l6 m6 s12 push-l1 left-align right-l instruments-and-genre left-s">
+        <h4>Instruments & Genre</h4>
+        <div class="row">
+
+          <div class="col s6">
+            <p style="margin-bottom: 20px;">
+              I am looking for:
+              {%for instrument in project.instruments%}
+              {% if instrument in myInstrumentsList%}
+              <li id="relevantInstrument"><span>{{instrument}}</span></li>
+              {%else%}
+              <li>{{instrument}}</li>
+              {%endif%}
+              {%endfor%}
+            </p>
+          </div>
+          <div class="col s6">
+            <p style="margin-bottom: 0;">
+              The main genre(s) are:
+              {%for genre in project.genres%}
+              <li>{{genre}}</li>
+              {%endfor%}
+          </div>
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+
   </div>
-  
-  
-  </div>
-  </div>
+
+
+  {%endif%}
+
+
+  {%endfor%}
+
+
+
+</div>
+
+
+</div>
+</div>
 {%endblock%}

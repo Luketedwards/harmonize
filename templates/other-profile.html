@@ -1,183 +1,179 @@
 {% extends "base.html"%}
-
+<!-- Displays profile of another user -->
 {% block content %}
 <div id="create-project-bg-image-no-scroll">
-<div id="user-profile-div" class=" transparent-bg">
-  
+  <div id="user-profile-div" class=" transparent-bg">
+
     <div style="margin-bottom: 0;" class="row  ">
       <div id="profile-header" class="col s12 ">
-
         <div class="row ">
           <div class="col s12 l4 l-left center-m">
-          <img id="profile-image" src="{{selectedUser.profile_pic}}" alt="" id="profile-image" class="circle responsive-img ">
-          <!-- notice the "circle" class -->
+            <img id="profile-image" src="{{selectedUser.profile_pic}}" alt="" id="profile-image"
+              class="circle responsive-img ">
           </div>
-
-          <div  class="col l8 s12 center l6">
-
+          <div class="col l8 s12 center l6">
             <div id="bio-container" class="container">
-              
-                <div class="col s12">
-                  <div id="other-profile-title-and-btns" style="margin-bottom: 0;" class="center-align row s12">
+              <div class="col s12">
+                <div id="other-profile-title-and-btns" style="margin-bottom: 0;" class="center-align row s12">
                   <div class="col l4 m12 s12">
                     <h2 id="bio-container-h2">{{selectedUser.username|capitalize}}</h2>
                   </div>
                   <div class="col l8 m12 s12">
-                    <a href="{{url_for('messages', usernameToContact=selectedUser.username)}}" class="edit-profile-btns waves-effect waves-light btn">Contact</a>
+                    <a href="{{url_for('messages', usernameToContact=selectedUser.username)}}"
+                      class="edit-profile-btns waves-effect waves-light btn">Contact</a>
                     {% if selectedUser.username in current_user.following %}
-                    <a style="margin-right: 10px!important;" href="{{url_for('unfollow_user', username=selectedUser.username, usernameOther=selectedUser.username )}}" class="edit-profile-btns waves-effect waves-light btn">Unfollow</a>
+                    <a style="margin-right: 10px!important;"
+                      href="{{url_for('unfollow_user', username=selectedUser.username, usernameOther=selectedUser.username )}}"
+                      class="edit-profile-btns waves-effect waves-light btn">Unfollow</a>
                     {%endif%}
                     {% if selectedUser.username not in current_user.following%}
-                    <a style="margin-right: 10px!important;" href="{{url_for('follow_user', username=selectedUser.username, usernameOther=selectedUser.username)}}" class="edit-profile-btns waves-effect waves-light btn">Follow</a>
+                    <a style="margin-right: 10px!important;"
+                      href="{{url_for('follow_user', username=selectedUser.username, usernameOther=selectedUser.username)}}"
+                      class="edit-profile-btns waves-effect waves-light btn">Follow</a>
                     {%endif%}
                   </div>
                 </div>
-                  <div id="profile-followers" class="row s12">       
+                <div id="profile-followers" class="row s12">
                   <span class="follower">Following: {{selectedUser.following|length}}</span>
                   <span class="follower">Followers: {{selectedUser.followers|length}}</span>
                   <span class="follower">Projects: {{project_number}}</span>
                 </div>
 
-                  <div class="card z-depth-3">
-                    <div class="card-tabs">
-                      <ul class="tabs tabs-fixed-width">
-                        <li class="tab"><a class="active" href="#test4">Bio</a></li>
-                        <li class="tab"><a class="active" href="#test5">Instruments</a></li>
-                        <li class="tab"><a href="#test6">Genres</a></li>
+                <div class="card z-depth-3">
+                  <div class="card-tabs">
+                    <ul class="tabs tabs-fixed-width">
+                      <li class="tab"><a class="active" href="#test4">Bio</a></li>
+                      <li class="tab"><a class="active" href="#test5">Instruments</a></li>
+                      <li class="tab"><a href="#test6">Genres</a></li>
+                    </ul>
+                  </div>
+                  <div class="card-content grey lighten-4">
+                    <div id="test4">{{selectedUser.bio}}</div>
+                    <div id="test5">
+                      <ul>
+                        {% for instrument in selectedUser.instruments%}
+                        <li>
+                          {{instrument}}
+                        </li>
+                        {%endfor%}
                       </ul>
                     </div>
-                    <div class="card-content grey lighten-4">
-                      <div id="test4">{{selectedUser.bio}}</div>
-                      <div id="test5">
-                        <ul>
-                          {% for instrument in selectedUser.instruments%}
-                          <li>
-                            {{instrument}}
-                          </li>
-                          {%endfor%}
-                        </ul>
-                      </div>
-                      <div id="test6">
-                        <ul>
-                          {% for genre in selectedUser.genres%}
-                          <li>
-                            {{genre}}
-                          </li>
-                          {%endfor%}
-                        </ul>
-                      </div>
+                    <div id="test6">
+                      <ul>
+                        {% for genre in selectedUser.genres%}
+                        <li>
+                          {{genre}}
+                        </li>
+                        {%endfor%}
+                      </ul>
                     </div>
                   </div>
                 </div>
-              
+              </div>
+
             </div>
 
           </div>
-          
-        </div>
-        
-        <div class="center-align row s12">
-          
-        </div>
-      </div>
-      </div>
-    
-      </div>
-    
 
+        </div>
+
+        <div class="center-align row s12">
+
+        </div>
+      </div>
     </div>
 
-  
-
-
+  </div>
+</div>
 
 <div class="">
 
   <h3 class="center-align">{{selectedUser.username|capitalize}}'s Projects</h3>
   <hr>
-  
+
   {% for project in projects%}
-  
+
   {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
-    <div id="my-projects-panel" class="card-panel z-depth-3 darken-1">
-        {%if project.completed == false%}
-                <span class="">This project is still active!<i id="my-projects-panel-tick"  class="fa-solid fa-check"></i></span>
-                {%else%}
-                <span class=""> This project is no longer active.<i id="my-projects-panel-cross" class="fa-solid fa-circle-xmark "></i></span>  
-        {%endif%}
-        <div class="row right">
-          {% if project.completed == true%}
-          <div id="projects-panel-apply-closed" class="col s12 right ">
-            <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
-          </div>
-          {%else%}
-            
-              {% if myUsername in members %}
-              <div id="projects-panel-apply" class="col s12 right">
-                <span><a href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn">View</a></span>      
-              </div>
-              {%else%}
-                <div id="projects-panel-apply" class="col s12 right">
-                  <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=selectedUser.username)}}" class="waves-effect waves-light btn">Apply</a></span>      
-                </div>
-              {%endif%}
-              
-          {%endif%}
-          </div>
-        <br>
-        {% if myUsername in members%}
-        <span>You are a member of this project!</span>
-        {%endif%}
-        <div class="row">     
-        <h2 id="other-profile-projects-title" class="center-align center">{{project.projectTitle|title}}</h2>
-        <div class="row center">
-        <div class="chip s12">
-            <img src="{{selectedUser.profile_pic}}" alt="{{selectedUser.username}}'s profile photo">
-        <span> Created by: <a href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
-        </div>   
-      </div> 
-        </div>   
-      
-        <div class="row">
-            <div class="col l6 m6 s12 push-l1 left-align about-the-project left">
-                <h4>About the project</h4>
-                <p>"{{project.projectDescription}}"</p>
-                <p>Location: {{project.city}}</p>
-            </div>
-            <div class="col l6 m6 s12 push-l1 left-align right-l left-s instruments-and-genre">
-                <h4>Instruments & Genre</h4>
-                <div class="row">
-                  <div class="col s6 ">
-                <p style="margin-bottom: 20px;">
-                    I am looking for:
-                    {%for instrument in project.instruments%}
-                   <li>{{instrument}}</li> 
-                    {%endfor%}
-                </p>        
-                  </div>
-                  <div class="col s6 ">
-                <p style="margin-bottom: 0;">
-                    The genre(s) are:
-                    {%for genre in project.genres%}
-                   <li>{{genre}}</li> 
-                    {%endfor%}
-                  </p>    
-                  </div>
-                  </div>
-            </div>
-            
-            
-        </div>
-        
+  <div id="my-projects-panel" class="card-panel z-depth-3 darken-1">
+    {%if project.completed == false%}
+    <span class="">This project is still active!<i id="my-projects-panel-tick" class="fa-solid fa-check"></i></span>
+    {%else%}
+    <span class=""> This project is no longer active.<i id="my-projects-panel-cross"
+        class="fa-solid fa-circle-xmark "></i></span>
+    {%endif%}
+    <div class="row right">
+      {% if project.completed == true%}
+      <div id="projects-panel-apply-closed" class="col s12 right ">
+        <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
+      </div>
+      {%else%}
+
+      {% if myUsername in members %}
+      <div id="projects-panel-apply" class="col s12 right">
+        <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
+            class="waves-effect waves-light btn">View</a></span>
+      </div>
+      {%else%}
+      <div id="projects-panel-apply" class="col s12 right">
+        <span><a
+            href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=selectedUser.username)}}"
+            class="waves-effect waves-light btn">Apply</a></span>
+      </div>
+      {%endif%}
+
+      {%endif%}
     </div>
-    
-    {% else %} 
-    <h4 class="center-align">{{selectedUser.username|capitalize}} has no projects.</h4>
-    
-{%endfor%}   
+    <br>
+    {% if myUsername in members%}
+    <span>You are a member of this project!</span>
+    {%endif%}
+    <div class="row">
+      <h2 id="other-profile-projects-title" class="center-align center">{{project.projectTitle|title}}</h2>
+      <div class="row center">
+        <div class="chip s12">
+          <img src="{{selectedUser.profile_pic}}" alt="{{selectedUser.username}}'s profile photo">
+          <span> Created by: <a
+              href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col l6 m6 s12 push-l1 left-align about-the-project left">
+        <h4>About the project</h4>
+        <p>"{{project.projectDescription}}"</p>
+        <p>Location: {{project.city}}</p>
+      </div>
+      <div class="col l6 m6 s12 push-l1 left-align right-l left-s instruments-and-genre">
+        <h4>Instruments & Genre</h4>
+        <div class="row">
+          <div class="col s6 ">
+            <p style="margin-bottom: 20px;">
+              I am looking for:
+              {%for instrument in project.instruments%}
+              <li>{{instrument}}</li>
+              {%endfor%}
+            </p>
+          </div>
+          <div class="col s6 ">
+            <p style="margin-bottom: 0;">
+              The genre(s) are:
+              {%for genre in project.genres%}
+              <li>{{genre}}</li>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+  <h4 class="center-align">{{selectedUser.username|capitalize}} has no projects.</h4>
+
+  {%endfor%}
 
 </div>
-
 
 </div>
 </div>

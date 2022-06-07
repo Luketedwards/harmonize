@@ -1,82 +1,77 @@
 {% extends 'base.html'%}
 {%block content%}
 <div id="create-project-bg-image">
-<div id="create-project-panel" class="row card-panel s8">
-    <h3 class="center-align">Apply to {{thisProject.projectTitle}}</h3>
-    <form class="col s12 m8 offset-m2" method="POST" action="#!">
-        <div style="height: 0;" class="row">
-            <div style="height: 0;" id="project-username-div" class="row">
-                
+    <div id="create-project-panel" class="row card-panel s8">
+        <h3 class="center-align">Apply to {{thisProject.projectTitle}}</h3>
+        <form class="col s12 m8 offset-m2" method="POST" action="#!">
+            <div style="height: 0;" class="row">
+                <div style="height: 0;" id="project-username-div" class="row">
                     <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
-                        maxlength="300" >
+                        maxlength="300">
                     <label for="project-username">username</label>
+                </div>
             </div>
-        </div>    
-        <div style="height: 0;" class="row">
-            <div style="height: 0;" id="" class="row">
-                
-                    <input hidden id="project-id" name="project-id" value="{{thisProject._id}}" type="text" minlength="5"
-                        maxlength="300" >
+            <div style="height: 0;" class="row">
+                <div style="height: 0;" id="" class="row">
+                    <input hidden id="project-id" name="project-id" value="{{thisProject._id}}" type="text"
+                        minlength="5" maxlength="300">
                     <label hidden for="project-id">username</label>
+                </div>
             </div>
-        </div>  
             <div class="input-field col s12">
                 <div id="project-apply-message" class="input-field col s12">
-                    
-                    <textarea id="project-message" name="project-message" placeholder="Write any details or messages you would like the project director to know." type="text" minlength="5"
-                        maxlength="3000" required></textarea>
+                    <textarea id="project-message" name="project-message"
+                        placeholder="Write any details or messages you would like the project director to know."
+                        type="text" minlength="5" maxlength="3000" required></textarea>
                     <label class="black-text" for="project-apply-message">Write a little about yourself.</label>
                 </div>
-        
+
                 <div class="row">
                     <div class="input-field col s6">
-                      <input id="city" name="city" type="text" class="validate">
-                      <label class="black-text" for="city">City</label>
+                        <input id="city" name="city" type="text" class="validate">
+                        <label class="black-text" for="city">City</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="email"  name="email" type="email" class="validate">
+                        <input id="email" name="email" type="email" class="validate">
                         <label class="black-text" for="email">Contact Email</label>
                     </div>
                 </div>
-            </div>    
-            <div class="input-field col s12">
-                <select id="instruments" name="instruments" required >
-                    {% for instrument in thisProject.instruments%}
-                  <option value="{{instrument}}">{{instrument}}</option>
-                  {%endfor%}
-                  
-                </select>
-                
-                <label class="black-text" for="instruments">What instrument do you play?</label>
-                    
             </div>
-              <div class="input-field col s12">
-                <select id="genres" name="genres" required >
+
+            <div class="input-field col s12">
+                <select id="instruments" name="instruments" required>
+                    {% for instrument in thisProject.instruments%}
+                    <option value="{{instrument}}">{{instrument}}</option>
+                    {%endfor%}
+                </select>
+
+                <label class="black-text" for="instruments">What instrument do you play?</label>
+
+            </div>
+            <div class="input-field col s12">
+                <select id="genres" name="genres" required>
                     {% for genre in thisProject.genres%}
                     <option value="{{genre}}">{{genre}}</option>
                     {%endfor%}
-                  
                 </select>
-                
-                <label class="black-text" for="genres" >Which Genre do you play?</label>
-                    
-                  
-              </div>
+
+                <label class="black-text" for="genres">Which Genre do you play?</label>
+            </div>
             <div id="manage-project-btn" class="row ">
-                <button  type="submit" class="col s12 btn-large btn center ">
-                    Submit Application 
+                <button type="submit" class="col s12 btn-large btn center ">
+                    Submit Application
                 </button>
-            
             </div>
-        </form>    
-            <div class="row">
-                <div class="col s12">
-                    <p class="center-align">
-                        Changed your mind? 
-                        <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Back to profile</a>
-                    </p>
-                </div>
+        </form>
+        <div class="row">
+            <div class="col s12">
+                <p class="center-align">
+                    Changed your mind?
+                    <a href="{{ url_for('profile', username=session['user']) }}"
+                        class="light-blue-text text-darken-4">Back to profile</a>
+                </p>
             </div>
-</div>            
-</div>               
+        </div>
+    </div>
+</div>
 {%endblock%}

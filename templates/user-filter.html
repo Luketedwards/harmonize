@@ -1,95 +1,90 @@
 {% extends 'base.html'%}
 {% block content %}
+<!-- Form to search for user by parameter -->
 <div id="filter-users-bg-image">
-<div id="search-users-panel" class="row card-panel s8 transparent-bg">
-  <h3 class="center-align">Search Users by Parameter</h3>
+  <div id="search-users-panel" class="row card-panel s8 transparent-bg">
+    <h3 class="center-align">Search Users by Parameter</h3>
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
-        <div class="row">
-            <div style="height: 0;" id="project-username-div" class="row">
-                <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
-                    <input id="project-username" name="project-username" value="" type="text" minlength="5"
-                        maxlength="300" >
-                    <label for="project-username">username</label>
-            </div>
-        </div>    
-            <div class="row">
-                
-            </div>
-            <div class="input-field col s12">
-                
-        
-                <div class="row">
-                    <div class="input-field col s12">
-                      <input id="city" name="city" type="text" class="validate">
-                      <label class="black-text" for="city">City</label>
-                    </div>
-                </div>
-            </div>    
-            <div class="input-field col s12">
-                <select id="instruments" name="instruments"  >
-                  <option selected value=""></option>
-                  <option value="Guitar">Guitar</option>
-                  <option value="Bass Guitar">Bass Guitar</option>
-                  <option value="Mandolin">Mandolin</option>
-                  <option value="Violin">Violin</option>
-                  <option value="Viola">Viola</option>
-                  <option value="Cello">Cello</option>
-                  <option value="Trumpet">Trumpet</option>
-                  <option value="Trombone">Trombone</option>
-                  <option value="French Horn">French Horn</option>
-                  <option value="Euphonium">Euphonium</option>
-                  <option value="Saxophone">Saxophone</option>
-                  <option value="Clarinet">Clarinet</option>
-                  <option value="Flute">Flute</option>
-                  <option value="Drums">Drums</option>
-                  <option value="Harp">Harp</option>
-                  
-                </select>
-                
-                <label class="black-text" for="instruments">Instruments</label>
-                    
-            </div>
-              <div class="input-field col s12">
-                <select id="genres" name="genres"  >
-                  <option selected value=""></option>
-                  <option value="Rock">Rock</option>
-                  <option value="Pop">Pop</option>
-                  <option value="Classical">Classical</option>
-                  <option value="Jazz">Jazz</option>
-                  <option value="Metal">Metal</option>
-                  <option value="Blues">Blues</option>
-                  <option value="Bluegrass">Bluegrass</option>
-                  <option value="Folk">Folk</option>
-                  <option value="EDM">EDM</option>
-                  <option value="Celtic">Celtic</option>
-                  <option value="World">World</option>
-                  
-                </select>
-                
-                <label class="black-text" for="genres" >Genres</label>
-              </div>  
-                    
-                  
-              
-              <div class="row">
-                <div class="col s12 center">
-                <button id="filter-user-btn" type="submit" class=" btn ">
-                    Search <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-                </div>
-              </div>
-    </form>
       <div class="row">
-                <div class="col s12">
-                    <p class="center-align">
-                        Changed your mind? 
-                        <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Back to profile</a>
-                    </p>
-                </div>
+        <div style="height: 0;" id="project-username-div" class="row">
+          <i class="fas fa-user-plus prefix light-blue-text text-darken-4"></i>
+          <input id="project-username" name="project-username" value="" type="text" minlength="5" maxlength="300">
+          <label for="project-username">username</label>
+        </div>
       </div>
-            
+      <div class="row">
+
+      </div>
+      <div class="input-field col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="city" name="city" type="text" class="validate">
+            <label class="black-text" for="city">City</label>
+          </div>
+        </div>
+      </div>
+      <div class="input-field col s12">
+        <select id="instruments" name="instruments">
+          <option selected value=""></option>
+          <option value="Guitar">Guitar</option>
+          <option value="Bass Guitar">Bass Guitar</option>
+          <option value="Mandolin">Mandolin</option>
+          <option value="Violin">Violin</option>
+          <option value="Viola">Viola</option>
+          <option value="Cello">Cello</option>
+          <option value="Trumpet">Trumpet</option>
+          <option value="Trombone">Trombone</option>
+          <option value="French Horn">French Horn</option>
+          <option value="Euphonium">Euphonium</option>
+          <option value="Saxophone">Saxophone</option>
+          <option value="Clarinet">Clarinet</option>
+          <option value="Flute">Flute</option>
+          <option value="Drums">Drums</option>
+          <option value="Harp">Harp</option>
+
+        </select>
+
+        <label class="black-text" for="instruments">Instruments</label>
+
+      </div>
+      <div class="input-field col s12">
+        <select id="genres" name="genres">
+          <option selected value=""></option>
+          <option value="Rock">Rock</option>
+          <option value="Pop">Pop</option>
+          <option value="Classical">Classical</option>
+          <option value="Jazz">Jazz</option>
+          <option value="Metal">Metal</option>
+          <option value="Blues">Blues</option>
+          <option value="Bluegrass">Bluegrass</option>
+          <option value="Folk">Folk</option>
+          <option value="EDM">EDM</option>
+          <option value="Celtic">Celtic</option>
+          <option value="World">World</option>
+
+        </select>
+
+        <label class="black-text" for="genres">Genres</label>
+      </div>
+
+      <div class="row">
+        <div class="col s12 center">
+          <button id="filter-user-btn" type="submit" class=" btn ">
+            Search <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col s12">
+        <p class="center-align">
+          Changed your mind?
+          <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Back to
+            profile</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
 </div>
-</div>            
-                   
-            
 {% endblock %}

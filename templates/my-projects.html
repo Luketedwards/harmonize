@@ -1,10 +1,10 @@
 {% extends 'base.html'%}
 {%block content%}  
+<!-- Renders all projects created by the user -->
 <h1 class="center">My Projects</h1>
 <hr>
 <h4 class="center-align">You currently have {{project_number}} existing projects.</h4>
 {% for project in projects%}
-
 
     <div id="my-projects-panel" class="card-panel blue-grey darken-1">
         {%if project.completed == false%}
@@ -17,9 +17,8 @@
                         <span id="myProjects-buttons" ><a href="{{url_for('manage_project', thisProject=project._id)}}" class="waves-effect waves-light btn">Manage</a>
                         <a id="view-btn" href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn">View</a></span>
                         <br>
-                           
                     </div>
-                    </div>
+                </div>
         <div class="row center">     
         <h2 id="my-projects-title" class="center-align ">{{project.projectTitle|title}}</h2>
         <div id="contact-chip" class="chip center">
@@ -28,7 +27,6 @@
         </div>    
         </div>   
         
-                
         <div class="row s12">
             <div  class="col l6 m6 s12  push-l1 left about-the-project">
                 <h4>About the project</h4>
@@ -53,8 +51,5 @@
         
     </div>
     
-    
 {%endfor%}   
-
-
 {%endblock%}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Same as base.html code, but with notifications section removed to fix error when user is not logged in. -->
 
 <head>
   <meta charset="UTF-8">
@@ -15,7 +16,6 @@
     href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
     rel="stylesheet">
 
-
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -25,7 +25,6 @@
   <script src="{{ url_for('static', filename='js/select.js') }}"></script>
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{ url_for('static', filename='favicon-16x16.png') }}">
-
 
   <title>Harmonise</title>
 </head>
@@ -45,8 +44,8 @@
     </div>
 
   </nav>
-  
-  <ul class="sidenav" id="mobile-demo"> 
+
+  <ul class="sidenav" id="mobile-demo">
 
     <li><a href="{{ url_for('register') }}">Register</a></li>
     <li><a href="{{ url_for('login') }}">Log In</a></li>
@@ -57,162 +56,157 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-<div id="register-bg-image">
+  <div id="register-bg-image">
 
-  <section>
-    <!-- flash messages -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <div class="row flashes">
-      <h4 id="messages-flash" class=" center-align">{{ message }}</h4>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-  </section>
+    <section>
+      <!-- flash messages -->
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="row flashes">
+        <h4 id="messages-flash" class=" center-align">{{ message }}</h4>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </section>
+<!-- Form to register and account on the site -->
+    <div id="register-container" class="row">
 
-
-
-<div id="register-container" class="row">
-  
-    <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
+      <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
         <div class="card-panel">
           <h3 id="register-h3" class="center-align">Compose an Account</h3>
-            <!-- username -->
-            <div class="row">
-                <div id="register-username" class="input-field col s12">
-                    
-                    <input id="username" name="username" type="text" minlength="3"
-                        maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
-                    <label class="black-text" for="username">Username</label>
-                </div>
+          <!-- username -->
+          <div class="row">
+            <div id="register-username" class="input-field col s12">
+
+              <input id="username" name="username" type="text" minlength="3" maxlength="15"
+                pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+              <label class="black-text" for="username">Username</label>
             </div>
-            <div class="input-field col s6">
-                <input  id="first_name" name="first_name" type="text" class="validate">
-                <label class="black-text" for="first_name">First Name</label>
-              </div>
-              <div  class="input-field col s6">
-                <input id="last_name" name="last_name" type="text" class="validate">
-                <label class="black-text" for="last_name">Last Name</label>
-              </div>
-            <!-- password -->
-            
-                <div class="row m12">
-                    <form class="col s12">
-                        <div class="row">
-                            <div id="register-password" class="input-field col s6">
-                                <input id="password" name="password"type="password" class="validate">
-                                <label class="black-text" for="password">Password</label>
-                            </div>
-                            <div id="register-password-confirm" class="input-field col s6">
-                                <input id="passwordConfirm" name="passwordConfirm" type="password">
-                                <label class="black-text" id="lblPasswordConfirm" for="passwordConfirm" data-error="Password not match" data-success="Password Match">Password (Confirm)</label>
-                            </div>
-                        </div>
-                    </form>
+          </div>
+          <div class="input-field col s6">
+            <input id="first_name" name="first_name" type="text" class="validate">
+            <label class="black-text" for="first_name">First Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="last_name" name="last_name" type="text" class="validate">
+            <label class="black-text" for="last_name">Last Name</label>
+          </div>
+          <!-- password -->
+
+          <div class="row m12">
+            <form class="col s12">
+              <div class="row">
+                <div id="register-password" class="input-field col s6">
+                  <input id="password" name="password" type="password" class="validate">
+                  <label class="black-text" for="password">Password</label>
                 </div>
-                <div class="row">
-                    <div id="register-city" class="input-field col s6">
-                      <input id="city" name="city" type="text" class="validate">
-                      <label class="black-text" for="city">City</label>
-                    </div>
-                    <div id="register-email" class="input-field col s6">
-                        <input id="email" name="email" type="email" class="validate">
-                        <label class="black-text" for="email">Email</label>
-                    </div>
+                <div id="register-password-confirm" class="input-field col s6">
+                  <input id="passwordConfirm" name="passwordConfirm" type="password">
+                  <label class="black-text" id="lblPasswordConfirm" for="passwordConfirm"
+                    data-error="Password not match" data-success="Password Match">Password (Confirm)</label>
                 </div>
-            <div class="input-field col s12 ">
-                <select id="instruments" name="instruments" multiple>
-                  <option value="" disabled selected>Choose your option</option>
-                  <option value="Guitar">Guitar</option>
-                  <option value="Bass Guitar">Bass Guitar</option>
-                  <option value="Mandolin">Mandolin</option>
-                  <option value="Violin">Violin</option>
-                  <option value="Viola">Viola</option>
-                  <option value="Cello">Cello</option>
-                  <option value="Trumpet">Trumpet</option>
-                  <option value="Trombone">Trombone</option>
-                  <option value="French Horn">French Horn</option>
-                  <option value="Euphonium">Euphonium</option>
-                  <option value="Saxophone">Saxophone</option>
-                  <option value="Clarinet">Clarinet</option>
-                  <option value="Flute">Flute</option>
-                  <option value="Drums">Drums</option>
-                  
-                </select>
-                
-                <label class="black-text" for="instruments">What Instruments Do You Play?</label>
-                    
               </div>
-              <div class="input-field col s12">
-                <select id="genres" name="genres" multiple>
-                  <option value="" disabled selected>Choose your option</option>
-                  <option value="Rock">Rock</option>
-                  <option value="Pop">Pop</option>
-                  <option value="Classical">Classical</option>
-                  <option value="Jazz">Jazz</option>
-                  <option value="Metal">Metal</option>
-                  <option value="Blues">Blues</option>
-                  <option value="Bluegrass">Bluegrass</option>
-                  <option value="Folk">Folk</option>
-                  <option value="EDM">EDM</option>
-                  <option value="Celtic">Celtic</option>
-                  <option value="World">World</option>
-                  
-                </select>
-                
-                <label class="black-text" for="genres" >What Genres Do You Play?</label>
-                    
-              </div>
-            <!-- register -->
-            <div class="row center-align">
-              <div class=" col s12 center">
-                <button type="submit" class=" btn center ">
-                    Register 
-                </button>
-              </div>
+            </form>
+          </div>
+          <div class="row">
+            <div id="register-city" class="input-field col s6">
+              <input id="city" name="city" type="text" class="validate">
+              <label class="black-text" for="city">City</label>
             </div>
-            <div class="row" style="margin-bottom: 0;">
-              <div class="col s12">
-                  <p class="center-align black-text" style="margin: 0;">
-                      Already Registered?
-                      <a href="{{url_for('login')}}" class="grey-text text-darken-4">Log In</a>
-                  </p>
-              </div>
+            <div id="register-email" class="input-field col s6">
+              <input id="email" name="email" type="email" class="validate">
+              <label class="black-text" for="email">Email</label>
+            </div>
+          </div>
+          <div class="input-field col s12 ">
+            <select id="instruments" name="instruments" multiple>
+              <option value="" disabled selected>Choose your option</option>
+              <option value="Guitar">Guitar</option>
+              <option value="Bass Guitar">Bass Guitar</option>
+              <option value="Mandolin">Mandolin</option>
+              <option value="Violin">Violin</option>
+              <option value="Viola">Viola</option>
+              <option value="Cello">Cello</option>
+              <option value="Trumpet">Trumpet</option>
+              <option value="Trombone">Trombone</option>
+              <option value="French Horn">French Horn</option>
+              <option value="Euphonium">Euphonium</option>
+              <option value="Saxophone">Saxophone</option>
+              <option value="Clarinet">Clarinet</option>
+              <option value="Flute">Flute</option>
+              <option value="Drums">Drums</option>
+
+            </select>
+
+            <label class="black-text" for="instruments">What Instruments Do You Play?</label>
+
+          </div>
+          <div class="input-field col s12">
+            <select id="genres" name="genres" multiple>
+              <option value="" disabled selected>Choose your option</option>
+              <option value="Rock">Rock</option>
+              <option value="Pop">Pop</option>
+              <option value="Classical">Classical</option>
+              <option value="Jazz">Jazz</option>
+              <option value="Metal">Metal</option>
+              <option value="Blues">Blues</option>
+              <option value="Bluegrass">Bluegrass</option>
+              <option value="Folk">Folk</option>
+              <option value="EDM">EDM</option>
+              <option value="Celtic">Celtic</option>
+              <option value="World">World</option>
+
+            </select>
+
+            <label class="black-text" for="genres">What Genres Do You Play?</label>
+
+          </div>
+          <!-- register -->
+          <div class="row center-align">
+            <div class=" col s12 center">
+              <button type="submit" class=" btn center ">
+                Register
+              </button>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: 0;">
+            <div class="col s12">
+              <p class="center-align black-text" style="margin: 0;">
+                Already Registered?
+                <a href="{{url_for('login')}}" class="grey-text text-darken-4">Log In</a>
+              </p>
+            </div>
           </div>
         </div>
 
-    </form>
-    
-</div>
+      </form>
 
-
-<footer class="page-footer center navbar-color">
-    © 2022 Luke Edwards
-</footer>
-</body> 
-  <script>
-    $(function () {
-      var availableTags = [{
-          %
-          for user in listOfUsers %
-        }
-        "{{user}}",
-        {
-          % endfor %
-        }
-      ];
-      $("#autocomplete-input").autocomplete({
-        source: availableTags
-      });
+    </div>
+    <footer class="page-footer center navbar-color">
+      © 2022 Luke Edwards
+    </footer>
+</body>
+<script>
+  $(function () {
+    var availableTags = [{
+        %
+        for user in listOfUsers %
+      }
+      "{{user}}",
+      {
+        %
+        endfor %
+      }
+    ];
+    $("#autocomplete-input").autocomplete({
+      source: availableTags
     });
-  
-    function searchBar {
-      window.location.href = "{{url_for('profile', username=username)}}";
-    }
+  });
 
-
-
-  </script>
-  <script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>
+  function searchBar {
+    window.location.href = "{{url_for('profile', username=username)}}";
+  }
+</script>
+<script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>

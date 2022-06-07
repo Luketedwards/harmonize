@@ -1,26 +1,25 @@
 {% extends 'base.html'%}
 {% block content %}
 <div id="image-upload-bg">
-
-<div id="image-upload" class="card-panel center-align transparent-bg">
-    <h3 class="center-align">Upload New Profile Image</h3>
+    <!-- Form to upload new user profile picture -->
+    <div id="image-upload" class="card-panel center-align transparent-bg">
+        <h3 class="center-align">Upload New Profile Image</h3>
         <form method="post" enctype="multipart/form-data">
             <span id="file-selected"></span>
             <label id="file-upload-label" for="file-upload" type="file" class="btn">Choose File</label>
-        <input required class="btn" id="file-upload" type="file" name="file1" accept=".jpg,.png">
-        <button id="image-submit-btn" class='btn' type="submit">Submit</button>
+            <input required class="btn" id="file-upload" type="file" name="file1" accept=".jpg,.png">
+            <button id="image-submit-btn" class='btn' type="submit">Submit</button>
         </form>
         <div class="row">
             <div class="col s12">
                 <p class="center-align">
-                    Changed your mind? 
-                    <a href="{{ url_for('profile', username=session['user']) }}" class="light-blue-text text-darken-4">Cancel Edit</a>
+                    Changed your mind?
+                    <a href="{{ url_for('profile', username=session['user']) }}"
+                        class="light-blue-text text-darken-4">Cancel Edit</a>
                 </p>
             </div>
         </div>
-</div>    
+    </div>
 
 </div>
-
 {% endblock %}
-

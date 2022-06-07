@@ -1,6 +1,7 @@
 import os
 import mimetypes
 import arrow
+# python file to create filters for formating dates and file types
 
 def datetimeformat(date_str):
     dt = arrow.get(date_str, 'DD/MM/YYYY HH:mm:ss')
@@ -16,4 +17,4 @@ def file_type(key):
     try:
         return mimetypes.types_map[file_extension]
     except KeyError():
-        return 'Unknown'       
+        return 'Unknown'

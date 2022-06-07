@@ -1,62 +1,61 @@
 {% extends 'base.html'%}
-
+<!-- Displays all other user profiles on the site -->
 {%block content%}
 <div id="create-project-bg-image">
-<div class="transparent-bg">
+  <div class="transparent-bg">
     <ul>
-        {% for use in users%}
-        <div id="all-users-row" class="row">
-          <div class="center row s12">
-        <li>
+      {% for use in users%}
+      <div id="all-users-row" class="row">
+        <div class="center row s12">
+          <li>
             <div id="user-display-div" class="col l4 md12 s12 center">
-                <img id="user-images" class=" " src="{{use.profile_pic}}" alt="{{use.username}}'s profile photo">
+              <img id="user-images" class=" " src="{{use.profile_pic}}" alt="{{use.username}}'s profile photo">
             </div>
-            <div class="col l4 md12 s12">   
-                <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}" class=''>{{use.username}}</a>
+            <div class="col l4 md12 s12">
+              <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
+                class=''>{{use.username}}</a>
             </div>
             <br>
-            <div class="col l4  md12 s12">    
-                    <ul id="user-info-collapse" class="collapsible s12  ">
-                        <li> 
-                          <div class="collapsible-header  "><i class="material-icons"></i>Instruments</div>
-                          <div class="collapsible-body  "><span>
-                              {%for instrument in use.instruments%}
-                                <span>{{instrument}},</span>
-                              {%endfor%}
-                          </span>
-                        </div>
-                        </li>
-                        <li>
-                          <div class="collapsible-header  "><i class="material-icons"></i>Genres</div>
-                          <div class="collapsible-body "><span>
-                            
-                            {%for genre in use.genres%}
-                            <span>{{genre}},</span>
-                            {%endfor%}
-                            
-                          </span>
-                        </div>
-                        </li>
-                        <li>
-                          <div class="collapsible-header   "><i class="material-icons"></i>City</div>
-                          <div class="collapsible-body   "><span>
-                              <p>{{use.city}}</p>
-                          </span>
-                        </div>
-                        </li>
-                      </ul>
-                
-                
+            <div class="col l4  md12 s12">
+              <ul id="user-info-collapse" class="collapsible s12  ">
+                <li>
+                  <div class="collapsible-header  "><i class="material-icons"></i>Instruments</div>
+                  <div class="collapsible-body  "><span>
+                      {%for instrument in use.instruments%}
+                      <span>{{instrument}},</span>
+                      {%endfor%}
+                    </span>
+                  </div>
+                </li>
+                <li>
+                  <div class="collapsible-header  "><i class="material-icons"></i>Genres</div>
+                  <div class="collapsible-body "><span>
+
+                      {%for genre in use.genres%}
+                      <span>{{genre}},</span>
+                      {%endfor%}
+
+                    </span>
+                  </div>
+                </li>
+                <li>
+                  <div class="collapsible-header   "><i class="material-icons"></i>City</div>
+                  <div class="collapsible-body   "><span>
+                      <p>{{use.city}}</p>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+
             </div>
-        </li> 
-      </div>
+          </li>
+        </div>
       </div>
       <br>
-        <hr>
-        {% endfor%}
+      <hr>
+      {% endfor%}
     </ul>
-    
-</div>
+
+  </div>
 </div>
 {%endblock%}
-

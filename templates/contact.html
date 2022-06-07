@@ -1,18 +1,19 @@
 {% extends 'base.html'%}
 {% block content%}
+<!-- Allows user to contact other user -->
 <div class="row s10 ">
-<div id="message-panel" class="col card-panel center l5 m12 s12 ">
-    <h3 class="center">Contact {{usernameToContact}}</h3>
-    <hr>
-    <div id="comment-container" class="col s12">
-    <form method="POST" action="{{ url_for('contact', usernameToContact=usernameToContact)}}">
-        <textarea name="message" id="message" cols="30" rows="10"></textarea>
-        <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
-            Send Message <i class="fas fa-sign-in-alt"></i>
-        </button>
-    </form>    
-        
-    </div>
-</div>    
+    <div id="message-panel" class="col card-panel center l5 m12 s12 ">
+        <h3 class="center">Contact {{usernameToContact}}</h3>
+        <hr>
+        <div id="comment-container" class="col s12">
+            <form method="POST" action="{{ url_for('contact', usernameToContact=usernameToContact)}}">
+                <textarea name="message" id="message" cols="30" rows="10"></textarea>
+                <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
+                    Send Message <i class="fas fa-sign-in-alt"></i>
+                </button>
+            </form>
 
-{%endblock%}
+        </div>
+    </div>
+
+    {%endblock%}

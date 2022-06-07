@@ -1,95 +1,94 @@
 {% extends 'base.html'%}
-
+<!-- Displays other site users based on search criteria -->
 {%block content%}
 <div id="create-project-bg-image">
-<div class=" transparent-bg s12">
-  <h1 id="filter-user-header" class="center">Users matching: "{{cityQuery}} {{instrumentsQuery|join}} {{genresQuery|join}}"</h1>
-  {% if instrumentsQuery != ['']%}
-  {% set instrumentQuery = instrumentsQuery|join%}
-  {%else%}
-  {% set instrumentQuery = "notAnInstrument" %}
-{%endif%}
+  <div class=" transparent-bg s12">
+    <h1 id="filter-user-header" class="center">Users matching: "{{cityQuery}} {{instrumentsQuery|join}}
+      {{genresQuery|join}}"</h1>
+      <!-- Takes search criteria and makes parses them so they can be used in if statements -->
+    {% if instrumentsQuery != ['']%}
+      {% set instrumentQuery = instrumentsQuery|join%}
+      {%else%}
+      {% set instrumentQuery = "notAnInstrument" %}
+    {%endif%}
 
-{% if genresQuery != ['']%}
-  {% set genresQuery = genresQuery|join%}
-  {%else%}
-  {% set genresQuery = "notAnInstrument" %}
-{%endif%}
+    {% if genresQuery != ['']%}
+      {% set genresQuery = genresQuery|join%}
+      {%else%}
+      {% set genresQuery = "notAnInstrument" %}
+    {%endif%}
 
 
-{% if cityQuery|length == 0%}
-    {% set cityQuery = "notACity" %}
-{%else%}
-    {% set cityQueryLower = cityQuery|lower %}
-    {% set cityQueryUpper = cityQuery|capitalize%}
-{%endif%}
+    {% if cityQuery|length == 0%}
+      {% set cityQuery = "notACity" %}
+      {%else%}
+      {% set cityQueryLower = cityQuery|lower %}
+      {% set cityQueryUpper = cityQuery|capitalize%}
+    {%endif%}
+
     <ul>
-        {% for use in users%}
-        {% if instrumentQuery in use.instruments|join or genresQuery in use.genres|join or cityQueryLower in use.city or cityQueryUpper in use.city%}
-        <div id="all-users-row" class="row">
-          <div class="center row s12">
-        <li>
-            
-              <div id="user-display-div" class="col l4 md12 s12 center">
-                <img id="user-images" class=" " src="{{use.profile_pic}}" alt="">
-              </div>
-                <div class="col l4 md12 s12">   
-                  <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}" class=''>{{use.username}}</a>
-                </div>
-                <div class="col l4 md12 s12">  
-                    <ul id="user-info-collapse" class="collapsible s12 ">
-                        <li> 
-                          <div class="collapsible-header  "><i class="material-icons"></i>Instruments</div>
-                          <div class="collapsible-body  "><span>
-                              {%for instrument in use.instruments%}
-                              {% if instrumentQuery == instrument%}
-                                <span id="relevantUserInstrument">{{instrument}},</span>
-                                {%else%}
-                                <span>{{instrument}},</span>
-                              {%endif%}
-                              {%endfor%}
-                          </span></div>
-                        </li>
-                        <li>
-                          <div class="collapsible-header  "><i class="material-icons"></i>Genres</div>
-                          <div class="collapsible-body "><span>
-                            
-                            {%for genre in use.genres%}
-                            {% if genresQuery == genre%}
-                            <span id="relevantUserInstrument" >{{genre}},</span>
-                            {%else%}
-                            <span>{{genre}},</span>
-                            {%endif%}
-                            {%endfor%}
-                            
-                          </span></div>
-                        </li>
-                        <li>
-                          <div class="collapsible-header   "><i class="material-icons"></i>City</div>
-                          <div class="collapsible-body   "><span>
-                            {% if cityQuery == use.city%}
-                              <p id="relevantUserInstrument">{{use.city}}</p>
-                              {%else%}
-                              <p>{{use.city}}</p>
-                            {%endif%}  
-                          </span></div>
-                        </li>
-                      </ul>
-                      </div>
-                
-                
-            
-        </li> 
+      {% for use in users%}
+      {% if instrumentQuery in use.instruments|join or genresQuery in use.genres|join or cityQueryLower in use.city or cityQueryUpper in use.city%}
+      <div id="all-users-row" class="row">
+        <div class="center row s12">
+          <li>
+
+            <div id="user-display-div" class="col l4 md12 s12 center">
+              <img id="user-images" class=" " src="{{use.profile_pic}}" alt="">
+            </div>
+            <div class="col l4 md12 s12">
+              <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
+                class=''>{{use.username}}</a>
+            </div>
+            <div class="col l4 md12 s12">
+              <ul id="user-info-collapse" class="collapsible s12 ">
+                <li>
+                  <div class="collapsible-header  "><i class="material-icons"></i>Instruments</div>
+                  <div class="collapsible-body  "><span>
+                      {%for instrument in use.instruments%}
+                      {% if instrumentQuery == instrument%}
+                      <span id="relevantUserInstrument">{{instrument}},</span>
+                      {%else%}
+                      <span>{{instrument}},</span>
+                      {%endif%}
+                      {%endfor%}
+                    </span></div>
+                </li>
+                <li>
+                  <div class="collapsible-header  "><i class="material-icons"></i>Genres</div>
+                  <div class="collapsible-body "><span>
+
+                      {%for genre in use.genres%}
+                      {% if genresQuery == genre%}
+                      <span id="relevantUserInstrument">{{genre}},</span>
+                      {%else%}
+                      <span>{{genre}},</span>
+                      {%endif%}
+                      {%endfor%}
+
+                    </span></div>
+                </li>
+                <li>
+                  <div class="collapsible-header   "><i class="material-icons"></i>City</div>
+                  <div class="collapsible-body   "><span>
+                      {% if cityQuery == use.city%}
+                      <p id="relevantUserInstrument">{{use.city}}</p>
+                      {%else%}
+                      <p>{{use.city}}</p>
+                      {%endif%}
+                    </span></div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </div>
       </div>
-      </div>
-        <hr>
-        {% endif %}
-        {% endfor%}
+      <hr>
+      {% endif %}
+      {% endfor%}
     </ul>
-    
-</div>
+
+  </div>
 </div>
 
 {%endblock%}
-
-

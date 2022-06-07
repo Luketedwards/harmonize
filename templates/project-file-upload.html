@@ -1,53 +1,53 @@
 {% extends 'base.html'%}
 {% block content %}
+<!-- Form to allow user to upload project files -->
 <div id="project-file-upload-bg">
-<div id="project-image-upload" class="card-panel center-align transparent-bg">
-    <h3 class="center-align">Upload Project Files</h3>
-    <span id="file-selected"></span>
+    <div id="project-image-upload" class="card-panel center-align transparent-bg">
+        <h3 class="center-align">Upload Project Files</h3>
+        <span id="file-selected"></span>
         <form method="post" enctype="multipart/form-data">
             <label id="file-upload-label" for="file-upload" type="file" class="btn">Choose File</label>
-        <input required class="btn" id="file-upload" type="file" name="file1" accept=".jpg,.png,.gp,.etf,.mp3,.mp4,.wav,.flac,.pdf">
-        <button id="image-submit-btn" class='btn' type="submit">Submit</button>
-        <div style="margin-top: 12px; padding-right: 10px; margin-bottom: 0" class="row s12">
-        <div class="col l6 m6 s12">
-        <label  type="text" for="file-name">Name Your File</label>  
-        <input  required pattern="[^' '.]+" id="file-name" name="file-name" type="text" placeholder="seperate each word with '-', no blank spaces.">
-        </div>
-        <div id="folder-type" class="input-field col l6 m6 s12">
-            <select id="file-folder" name="file-folder" required >
-              <option value="Audio">Audio</option>
-              <option value="Image">Image</option>
-              <option value="PDF">PDF/Sheet music</option>
-              <option value="IMF">Interactive Music File</option>
-              <option value="Video">Video</option>
-              <option value="Other">Other</option>
-              
-              
-            </select>
-            
-            <label for="file-folder">What type of file is this?</label>
-                
-          </div>
-        </div>
-        
-        <label  type="text" for="file-description">File Description</label>
-        
-        <input required id="file-description" name="file-description" type="text" placeholder="Summarise your file.">
-        
-        
-        
+            <input required class="btn" id="file-upload" type="file" name="file1"
+                accept=".jpg,.png,.gp,.etf,.mp3,.mp4,.wav,.flac,.pdf">
+            <button id="image-submit-btn" class='btn' type="submit">Submit</button>
+            <div style="margin-top: 12px; padding-right: 10px; margin-bottom: 0" class="row s12">
+                <div class="col l6 m6 s12">
+                    <label type="text" for="file-name">Name Your File</label>
+                    <input required pattern="[^' '.]+" id="file-name" name="file-name" type="text"
+                        placeholder="seperate each word with '-', no blank spaces.">
+                </div>
+                <div id="folder-type" class="input-field col l6 m6 s12">
+                    <select id="file-folder" name="file-folder" required>
+                        <option value="Audio">Audio</option>
+                        <option value="Image">Image</option>
+                        <option value="PDF">PDF/Sheet music</option>
+                        <option value="IMF">Interactive Music File</option>
+                        <option value="Video">Video</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <label for="file-folder">What type of file is this?</label>
+
+                </div>
+            </div>
+
+            <label type="text" for="file-description">File Description</label>
+
+            <input required id="file-description" name="file-description" type="text"
+                placeholder="Summarise your file.">
+
         </form>
         <div class="row">
             <div class="col s12">
                 <p class="center-align">
-                    Changed your mind? 
-                    <a href="{{url_for('project_hub', thisProject = thisProject)}}" class="light-blue-text text-darken-4">Back to project</a>
+                    Changed your mind?
+                    <a href="{{url_for('project_hub', thisProject = thisProject)}}"
+                        class="light-blue-text text-darken-4">Back to project</a>
                 </p>
             </div>
         </div>
-</div>    
+    </div>
 
 </div>
 
 {% endblock %}
-

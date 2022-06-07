@@ -1,46 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     type="text/css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-<link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Baskervville&family=Lusitana:wght@400;700&family=Open+Sans:wght@400;500;600;700&family=Playfair+Display&family=Satisfy&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;0,8..60,800;0,8..60,900;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600;1,8..60,700;1,8..60,800;1,8..60,900&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Baskervville&family=Lusitana:wght@400;700&family=Open+Sans:wght@400;500;600;700&family=Playfair+Display&family=Satisfy&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;0,8..60,800;0,8..60,900;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600;1,8..60,700;1,8..60,800;1,8..60,900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  
-  
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{ url_for('static', filename='favicon-16x16.png') }}">
-  
-
-
-
   {% block styles %}
   {% endblock %}
 
-
   <title>Harmonise-app</title>
+
 </head>
 
 <body>
   <nav id="navbar-color" class="collapse-large">
-
+<!-- dropdowns for links in navabr -->
     <ul id="dropdown-connections" class="dropdown-content">
       <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
       <li><a href="{{ url_for('followers', username=session['user']) }}">Followers</a></li>
@@ -60,8 +53,7 @@
       <li><a href="{{ url_for('other_users') }}">All Users</a></li>
       <li><a href="{{ url_for('filter_users') }}">Find Users by type</a></li>
     </ul>
-    
-    
+<!-- Drop down for notifications feature. Notifications are taken from the database and then displayed conditionally based on their type -->
     <ul id="dropdown-notifications" class="dropdown-content">
 
       {%if session.user%}
@@ -70,78 +62,86 @@
       {%else%}
       {% for notify in user_notifications.notifications|reverse %}
       {%if notify in allCurrentUsernames  %}
-      <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}} <i class="fa-solid fa-user"></i></a>
+      <li><a href="{{url_for('other_profile', usernameOther=notify )}}">You are now being followed by {{notify}} <i
+            class="fa-solid fa-user"></i></a>
       </li>
       {%elif notify in listOfProjectNames%}
-      <li><a href="{{url_for('manage_project_link', thisProject=notify )}}">New project application: {{notify}} <i class="fa-solid fa-file-circle-check"></i></a></li>
+      <li><a href="{{url_for('manage_project_link', thisProject=notify )}}">New project application: {{notify}} <i
+            class="fa-solid fa-file-circle-check"></i></a></li>
       {% elif 'message' in notify%}
       <li><a href="{{url_for('convo_list') }}">{{notify}} <i class="fa-solid fa-envelope"></i></a></li>
 
       {%elif 'comment' in notify%}
-      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class="fa-solid fa-comment"></i></a></li>
+      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i
+            class="fa-solid fa-comment"></i></a></li>
       {%elif 'denied' in notify%}
-      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class=" red-text fa-solid fa-circle-xmark"></i></a></li>
+      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i
+            class=" red-text fa-solid fa-circle-xmark"></i></a></li>
 
       {%elif 'approved' in notify%}
-      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i class=" green-text fa-solid fa-circle-check"></i></a></li>
-      
+      <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify}} <i
+            class=" green-text fa-solid fa-circle-check"></i></a></li>
+
       {%endif%}
-
-
       {%endfor%}
-      <li  class="red"><a style="color: white !important;" href="{{url_for('clear_notifications')}}">Clear All Notifications <i class="fa-solid fa-trash-can right black-text"></i></a></li>
+      <li class="red"><a style="color: white !important;" href="{{url_for('clear_notifications')}}">Clear All
+          Notifications <i class="fa-solid fa-trash-can right black-text"></i></a></li>
       {%endif%}
       {%endif%}
     </ul>
 
-
+<!-- Modal to container the mobile version of the notifications feature. -->
     <div id="modal1" class="modal border">
       <div style="padding: 0 ;" class="modal-content black-text">
         <h4 id="side-modal-h4" class="center">Notifications</h4>
         <div class="row">
-        <div class="col s6 center">
-          <a id="modal-clear-notifications" class=" center white-text center btn red-btn"href="{{url_for('clear_notifications')}}">Clear</a>
+          <div class="col s6 center">
+            <a id="modal-clear-notifications" class=" center white-text center btn red-btn"
+              href="{{url_for('clear_notifications')}}">Clear</a>
+          </div>
+          <div class="col s6 center">
+            <a id="modal-notifications-close-btn" href="#!"
+              class="modal-close waves-effect waves-green btn  white-text center">Close</a>
+          </div>
         </div>
-        <div class="col s6 center">
-        <a id="modal-notifications-close-btn" href="#!" class="modal-close waves-effect waves-green btn  white-text center">Close</a>
+        <div>
+          <ul id="" class="">
+            {%if session.user%}
+              {% if user_notifications.notifications|length == 0%}
+              <li>You have no notifications</li>
+              {%else%}
+              {% for notify_side in user_notifications.notifications|reverse %}
+              {%if notify_side in allCurrentUsernames  %}
+              <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by
+                  {{notify_side}} <i class="fa-solid fa-user  "></i></a>
+              </li>
+              {%elif notify_side in listOfProjectNames%}
+              <li><a href="{{url_for('manage_project_link', thisProject=notify_side )}}">You have a new application to
+                  your project: {{notify_side}} <i class="fa-solid fa-file-circle-check  "></i></a></li>
+              {% elif 'message' in notify_side%}
+              <li><a href="{{url_for('convo_list') }}">{{notify_side}} <i class="fa-solid fa-envelope  "></i></a></li>
+
+              {%elif 'comment' in notify_side%}
+              <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i
+                    class="fa-solid fa-comment  "></i></a></li>
+              {%elif 'denied' in notify_side%}
+              <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i
+                    class=" red-text fa-solid fa-circle-xmark  "></i></a></li>
+
+              {%elif 'approved' in notify_side%}
+              <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i
+                    class=" green-text fa-solid fa-circle-check  "></i></a></li>
+
+              {%endif%}
+              {%endfor%}
+            {%endif%}
+            {%endif%}
+          </ul>
+        </div>
       </div>
     </div>
-    <div>
-        <ul id="" class="">
-     
-          {%if session.user%}
-          {% if user_notifications.notifications|length == 0%}
-          <li>You have no notifications</li>
-          {%else%}
-          {% for notify_side in user_notifications.notifications|reverse %}
-          {%if notify_side in allCurrentUsernames  %}
-          <li><a href="{{url_for('other_profile', usernameOther=notify_side )}}">You are now being followed by {{notify_side}} <i class="fa-solid fa-user  "></i></a>
-          </li>
-          {%elif notify_side in listOfProjectNames%}
-          <li><a href="{{url_for('manage_project_link', thisProject=notify_side )}}">You have a new application to your project: {{notify_side}} <i class="fa-solid fa-file-circle-check  "></i></a></li>
-          {% elif 'message' in notify_side%}
-          <li><a href="{{url_for('convo_list') }}">{{notify_side}} <i class="fa-solid fa-envelope  "></i></a></li>
-    
-          {%elif 'comment' in notify_side%}
-          <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i class="fa-solid fa-comment  "></i></a></li>
-          {%elif 'denied' in notify_side%}
-          <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i class=" red-text fa-solid fa-circle-xmark  "></i></a></li>
-    
-          {%elif 'approved' in notify_side%}
-          <li><a href="{{url_for('projects_im_in', user=session['user']) }}">{{notify_side}} <i class=" green-text fa-solid fa-circle-check  "></i></a></li>
-          
-          {%endif%}
-    
-    
-          {%endfor%}
-          
-          {%endif%}
-          {%endif%}
-        </ul>
-      </div>  
-        </div> 
-    </div>
 
+<!-- Mobile version of Navbar with conditional logic based on if user is logged in or not -->
     <div id="navbar-color-side" class="nav-wrapper ">
 
       <a href="{{ url_for('profile', username=session['user']) }}" id="logo" class="brand-logo">Harmonise</a>
@@ -155,9 +155,9 @@
         {%if session.user%}
         <li>
           <form method="post" action="{{url_for('other_profile_search', username=username)}}">
-            <input placeholder="Search" class="autocomplete white-text" type="text" id="user-search-input" name="user-search-input"
-              list="user-search">
-              
+            <input placeholder="Search" class="autocomplete white-text" type="text" id="user-search-input"
+              name="user-search-input" list="user-search">
+
             <datalist id="user-search">
               {%for user in listOfUsers%}
               <option value="{{user.username}}">{{user.username}}</option>
@@ -175,19 +175,15 @@
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile" href="#!">My Account</a></li>
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users" href="#!">Users</a></li>
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections" href="#!">My Connections</a></li>
-        <li><a href="{{url_for('convo_list')}}">Messages</a></li>      
-
-
+        <li><a href="{{url_for('convo_list')}}">Messages</a></li>
         {%endif%}
-
-
       </ul>
     </div>
 
   </nav>
-  
+<!-- Desktop version of navbar -->
   <ul class="sidenav" id="mobile-demo">
-    
+
     <ul id="dropdown-connections-side" class="dropdown-content">
       <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
       <li><a href="{{ url_for('followers', username=session['user']) }}">Followers</a></li>
@@ -212,32 +208,29 @@
     <li><a href="{{ url_for('login') }}">Log In</a></li>
     {% endif %}
     {%if session.user%}
+    <!-- input field that provides dropdown of site usernames and passes entered value into username search function.  -->
     <li>
       <form method="post" action="{{url_for('other_profile_search', username=username)}}">
         <input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input"
           list="user-search">
-        
-
         <datalist id="user-search">
           {%for user in listOfUsers%}
-          <option value="{{user.username}}">{{user.username}}</option>
+            <option value="{{user.username}}">{{user.username}}</option>
           {%endfor%}
         </datalist>
       </form>
 
-    <li><a href="{{ url_for('logout') }}">Log Out</a></li> 
+    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
     <li><a class=" modal-trigger" href="#modal1">Notifications
         {% if user_notifications.notifications|length > 0%}
         <span class="new badge">{{user_notifications.notifications|length}} <i
-          class="right fa-solid fa-bell white-text side-nav-notifications-bell"></i></span></a></li>
+            class="right fa-solid fa-bell white-text side-nav-notifications-bell"></i></span></a></li>
     {%endif%}
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-projects-side" href="#!">Projects</a></li>
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-profile-side" href="#!">My Account</a></li>
-      <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users-side" href="#!">Users</a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown-users-side" href="#!">Users</a></li>
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown-connections-side" href="#!">My Connections</a></li>
-          <li><a href="{{url_for('convo_list')}}">Messages</a></li>      
-
-
+    <li><a href="{{url_for('convo_list')}}">Messages</a></li>
     {%endif%}
   </ul>
 
@@ -246,7 +239,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="{{ url_for('static', filename='js/select.js') }}"></script>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 
   <section>
     <!-- flash messages -->
@@ -263,10 +255,10 @@
   {% block content %}
 
   {% endblock %}
-  
+
   {% block scripts %}
   {% endblock %}
-  
+
   <footer class="page-footer center navbar-color">
     © 2022 Luke Edwards
   </footer>
@@ -279,7 +271,8 @@
       }
       "{{user}}",
       {
-        % endfor %
+        %
+        endfor %
       }
     ];
     $("#autocomplete-input").autocomplete({
@@ -292,6 +285,4 @@
   }
 </script>
 <script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>
-
-
 </html>

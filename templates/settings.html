@@ -1,28 +1,31 @@
 {% extends 'base.html'%}
 {%block content%}
+<!-- Page to allow user to delete their account -->
 <div id="settings-bg-image">
-<div class="transparent-bg-settings">
-<h1 class="center">Settings</h1>
-<div class="row">
-    <div class="col s12 center">
-        <a id="application-denied-btn"  href="#modal3" class=" waves-effect  waves-light btn red-btn white-text modal-trigger">Delete Account</a>
-    </div>
-</div>
-
-<div id="modal3" class="modal">
-    <div class="modal-content center">
-      <h4>Are you sure you want to delete your account?</h4>
-      <p>This action is irreversible and will remove all profile and project data.</p>
-    </div>
+  <div class="transparent-bg-settings">
+    <h1 class="center">Settings</h1>
     <div class="row">
-    <div class="modal-footer center">
-        <div class="col s12 center" >
-      <a href="{{ url_for('delete_account')}}" class=" modal-close waves-effect waves-green btn-flat red white-text center">Delete</a>
-      <a href="#!" class=" modal-close waves-effect waves-green btn-flat grey white-text center">Cancel</a>
+      <div class="col s12 center">
+        <a id="application-denied-btn" href="#modal3"
+          class=" waves-effect  waves-light btn red-btn white-text modal-trigger">Delete Account</a>
       </div>
     </div>
-</div>
+    <!-- Confirmation modal -->
+    <div id="modal3" class="modal">
+      <div class="modal-content center">
+        <h4>Are you sure you want to delete your account?</h4>
+        <p>This action is irreversible and will remove all profile and project data.</p>
+      </div>
+      <div class="row">
+        <div class="modal-footer center">
+          <div class="col s12 center">
+            <a href="{{ url_for('delete_account')}}"
+              class=" modal-close waves-effect waves-green btn-flat red white-text center">Delete</a>
+            <a href="#!" class=" modal-close waves-effect waves-green btn-flat grey white-text center">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>  
 </div>
 {%endblock%}
