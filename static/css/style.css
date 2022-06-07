@@ -5,6 +5,23 @@
 
 }
 
+#user-search{
+    height: 10px !important;
+}
+
+.transparent-bg-settings-div{
+    height: fit-content !important;
+    width: 54% !important;
+    margin: 0 auto !important;
+    margin-top: 50px !important;
+    padding: 0;
+}
+
+.transparent-bg-settings-div p{
+    font-size: 1.2rem;
+    padding-top: 15px;
+}
+
 .instruments-and-genre .row {
     display: inline-block;
 }
@@ -819,7 +836,7 @@ footer {
 #profile-image {
     height: 29vh;
     display: block;
-    margin-left: 27%;
+    margin-left: 31%;
     margin-right: auto;
     margin-top: 12px;
 }
@@ -1367,6 +1384,10 @@ footer {
 /* Media Queries*/
 
 @media screen and (max-width: 1000px) {
+    .transparent-bg-settings-div{
+        width: 96% !important;
+    }
+
     #image-upload {
         width: 95%;
     }

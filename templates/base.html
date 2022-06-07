@@ -39,14 +39,14 @@
 
 <body>
   <nav id="navbar-color" class="collapse-large">
-    <!-- dropdowns for links in navabr -->
+    <!-- dropdowns for links in navbar -->
     <ul id="dropdown-connections" class="dropdown-content">
       <li><a href="{{ url_for('following', username=session['user']) }}">Following</a></li>
       <li><a href="{{ url_for('followers', username=session['user']) }}">Followers</a></li>
     </ul>
     <ul id="dropdown-profile" class="dropdown-content">
       <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
-      <li><a href="{{ url_for('settings', username=session['user']) }}">Profile Settings</a></li>
+      <li><a href="{{ url_for('settings', username=session['user']) }}">Delete Profile</a></li>
     </ul>
     <ul id="dropdown-projects" class="dropdown-content">
       <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
@@ -196,7 +196,7 @@
     </ul>
     <ul id="dropdown-profile-side" class="dropdown-content">
       <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
-      <li><a href="{{ url_for('settings', username=session['user']) }}">Profile Settings</a></li>
+      <li><a href="{{ url_for('settings', username=session['user']) }}">Delete Profile</a></li>
     </ul>
     <ul id="dropdown-projects-side" class="dropdown-content">
       <li><a href="{{url_for('create_a_project', user=session['user']) }}">Create a Project</a></li>
@@ -217,8 +217,8 @@
     <!-- input field that provides dropdown of site usernames and passes entered value into username search function.  -->
     <li>
       <form method="post" action="{{url_for('other_profile_search', username=username)}}">
-        <input placeholder="Search" class="autocomplete" type="text" id="user-search-input" name="user-search-input"
-          list="user-search">
+        <input placeholder="Search" class="autocomplete"  type="text" id="user-search-input" name="user-search-input"
+          list="user-search" autocomplete="off">
         <datalist id="user-search">
           {%for user in listOfUsers%}
           <option value="{{user.username}}">{{user.username}}</option>
@@ -269,17 +269,11 @@
   </footer>
 </body>
 <script>
-  $(function () {
-    var availableTags = ['fish','burger'];
-    $("#autocomplete-input").autocomplete({
-      source: availableTags
-    });
-  });
-
   function searchBar() {
     window.location.href = "{{url_for('profile', username=username)}}";
   }
 </script>
+
 <script src="https://kit.fontawesome.com/15075673e9.js" crossorigin="anonymous"></script>
 
 </html>

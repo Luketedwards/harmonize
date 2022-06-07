@@ -32,8 +32,6 @@
       $('#instruments-and-genre').removeClass('center')
       $('#about-the-project').addClass('left')
       $('#instruments-and-genre').addClass('right')
-      
-     
     }
     
   });
@@ -49,7 +47,3 @@
     }
     
   });
-  
-
-
-
