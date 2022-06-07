@@ -270,22 +270,13 @@
 </body>
 <script>
   $(function () {
-    var availableTags = [{
-        %
-        for user in listOfUsers %
-      }
-      "{{user}}",
-      {
-        %
-        endfor %
-      }
-    ];
+    var availableTags = ['fish','burger'];
     $("#autocomplete-input").autocomplete({
       source: availableTags
     });
   });
 
-  function searchBar {
+  function searchBar() {
     window.location.href = "{{url_for('profile', username=username)}}";
   }
 </script>
