@@ -3,8 +3,8 @@
 {%block content%}
 <div id="create-project-bg-image">
   <div class="transparent-bg">
+    {% for use in users%}
     <ul>
-      {% for use in users%}
       <div id="all-users-row" class="row">
         <div class="center row s12">
           <li>
@@ -12,7 +12,7 @@
               <img id="user-images" class=" " src="{{use.profile_pic}}" alt="{{use.username}}'s profile photo">
             </div>
             <div class="col l4 md12 s12">
-              <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
+              <a class="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
                 class=''>{{use.username}}</a>
             </div>
             <br>
@@ -51,10 +51,11 @@
           </li>
         </div>
       </div>
-      <br>
-      <hr>
-      {% endfor%}
     </ul>
+    <br>
+    <hr>
+    {% endfor%}
+    
 
   </div>
 </div>

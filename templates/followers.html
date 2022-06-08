@@ -5,9 +5,10 @@
   <div class="transparent-bg">
     <h1 id="follower-heading" class="center">Followers</h1>
     {% if current_user.followers|length > 0%}
-    <ul>
+    
       {% for use in users%}
       {%if use.username in current_user.followers%}
+      <ul>
       <div id="all-users-row" class="row">
         <div class="center row s12">
           <li>
@@ -15,7 +16,7 @@
               <img id="user-images" class=" " src="{{use.profile_pic}}" alt="">
             </div>
             <div class="col l4 md12 s12">
-              <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
+              <a class="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
                 class=''>{{use.username}}</a>
             </div>
             <br>
@@ -51,11 +52,12 @@
           </li>
         </div>
       </div>
+    </ul>
       <br>
       <hr>
       {%endif%}
       {% endfor%}
-    </ul>
+    
     {%else%}
     <div class="row">
       <h3 class="center">You have no followers.</h3>

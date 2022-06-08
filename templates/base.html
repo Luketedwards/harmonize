@@ -161,7 +161,7 @@
         {%if session.user%}
         <li>
           <form method="post" action="{{url_for('other_profile_search', username=username)}}">
-            <input placeholder="Search" class="autocomplete white-text" type="text" id="user-search-input"
+            <input placeholder="Search" class="autocomplete white-text" type="text" id="user-search-input-side"
               name="user-search-input" list="user-search">
 
             <datalist id="user-search">

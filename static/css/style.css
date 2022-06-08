@@ -166,7 +166,7 @@ footer {
 }
 
 .tab a {
-    color: white !important;
+    color: black !important;
 }
 
 .btn-small {
@@ -175,7 +175,8 @@ footer {
 
 .collapsible-header {
     background-color: #e59612 !important;
-    color: white !important;
+    color: black !important;
+    font-family: 'Open Sans', 'serif';
 }
 
 .collapsible-header .col strong {
@@ -405,6 +406,9 @@ footer {
 }
 
 #user-search-input {
+    color: black;
+}
+#user-search-input-side {
     color: black;
 }
 
@@ -784,11 +788,11 @@ footer {
     border-radius: 50%;
 }
 
-#other-users-link {
-    font-size: 2.5vw;
-    position: relative;
+.other-users-link {
+    font-size: 2.5vw !important;
+    position: relative !important;
     top: 4.5vw !important;
-    color: #39583a;
+    color: #39583a !important;
 }
 
 #user-info-collapse {
@@ -1471,11 +1475,11 @@ footer {
         width: 100%;
     }
 
-    #other-users-link {
-        font-size: 1.8rem;
-        position: relative;
-        margin: 0 auto;
-        margin-left: 0;
+    .other-users-link {
+        font-size: 1.8rem !important;
+        position: relative !important;
+        margin: 0 auto !important;
+        margin-left: 0 !important;
         top: 0vw !important;
 
     }

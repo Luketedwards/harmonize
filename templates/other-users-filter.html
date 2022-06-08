@@ -26,8 +26,9 @@
       {% set cityQueryUpper = cityQuery|capitalize%}
     {%endif%}
 
-    <ul>
+    
       {% for use in users%}
+      <ul>
       {% if instrumentQuery in use.instruments|join or genresQuery in use.genres|join or cityQueryLower in use.city or cityQueryUpper in use.city%}
       <div id="all-users-row" class="row">
         <div class="center row s12">
@@ -37,7 +38,7 @@
               <img id="user-images" class=" " src="{{use.profile_pic}}" alt="">
             </div>
             <div class="col l4 md12 s12">
-              <a id="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
+              <a class="other-users-link" href="{{url_for('other_profile', usernameOther=use.username )}}"
                 class=''>{{use.username}}</a>
             </div>
             <div class="col l4 md12 s12">
@@ -83,10 +84,11 @@
           </li>
         </div>
       </div>
+    </ul>
       <hr>
       {% endif %}
       {% endfor%}
-    </ul>
+    
 
   </div>
 </div>
