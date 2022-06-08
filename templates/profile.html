@@ -95,7 +95,7 @@
   {% for project in projects%}
 
   {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
-  <div id="my-projects-panel" class="card-panel z-depth-3 darken-1 black-text">
+  <div id="my-projects-panel" class="card-panel z-depth-3 darken-1 white-text">
     {%if project.completed == false%}
     <span class="">This project is still active!<i id="my-projects-panel-tick" class="fa-solid fa-check"></i></span>
     {%else%}
@@ -118,7 +118,7 @@
     <br>
 
     <div class="row">
-      <h2 id="other-profile-projects-title" class="center-align center">{{project.projectTitle|title}}</h2>
+      <h2 id="other-profile-projects-title" class="center-align center ">{{project.projectTitle|title}}</h2>
       <div class="row center">
         <div class="chip s12">
           <img src="{{selectedUser.profile_pic}}" alt="{{selectedUser.username}}'s profile photo">
@@ -129,13 +129,13 @@
     </div>
 
     <div class="row">
-      <div class="col l6 m6 s12 push-l1 left-align about-the-project ">
-        <h4>About the project</h4>
+      <div class="col l6 m6 s12 push-l1 left-align about-the-project  ">
+        <h4 >About the project</h4>
         <p>"{{project.projectDescription}}"</p>
         <p>Location: {{project.city}}</p>
       </div>
       <div class="col l6 m6 s12 push-l1 left-align   instruments-and-genre ">
-        <h4>Instruments & Genre</h4>
+        <h4 >Instruments & Genre</h4>
         <div class="row">
           <div class="col s6 ">
             <p style="margin-bottom: 20px;">

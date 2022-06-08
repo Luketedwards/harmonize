@@ -892,7 +892,7 @@ def browse_all_projects():
 # allows user to update details about the project from "my-projects" page
 @app.route('/manage_project/<thisProject>/', methods=["GET", "POST"])
 def manage_project(thisProject):
-    try:
+    
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
         listOfProjectNames = mongo.db.projects.distinct('projectTitle')
@@ -934,8 +934,7 @@ def manage_project(thisProject):
         listOfUsers=listOfUsers, applications=applications,
         members=members, allCurrentUsernames=allCurrentUsernames,
         listOfProjectNames=listOfProjectNames)
-    except:
-        return render_template("login.html")    
+        
     
 
 # allows user to update details about the project from notification link

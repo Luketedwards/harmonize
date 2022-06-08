@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+{% set listOfInstruments = ['Guitar','Bass Guitar','Mandolin','Violin','Viola','Cello','Trumpet','Trombone','French Horn','Euphonium','Saxophone','Clarinet','Flute','Drums']%}
+{% set listOfGenres = ['Rock','Pop','Classical','Jazz','Metal','Blues','Bluegrass','Folk','EDM','Celtic','World']%}
 <!-- Form to allow user to update their profile information -->
 <div id="create-project-bg-image">
     <div id="edit-profile-container" class="container">
@@ -39,21 +41,13 @@
                 <div class="input-field col s12">
                     <select id="instrumentsEdit" name="instrumentsEdit" multiple>
 
-                        <option value="Guitar">Guitar</option>
-                        <option value="Bass Guitar">Bass Guitar</option>
-                        <option value="Mandolin">Mandolin</option>
-                        <option value="Violin">Violin</option>
-                        <option value="Viola">Viola</option>
-                        <option value="Cello">Cello</option>
-                        <option value="Trumpet">Trumpet</option>
-                        <option value="Trombone">Trombone</option>
-                        <option value="French Horn">French Horn</option>
-                        <option value="Euphonium">Euphonium</option>
-                        <option value="Saxophone">Saxophone</option>
-                        <option value="Clarinet">Clarinet</option>
-                        <option value="Flute">Flute</option>
-                        <option value="Drums">Drums</option>
-
+                        {% for instrument in listOfInstruments%}
+                        {% if instrument in current_user.instruments%}
+                        <option selected value="{{instrument}}">{{instrument}}</option>
+                        {%else%}
+                        <option value="{{instrument}}">{{instrument}}</option>
+                        {%endif%}
+                    {%endfor%}  
                     </select>
 
                     <label class="black-text" for="instrumentsEdit">What Instruments Do You Play?</label>
@@ -61,18 +55,13 @@
                 </div>
                 <div class="input-field col s12">
                     <select id="genreEdit" name="genreEdit" multiple>
-
-                        <option value="Rock">Rock</option>
-                        <option value="Pop">Pop</option>
-                        <option value="Classical">Classical</option>
-                        <option value="Jazz">Jazz</option>
-                        <option value="Metal">Metal</option>
-                        <option value="Blues">Blues</option>
-                        <option value="Bluegrass">Bluegrass</option>
-                        <option value="Folk">Folk</option>
-                        <option value="EDM">EDM</option>
-                        <option value="Celtic">Celtic</option>
-                        <option value="World">World</option>
+                        {% for genre in listOfGenres%}
+                        {% if genre in current_user.genres%}
+                        <option selected value="{{genre}}">{{genre}}</option>
+                        {%else%}
+                        <option value="{{genre}}">{{genre}}</option>
+                        {%endif%}
+                    {%endfor%}   
 
                     </select>
 
@@ -104,34 +93,5 @@
 
     </div>
 </div>
-<script>
-    var instrumentsArray = {
-        {
-            current_user.instruments | safe
-        }
-    }
-    var genreArray = {
-        {
-            current_user.genres | safe
-        }
-    }
-    var optionsToSelect = instrumentsArray
-    var optionsToSelectGenre = genreArray
-    var select = document.getElementById('instrumentsEdit')
-    var selectGenre = document.getElementById('genreEdit')
-    for (var i = 0, l = select.options.length, o; i < l; i++) {
-        o = select.options[i];
-        if (optionsToSelect.indexOf(o.text) != -1) {
-            o.selected = true;
-        }
-    }
-
-    for (var i = 0, l = selectGenre.options.length, o; i < l; i++) {
-        o = selectGenre.options[i];
-        if (optionsToSelectGenre.indexOf(o.text) != -1) {
-            o.selected = true;
-        }
-    }
-</script>
 
 {% endblock %}

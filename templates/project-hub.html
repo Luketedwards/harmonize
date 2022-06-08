@@ -8,7 +8,7 @@
             href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
 
     <div id="comment-project-info-container" class="row ">
-        <div class="col card-panel l6 m12 s12 transparent-bg">
+        <div style="overflow-y: auto;" class="col card-panel l6 m12 s12 transparent-bg">
 
             <h2 class="center">Project Information</h2>
             <div class="row s12">
@@ -36,9 +36,9 @@
                                     </a>
                                     {%endif%}
                                     {% if member.memberUsername == user%}
-                                    <a id="project-hub-member-username"
+                                    <a id="project-hub-member-username" class=""
                                         href="{{url_for('profile', username=member.memberUsername )}}">
-                                        <h4 class="white-text">{{member.memberUsername}}</h4>
+                                        <h4 class="white-text ">{{member.memberUsername}}</h4>
                                     </a>
                                     <br>
                                     <p>{{member.memberInstrument}}</p>
@@ -48,7 +48,7 @@
                                         <h4 class="white-text">{{member.memberUsername}}</h4>
                                     </a>
                                     <br>
-                                    <p>{{member.memberInstrument}}</p>
+                                    <p class="white-text">{{member.memberInstrument}}</p>
                                 </article>
                                 {%endif%}
                             </section>
@@ -66,23 +66,29 @@
             <div id="comment-container" class="col s12">
                 {% for comment in thisProject.comments%}
                 {% if comment.username == thisProject.username%}
-                <span><i class="fa-solid fa-star"></i><a id="host-comment"
+                <span>
+                    <span class="comment-date right">{{comment.date|datetimeformat}}</span>
+                    <i class="fa-solid fa-star"></i><a id="host-comment"
                         href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
                     {{comment.userComment}}
-                    <span class="comment-date">{{comment.date|datetimeformat}}</span> </span>
+                     </span>
                 <hr>
                 <br>
                 {% elif comment.username == user%}
-                <span><a class="red-text"
+                <span>
+                    <span class="comment-date right">{{comment.date|datetimeformat}}</span>
+                    <a class="red-text"
                         href="{{url_for('profile', username=comment.username )}}">{{comment.username}}</a>:
                     {{comment.userComment}}
-                    <span class="comment-date">{{comment.date|datetimeformat}}</span> </span>
+                     </span>
                 <hr>
                 <br>
                 {%else%}
-                <span><a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
+                <span>
+                    <span class="comment-date right">{{comment.date|datetimeformat}}</span>
+                    <a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
                     {{comment.userComment}}
-                    <span class="comment-date">{{comment.date|datetimeformat}}</span> </span>
+                     </span>
                 <hr>
                 <br>
                 {%endif%}

@@ -1,21 +1,22 @@
 {% extends 'base.html'%}
 {%block content%}  
+<div id="create-project-bg-image">
+<div class="transparent-bg">
 <!-- Renders all projects created by the user -->
-<h1 class="center">My Projects</h1>
-<hr>
+<h1 style="margin-top: 10px;" class="center">My Projects</h1>
 <h4 class="center-align">You currently have {{project_number}} existing projects.</h4>
 {% for project in projects%}
 
-    <div id="my-projects-panel" class="card-panel blue-grey darken-1">
+    <div id="my-projects-panel" class="card-panel ">
         {%if project.completed == false%}
-                <span class="">This project is still active!<i id="my-projects-panel-tick"  class="fa-solid fa-check"></i></span>
+                <span class=" white-text">This project is still active!<i id="my-projects-panel-tick"  class="fa-solid fa-check"></i></span>
                 {%else%}
                 <span class=""> This project is no longer active.<i id="my-projects-panel-cross" class="fa-solid fa-circle-xmark "></i></span>
                 {%endif%}
                 <div class="row s4 right">
                     <div id="projects-panel-apply" class="col s4">
                         <span id="myProjects-buttons" ><a href="{{url_for('manage_project', thisProject=project._id)}}" class="waves-effect waves-light btn">Manage</a>
-                        <a id="view-btn" href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn">View</a></span>
+                        <a id="view-btn" href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn ">View</a></span>
                         <br>
                     </div>
                 </div>
@@ -28,12 +29,12 @@
         </div>   
         
         <div class="row s12">
-            <div  class="col l6 m6 s12  push-l1 left about-the-project">
+            <div  class="col l6 m6 s12  push-l1 left about-the-project white-text">
                 <h4>About the project</h4>
                 <p>{{project.projectDescription}}</p>
                 <p>{{project.city}}</p>
             </div>
-            <div  class="col l6  m6 s12 push-l1 right instruments-and-genre">
+            <div  class="col l6  m6 s12 push-l1 right instruments-and-genre white-text">
                 <h4>Instruments & Genre</h4>
                 <p>
                     I am looking for:
@@ -50,6 +51,8 @@
         </div>
         
     </div>
-    
+
 {%endfor%}   
+</div>
+</div>  
 {%endblock%}
