@@ -129,34 +129,29 @@
     </div>
 
     <div class="row">
-      <div class="col l6 m6 s12 push-l1 left-align about-the-project  ">
-        <h4 >About the project</h4>
-        <p>"{{project.projectDescription}}"</p>
-        <p>Location: {{project.city}}</p>
-      </div>
-      <div class="col l6 m6 s12 push-l1 left-align   instruments-and-genre ">
-        <h4 >Instruments & Genre</h4>
-        <div class="row">
-          <div class="col s6 ">
-            <p style="margin-bottom: 20px;">
-              I am looking for:
-              <ul>
-              {%for instrument in project.instruments%}
-              <li>{{instrument}}</li>
-              {%endfor%}
-              </ul>
-            </p>
-          </div>
-          <div class="col s6 ">
-            <p style="margin-bottom: 0;">
-              The genre(s) are:
-              <ul>
-              {%for genre in project.genres%}
-              <li>{{genre}}</li>
-              {%endfor%}
-              </ul>
-            </p>
-          </div>
+      <div  class="col l6 m6 s12  push-l1 left about-the-project white-text">
+        <h4>About the project</h4>
+        <p>{{project.projectDescription}}</p>
+        <p>{{project.city}}</p>
+    </div>
+    <div  class="col l6  m6 s12 push-l1 right instruments-and-genre white-text">
+        <h4>Instruments & Genre</h4>
+        <p>
+        <div class="col l6 m12 s12">
+            I am looking for:
+            {%for instrument in project.instruments%}
+           <li>{{instrument}}</li> 
+            {%endfor%}
+        </div>
+        <div class="col l6 m12 s12 pull-l2">
+
+            The genre(s) are:
+            {%for genre in project.genres%}
+           <li>{{genre}}</li> 
+            {%endfor%}
+        </p>
+        </div>
+    </div>
         </div>
 
       </div>

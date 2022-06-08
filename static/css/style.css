@@ -21,7 +21,7 @@
     width: 54% !important;
     margin: 0 auto !important;
     margin-top: 50px !important;
-    padding: 0;
+    padding: 10px;
 }
 
 .transparent-bg-settings-div p{
@@ -76,6 +76,13 @@ span.badge.new {
     overflow-x: hidden;
 }
 
+.transparent-bg2 {
+    background: rgba(255, 255, 255, 0.9) !important;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 .collapsible-body {
     background: rgba(255, 255, 255, 0.9) !important;
 }
@@ -109,7 +116,7 @@ span.badge.new {
 }
 
 .yellow-bg {
-    background-color: #e59612 !important;
+    background-color: #583957 !important;
     border-radius: 5px;
 }
 
@@ -235,8 +242,8 @@ h4 {
 
 /* apply-to-project.html */
 #application-denied-btn {
-    background-color: #F44336 !important;
-    border: 2px solid #f44336 !important;
+    background-color: #b60000 !important;
+    border: 2px solid #b60000 !important;
 }
 
 #application-denied-btn:hover {
@@ -245,7 +252,7 @@ h4 {
 }
 
 #remove-member-btn {
-    background-color: #F44336 !important;
+    background-color: #b60000 !important;
     border-radius: 5px;
 }
 
@@ -588,7 +595,7 @@ footer {
     margin: 0 auto;
     margin-top: 0;
     padding: 6px 11px 6px 11px;
-    background-color: #e59612;
+    background-color: #583957;
 }
 
 #direct-messaging-panel h2 {
@@ -601,9 +608,10 @@ footer {
 #convo-panel {
     padding: 0.5%;
     padding-bottom: 0;
-    background-color: #e59612;
+    background-color: #583957;
     width: 80%;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 #convo-username {
@@ -1213,7 +1221,7 @@ footer {
 }
 
 #manage-project-member-div {
-    padding-top: 0;
+    padding-top: 10px;
     padding-bottom: 20px;
 }
 
