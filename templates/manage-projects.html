@@ -5,6 +5,7 @@
 <!-- Form to allow user to update information about one of their projects, and also to accept or deny project applications. -->
 <div id="create-project-bg-image">
     {% set noOfFiles = thisProject.projectFiles|length%}
+{% if username == thisProject.username%}    
     <div id="create-project-panel" class=" card-panel">
         <h3 class="center-align">Manage Project: {{thisProject.projectTitle|title}}</h3>
         <form class="col s12 m8 offset-m2" method="POST" action="#!">
@@ -121,7 +122,7 @@
             <a href="{{url_for('other_profile', usernameOther=apply.applicantUsername )}}">
                 <h4>{{apply.applicantUsername}}</h4>
             </a>
-            <div class="row s12">
+            <div style="margin-bottom: 0;" class="row s12">
                 <div>
                     <h5>Project Message</h5>
                     <p>{{apply.projectMessage}}</p>
@@ -159,6 +160,19 @@
         </div>
     </div>
 </div>
-
+{%else%}
+<div class="transparent-bg">
+<div class="row">  
+<div style="width: fit-content; margin: 0 auto; margin-top: 20px;" class="card-panel center">
+<h1 class="center">You don't have permission to view this page.</h1>
+<div class="row">
+    <div class="col s12 center">
+        <a class="btn btn-large" href="{{url_for('profile', username=username)}}">Return to profile</a>
+    </div>
+</div>
+</div>
+</div>  
+</div>
+{%endif%}
 </div>
 {%endblock%}

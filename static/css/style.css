@@ -461,7 +461,8 @@ footer {
     padding-top: 1px;
     padding-bottom: 7px;
     margin: 0;
-    background-color: #e59612;
+    margin-bottom: 10px;
+    background-color: #583957;
     color: white;
 }
 

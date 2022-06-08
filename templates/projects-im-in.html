@@ -1,11 +1,12 @@
 {% extends 'base.html'%}
 {% block content %}
 <!-- Displays list of projects that the user is a member of  -->
+<div id="create-project-bg-image">
+<div class="transparent-bg">
 {% if projectsImInNumber == 0%}
 <h1 class="center">You are not a member in any projects.</h1>
 {%else%}
 <h1 class="center">Projects I'm In</h1>
-<hr>
 {% for projects in projectsImIn%}
 <div id="convo-wrapper" class="center card-panel blue-grey darken-1 white-text">
     <div class="row l4 m12 s12 ">
@@ -30,5 +31,6 @@
 </div>
 {%endfor%}
 {%endif%}
-
+</div>
+</div>
 {%endblock%}

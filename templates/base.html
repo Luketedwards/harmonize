@@ -65,7 +65,7 @@
 
       {%if session.user%}
       {% if user_notifications.notifications|length == 0%}
-      <li>You have no notifications</li>
+      <li style="padding-top: 15px;"><a href="#!">You have no notifications</a></li>
       {%else%}
       {% for notify in user_notifications.notifications|reverse %}
       {%if notify in allCurrentUsernames  %}

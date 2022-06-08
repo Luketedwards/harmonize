@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% set usernameOther = thisProject.username%}
 {%block content%}
 <div id="create-project-bg-image">
     <div id="create-project-panel" class="row card-panel s8">
@@ -6,7 +7,7 @@
         <form class="col s12 m8 offset-m2" method="POST" action="#!">
             <div style="height: 0;" class="row">
                 <div style="height: 0;" id="project-username-div" class="row">
-                    <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
+                    <input id="project-username" name="project-username" value="{{usernameOther}}" type="text" minlength="5"
                         maxlength="300">
                     <label for="project-username">username</label>
                 </div>
