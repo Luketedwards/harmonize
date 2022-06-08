@@ -103,8 +103,11 @@ def register():
         # check if username already exists in db
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
+        takenUsername = mongo.db.takenUsernames.find_one(
+            {"username": request.form.get("username").lower()})
 
-        if existing_user:
+
+        if existing_user or takenUsername:
             flash("Username already exists")
             return redirect(url_for("register"))
 
@@ -125,7 +128,12 @@ def register():
             "notifications": []
         }
 
+        takenUsernames = {
+            "username": request.form.get("username").lower()
+        }
+
         mongo.db.users.insert_one(register)
+        mongo.db.takenUsernames.insert_one(takenUsernames)
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
@@ -445,7 +453,7 @@ def other_profile(usernameOther):
         username = user
         current_user = mongo.db.users.find_one({'username': user})
 
-        if usernameOther != user:
+        if usernameOther != user and usernameOther in allCurrentUsernames:
             return render_template('other-profile.html',
             selectedUser=selectedUser, following=following,
             listOfUsers=listOfUsers, user=user, current_user=current_user,
@@ -454,6 +462,11 @@ def other_profile(usernameOther):
             allCurrentUsernames=allCurrentUsernames,
             listOfProjectNames=listOfProjectNames,
             projectsImIn=projectsImIn, myUsername=myUsername)
+
+        elif usernameOther not in allCurrentUsernames:
+            flash('This profile no longer exists')
+            return redirect(url_for("profile", username=username))
+            
 
         return redirect(url_for("profile", username=username))
     except:
