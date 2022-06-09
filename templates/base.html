@@ -218,7 +218,7 @@
     <!-- input field that provides dropdown of site usernames and passes entered value into username search function.  -->
     <li>
       <form method="post" action="{{url_for('other_profile_search', username=username)}}">
-        <input placeholder="Search" class="autocomplete"  type="text" id="user-search-input" name="user-search-input"
+        <input placeholder=" Search" class="autocomplete"  type="text" id="user-search-input" name="user-search-input"
           list="user-search" autocomplete="off">
         <datalist id="user-search">
           {%for user in listOfUsers%}

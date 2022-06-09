@@ -6,6 +6,8 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from PIL import Image
+import PIL
+import glob
 import pathlib
 import datetime
 from datetime import datetime, timedelta, date
@@ -338,13 +340,13 @@ def upload_file():
             if 'file1' not in request.files:
                 return 'there is no file1 in form!'
             file1 = request.files['file1']
-
+            
             newFileName = "profile-image" + "-" + user
             path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
             ext = pathlib.Path(path).suffix
             newPath = os.path.join(
                 app.config['UPLOAD_FOLDER'], newFileName + ext)
-
+            
             my_bucket = get_bucket()
             my_bucket.Object(newPath).put(Body=file1)
 

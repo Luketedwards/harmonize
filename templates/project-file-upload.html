@@ -49,5 +49,15 @@
     </div>
 
 </div>
+<script>
+var uploadField = document.getElementById("file-upload");
+
+uploadField.onchange = function() {
+    if(this.files[0].size > 1048576){
+       alert("File cannot exceed 1MB.");
+       this.value = "";
+    };
+};
+</script>
 
 {% endblock %}
