@@ -125,6 +125,7 @@ def register():
             "bio": "Tell us a little about yourself! Click the edit profile \
                     button to write your bio",
             "profile_pic": "/static/images/default-pp-min.png",
+            "profile_pic2": "https://ik.imagekit.io/harmonise/static/images/user-images/default-pp-min.png",
             "followers": [],
             "following": [],
             "notifications": []
@@ -325,7 +326,7 @@ def edit_profile(username):
 # allows user to upload and change their profile image
 @app.route('/upload_file', methods=['GET', 'POST'])
 def upload_file():
-    try:
+    
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
         listOfProjectNames = mongo.db.projects.distinct('projectTitle')
@@ -355,9 +356,18 @@ def upload_file():
                 'profile_pic':
                 'https://harmonise.s3.eu-west-2.amazonaws.com/' + newPath
             }
+            
             }
+
+            profile_pic_update_optimsed = {'$set':{
+                'profile_pic2':
+                'https://ik.imagekit.io/harmonise/'+ newPath
+            }}
             mongo.db.users.update_one(
                 {'_id': ObjectId(user_id)}, profile_pic_update)
+
+            mongo.db.users.update_one(
+                {'_id': ObjectId(user_id)}, profile_pic_update_optimsed)    
             flash("Profile Picture Updated!")
 
             return redirect(url_for("profile", username=username))
@@ -366,8 +376,7 @@ def upload_file():
         user_notifications=user_notifications,
         allCurrentUsernames=allCurrentUsernames,
         listOfProjectNames=listOfProjectNames)
-    except:
-        return render_template("login.html")
+    
 
 
 # renders all other users on the site

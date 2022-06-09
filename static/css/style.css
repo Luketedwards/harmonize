@@ -802,8 +802,8 @@ footer {
 #user-images {
     display: inline;
     height: 16vw;
-    width: 12vw;
-    border-radius: 50%;
+    width: 16vw;
+    
 }
 
 .other-users-link {
@@ -1473,6 +1473,7 @@ footer {
 
     #user-images {
 
+        height: 53vw !important;
         width: 53vw !important;
     }
 
@@ -1537,8 +1538,8 @@ footer {
     #user-images {
         margin: 0 auto;
         position: relative;
-        height: 50%;
-        width: 31vw;
+        height: 37vw;
+        width: 37vw;
     }
 
     .edit-profile-btns {

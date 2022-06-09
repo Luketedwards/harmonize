@@ -10,7 +10,7 @@
 
           <div class="row ">
             <div class="col s12 l4 l-left center-m">
-              <img src="{{current_user.profile_pic}}" alt="" id="profile-image" class="circle responsive-img ">
+              <img src="{{current_user.profile_pic2 + '?tr=w-500,h-500'}}" alt="" id="profile-image" class="circle responsive-img ">
               <!-- notice the "circle" class -->
             </div>
 
@@ -121,7 +121,7 @@
       <h2 id="other-profile-projects-title" class="center-align center ">{{project.projectTitle|title}}</h2>
       <div class="row center">
         <div class="chip s12">
-          <img src="{{selectedUser.profile_pic}}" alt="{{selectedUser.username}}'s profile photo">
+          <img src="{{selectedUser.profile_pic2 + '?tr=w-100,h-100'}}" alt="{{selectedUser.username}}'s profile photo">
           <span> Created by: <a
               href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
         </div>
