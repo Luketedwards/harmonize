@@ -319,7 +319,18 @@ Once a message is sent the recipient is notified that you have contacted them.
 
 ### Delete Profile
 ---
-If you no longer wish to be a site member you can remove your profile from the system
+If you no longer wish to be a site member you can remove your profile from the system through the 'Delete Profile' page.
+After confirming your decision your profile will be wiped clean from the site.
+
+This includes:
+- Removing you from all projects
+- Removing you from all followers/following lists
+- Deleting all of your projects and the files within them from the S3 bucket
+- Deleting your profile image from the server
+
+Any messages you had with other users are retained, but when they click the link to your profile within the messenger panel, they are informed that your account no longer exists.
+
+![Delete Profile](/static/readme-files/features/delete-account-min.png)
 
 ## Technologies Used 
 ---
@@ -333,48 +344,59 @@ If you no longer wish to be a site member you can remove your profile from the s
 
 ### Framework, Software & Libraries Used
 
-1. [Bootstrap 4.4.1](https://getbootstrap.com/):
-      * Bootstrap was utilised to quickly build a responsive framework for the website, before being overwritten with a custom CSS stylesheet to add my own style.
+1. [Materialize](https://materializecss.com/):
+      * Materialize was used to quickly generate a layout for the navbar and some elements of the site, before being overwritten by custom CSS.
 
 2. [Google Fonts](https://fonts.google.com/):
-   * Google fonts was used to import the fonts 'Lusitana' for the nav bar and headings, and 'Source Serif 4' for the body text. Both fonts were backed up by 'Sans-serif'.
+   * Google fonts was used to import the fonts used throughout the site..
 
 3. [Font Awesome](https://fontawesome.com/):
-   * Font Awesome was used to provide icons for the toggle buttons on the memory tips page.
+   * Font Awesome was used to provide icons for various elements on the site.
 
 4. [Git](https://git-scm.com/):
    * Git was used for version control to backup my project. I did this through terminal commands to commit to Git and push externally to GitHub.
 
 5. [GitHub](https://github.com/):
-   * GitHub was used to store all of my project code after being pushed from Git. Git hub pages was then used to deploy the project.
+   * GitHub was used to store all of my project code after being pushed from Git.
 
-6. [Affinity Photo/Publisher](https://affinity.serif.com/en-gb/photo/):
-      * Affinity software was used to create my poker chip buttons and favicon image.
-
-7. [Figma](https://figma.com/):
+6. [Figma](https://figma.com/):
       * The Figma free trial was used to generate my wireframes to guide my design process.
 
-8. [Real Favicon Generator](https://realfavicongenerator.net):
-   * Real Favicon Generator was used to turn the image I created into a favicon.ico file.
+7. [Real Favicon Generator](https://realfavicongenerator.net):
+   * Real Favicon Generator was used to create a favicon.ico file.
 
-9. [Website Mockup Generator](https://websitemockupgenerator.com)
+8. [Website Mockup Generator](https://websitemockupgenerator.com)
    * Website Mockup Generator was used to create the website mockup at the start of this README.
 
-10.  [JQUERY](https://jquery.com)  
+9.  [JQUERY](https://jquery.com)  
       * JQUERY was used throughout the process of creating my Javascript code.
 
-13. [Final Cut Pro](https://www.apple.com/uk/final-cut-pro/)
-      * Final Cut Pro was used to edit the demo video included in this read me.
-
-14. [Logic Pro X](https://www.apple.com/uk/logic-pro/)
-      * Logic Pro X was used to record and edit the audio voiceover for the demo video included in this read me.
-
-14. [lighthouse](https://developers.google.com/web/tools/lighthouse)
+10. [lighthouse](https://developers.google.com/web/tools/lighthouse)
       * Lighthouse was used to assess the performance of the project.
 
-14. [Wave](https://wave.webaim.org/)
+11. [Wave](https://wave.webaim.org/)
       * Wave was used to assess the accessibility of the project.
 
+12. [ImageKit](https://imagekit.io/)
+      * Image kit was used to compress and serve images stored in the Amazon S3 server to increase performance.
+
+13. [Amazon S3](https://aws.amazon.com/s3/)
+      * Amazon S3 was used to store all uploaded user files.    
+
+14. [Flask](https://flask.palletsprojects.com/en/2.1.x/)
+      * Flask was used as the framework to create my project.        
+
+15. [MongoDb](https://mongodb.com)
+      * MongoDb was used as my database to store all data about users, projects and messages. This information was then all related to eachother using ID and username parameters.
+
+16. [Pymongo](https://pymongo.readthedocs.io/en/stable/)
+      * Pymongo was used to interact with the MongoDb database. 
+
+17. [image compressor](https://imagecompressor.com/)
+      * Imagecompressor was used to compress all of my static files to improve performance.
+
+18. [Heroku](https://heroku.com/)
+      * Heroku was used to host my project.                      
 
 # Testing User Stories from the User Experience (UX) Section
 - As a first time user I want to:
