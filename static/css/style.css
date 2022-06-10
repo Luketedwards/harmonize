@@ -46,7 +46,7 @@
 }
 
 img {
-    clip-path: circle();
+    border-radius: 50%;
 }
 
 span.badge.new {
