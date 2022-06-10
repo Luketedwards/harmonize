@@ -50,8 +50,6 @@
 
   </ul>
 
-  <div id="register-bg-image">
-
     <section>
       <!-- flash messages -->
       {% with messages = get_flashed_messages() %}
@@ -65,6 +63,7 @@
       {% endwith %}
     </section>
 <!-- Form to register and account on the site -->
+<div id="register-bg-image">
     <div id="register-container" class="row">
 
       <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
@@ -177,6 +176,7 @@
 
       </form>
 
+    </div>
     </div>
     <footer class="page-footer center navbar-color">
       © 2022 Luke Edwards

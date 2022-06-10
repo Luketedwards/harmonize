@@ -1295,6 +1295,7 @@ footer {
 
 #register-container {
     padding-top: 50px;
+    margin-bottom: 0;
 }
 
 #register-container .card-panel {
@@ -1313,6 +1314,7 @@ footer {
     background-size: cover;
     background-position: top;
     width: 100vw;
+    height: 100%;
     overflow: scroll;
 }
 
