@@ -5,9 +5,6 @@ from flask import (
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
-from PIL import Image
-import PIL
-import glob
 import pathlib
 import datetime
 from datetime import datetime, timedelta, date
@@ -16,6 +13,12 @@ import botocore
 from filters import datetimeformat, datetimeformatBucket, file_type
 
 
+from imagekitio import ImageKit
+imagekit = ImageKit(
+    private_key='private_qwuxSVAklF1V0cJcrBjfluCALVM=',
+    public_key='public_pW2XXmuTn4jfQxJ4V1KESsANJYQ=',
+    url_endpoint='https://ik.imagekit.io/harmonise'
+)
 
 if os.path.exists("env.py"):
     import env
@@ -44,6 +47,8 @@ mongo = PyMongo(app)
 global user
 
 # creating global instance of amazon S3 bucket for file uploads
+
+
 def _get_s3_resource():
     if S3_KEY and S3_SECRET:
         return boto3.resource(
@@ -55,11 +60,15 @@ def _get_s3_resource():
         return boto3.resource('s3')
 
 # projects Amazon S3 bucket
+
+
 def get_bucket():
     s3_resource = _get_s3_resource()
     return s3_resource.Bucket(S3_BUCKET)
 
 # Login function
+
+
 @app.route("/")
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -99,6 +108,8 @@ def files():
     return render_template("files.html", my_bucket=my_bucket, files=summaries)
 
 # registers user account, creates user object in database
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -108,7 +119,6 @@ def register():
         takenUsername = mongo.db.takenUsernames.find_one(
             {"username": request.form.get("username").lower()})
 
-
         if existing_user or takenUsername:
             flash("Username already exists")
             return redirect(url_for("register"))
@@ -117,7 +127,8 @@ def register():
             "username": request.form.get("username").lower(),
             "fname": request.form.get("first_name"),
             "lname": request.form.get("last_name"),
-            "password": generate_password_hash(request.form.get("password")),
+            "password": generate_password_hash(
+                request.form.get("password")),
             "city": request.form.get("city"),
             "email": request.form.get("email"),
             "instruments": request.form.getlist("instruments"),
@@ -125,11 +136,11 @@ def register():
             "bio": "Tell us a little about yourself! Click the edit profile \
                     button to write your bio",
             "profile_pic": "/static/images/default-pp-min.png",
-            "profile_pic2": "https://ik.imagekit.io/harmonise/static/images/user-images/default-pp-min.png",
+            "profile_pic2":
+            "https://ik.imagekit.io/harmonise/static/images/user-images/default-pp-min.png",
             "followers": [],
             "following": [],
-            "notifications": []
-        }
+            "notifications": []}
 
         takenUsernames = {
             "username": request.form.get("username").lower()
@@ -146,6 +157,8 @@ def register():
     return render_template("register.html")
 
 # logs out user
+
+
 @app.route("/logout")
 def logout():
     # remove user from session cookie
@@ -154,34 +167,39 @@ def logout():
     return redirect(url_for("login"))
 
 # users personal profile
+
+
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    
-        listOfUsers = mongo.db.users.find()
-        allCurrentUsernames = mongo.db.users.distinct("username")
-        projects = mongo.db.projects.find({'username': username})
-        # grab the session user's username from db
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        user = (session["user"])
-        user_notifications = mongo.db.users.find_one({'username': user})
-        listOfUsers = mongo.db.users.find()
-        listOfProjectNames = mongo.db.projects.distinct('projectTitle')
 
-        if session["user"]:
-            user = (session["user"])
-            current_user = mongo.db.users.find_one({'username': user})
-            userProjects = mongo.db.projects.count_documents({'username':username})
-            return render_template("profile.html", username=username,
-            current_user=current_user, listOfUsers=listOfUsers,
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    projects = mongo.db.projects.find({'username': username})
+    # grab the session user's username from db
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username': user})
+    listOfUsers = mongo.db.users.find()
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+
+    if session["user"]:
+        user = (session["user"])
+        current_user = mongo.db.users.find_one({'username': user})
+        userProjects = mongo.db.projects.count_documents(
+            {'username': username})
+        return render_template(
+            "profile.html",
+            username=username,
+            current_user=current_user,
+            listOfUsers=listOfUsers,
             user_notifications=user_notifications,
             allCurrentUsernames=allCurrentUsernames,
             listOfProjectNames=listOfProjectNames,
-            userProjects=userProjects,projects=projects)
+            userProjects=userProjects,
+            projects=projects)
 
-        return redirect(url_for("login"))
-
-   
+    return redirect(url_for("login"))
 
 
 # Renders users setting page
@@ -203,82 +221,86 @@ def settings(username):
             current_user = mongo.db.users.find_one({'username': user})
 
             return render_template("settings.html", username=username,
-            current_user=current_user,
-            user_notifications=user_notifications,
-            allCurrentUsernames=allCurrentUsernames,
-            listOfProjectNames=listOfProjectNames)
+                                   current_user=current_user,
+                                   user_notifications=user_notifications,
+                                   allCurrentUsernames=allCurrentUsernames,
+                                   listOfProjectNames=listOfProjectNames)
 
         return redirect(url_for("login"))
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
 # function to delete user account from database
 @app.route("/delete_account", methods=["GET", "POST"])
 def delete_account():
-    
-        listOfUsers = mongo.db.users.find()
-        allCurrentUsernames = mongo.db.users.distinct("username")
-        listOfProjectNames = mongo.db.projects.distinct('projectTitle')
-        username = (session["user"])
-        
-        # Code to delete all of the files within users projects and then the project itself
-        
-        projectsToDelete = mongo.db.projects.find({'username': username})
 
-        for projectsD in projectsToDelete:
-            thisProjectId = projectsD['_id']
-            thisProjectTitle = projectsD['projectTitle']
-            noOfFiles = mongo.db.projects.find_one({'_id': ObjectId(thisProjectId)})
-            noOfFiles = len(noOfFiles['projectFiles'])
-            result1=[]
-            result2=[]
-            if noOfFiles > 0:
-                for nameOfFiles in mongo.db.projects.find({'_id': ObjectId(thisProjectId)}, {'projectFiles':{'file':True}}):
-                    result1.append(nameOfFiles['projectFiles'])
-                    for i in range(noOfFiles):
-                        result2.append(nameOfFiles['projectFiles'][i]['file'])
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    username = (session["user"])
 
-                mongo.db.projects.delete_one({'_id': ObjectId(thisProjectId)})
+    # Code to delete all of the files within users projects and then the
+    # project itself
 
-                for filename in result2:
-                    key = str(filename)
-                    my_bucket = get_bucket()
-                    my_bucket.Object(key).delete()
-                    
-            else:
-                mongo.db.projects.delete_one({'_id': ObjectId(thisProjectId)})
-        # Deletes users username from all following lists
-        mongo.db.users.update_many(
-            {"following": username},
-            {'$pull': {"following": username}})
-        mongo.db.users.update_many(
-            {"followers": username},
-            {'$pull': {"followers": username}}) 
-        
-        # deletes users profile photo from Amazon s3
-        try:
-            typeofFile = mongo.db.users.find_one({'username': username})['profile_pic']
-            typeofFile = typeofFile[-4:]
-            key = 'static/images/user-images/profile-image-' + username + typeofFile
-            my_bucket = get_bucket()
-            my_bucket.Object(key).delete()
+    projectsToDelete = mongo.db.projects.find({'username': username})
 
-            # Deletes users account and data
-            mongo.db.users.delete_one({"username": username})        
+    for projectsD in projectsToDelete:
+        thisProjectId = projectsD['_id']
+        thisProjectTitle = projectsD['projectTitle']
+        noOfFiles = mongo.db.projects.find_one(
+            {'_id': ObjectId(thisProjectId)})
+        noOfFiles = len(noOfFiles['projectFiles'])
+        result1 = []
+        result2 = []
+        if noOfFiles > 0:
+            for nameOfFiles in mongo.db.projects.find({'_id': ObjectId(thisProjectId)}, {
+                                                      'projectFiles': {'file': True}}):
+                result1.append(nameOfFiles['projectFiles'])
+                for i in range(noOfFiles):
+                    result2.append(nameOfFiles['projectFiles'][i]['file'])
 
-            # logs out user for the last time and prompts them to register
-            session.pop("user")
-            flash("Account successfully deleted")
-        except:
-            # Deletes users account and data
-            mongo.db.users.delete_one({"username": username})        
+            mongo.db.projects.delete_one({'_id': ObjectId(thisProjectId)})
 
-            # logs out user for the last time and prompts them to register
-            session.pop("user")
-            flash("Account successfully deleted")
+            for filename in result2:
+                key = str(filename)
+                my_bucket = get_bucket()
+                my_bucket.Object(key).delete()
 
-        return render_template("register.html")
+        else:
+            mongo.db.projects.delete_one({'_id': ObjectId(thisProjectId)})
+    # Deletes users username from all following lists
+    mongo.db.users.update_many(
+        {"following": username},
+        {'$pull': {"following": username}})
+    mongo.db.users.update_many(
+        {"followers": username},
+        {'$pull': {"followers": username}})
+
+    # deletes users profile photo from Amazon s3
+    try:
+        typeofFile = mongo.db.users.find_one(
+            {'username': username})['profile_pic']
+        typeofFile = typeofFile[-4:]
+        key = 'static/images/user-images/profile-image-' + username + typeofFile
+        my_bucket = get_bucket()
+        my_bucket.Object(key).delete()
+
+        # Deletes users account and data
+        mongo.db.users.delete_one({"username": username})
+
+        # logs out user for the last time and prompts them to register
+        session.pop("user")
+        flash("Account successfully deleted")
+    except BaseException:
+        # Deletes users account and data
+        mongo.db.users.delete_one({"username": username})
+
+        # logs out user for the last time and prompts them to register
+        session.pop("user")
+        flash("Account successfully deleted")
+
+    return render_template("register.html")
 
 
 # allows user to edit bio and account information
@@ -313,70 +335,89 @@ def edit_profile(username):
 
             return redirect(url_for('profile', username=username))
 
-        return render_template("edit-profile.html", username=username,
-        current_user=current_user, listOfUsers=listOfUsers,
-        user_notifications=user_notifications,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
+        return render_template(
+            "edit-profile.html",
+            username=username,
+            current_user=current_user,
+            listOfUsers=listOfUsers,
+            user_notifications=user_notifications,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
 # allows user to upload and change their profile image
 @app.route('/upload_file', methods=['GET', 'POST'])
 def upload_file():
+
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username': user})
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    current_user = mongo.db.users.find_one({'username': user})
+    user_id = mongo.db.users.find_one({'username': user})['_id']
     
-        listOfUsers = mongo.db.users.find()
-        allCurrentUsernames = mongo.db.users.distinct("username")
-        listOfProjectNames = mongo.db.projects.distinct('projectTitle')
-        user = (session["user"])
-        user_notifications = mongo.db.users.find_one({'username': user})
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        current_user = mongo.db.users.find_one({'username': user})
-        user_id = mongo.db.users.find_one({'username': user})['_id']
 
-        if request.method == 'POST':
-            if 'file1' not in request.files:
-                return 'there is no file1 in form!'
-            file1 = request.files['file1']
-            
-            newFileName = "profile-image" + "-" + user
-            path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
-            ext = pathlib.Path(path).suffix
-            newPath = os.path.join(
-                app.config['UPLOAD_FOLDER'], newFileName + ext)
-            
-            my_bucket = get_bucket()
-            my_bucket.Object(newPath).put(Body=file1)
+    if request.method == 'POST':
+        if 'file1' not in request.files:
+            return 'there is no file1 in form!'
+        file1 = request.files['file1']
 
-            profile_pic_update = {'$set': {
-
-                'profile_pic':
-                'https://harmonise.s3.eu-west-2.amazonaws.com/' + newPath
-            }
-            
-            }
-
-            profile_pic_update_optimsed = {'$set':{
-                'profile_pic2':
-                'https://ik.imagekit.io/harmonise/'+ newPath
-            }}
-            mongo.db.users.update_one(
-                {'_id': ObjectId(user_id)}, profile_pic_update)
-
-            mongo.db.users.update_one(
-                {'_id': ObjectId(user_id)}, profile_pic_update_optimsed)    
-            flash("Profile Picture Updated!")
-
-            return redirect(url_for("profile", username=username))
-
-        return render_template("upload_file.html", listOfUsers=listOfUsers,
-        user_notifications=user_notifications,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
+        newFileName = "profile-image" + "-" + user
+        path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+        ext = pathlib.Path(path).suffix
+        newPath = os.path.join(
+            app.config['UPLOAD_FOLDER'], newFileName + ext)
+        newPathNoExt = os.path.join(
+            app.config['UPLOAD_FOLDER'], newFileName )
     
+
+        my_bucket = get_bucket()
+        my_bucket.Object(newPath).put(Body=file1)
+        
+        #purges imagekit cache so new profile image is updated
+
+        imagekit.purge_file_cache(
+            'https://ik.imagekit.io/harmonise/' + newPathNoExt + '.jpg' + '*'
+            )
+
+        imagekit.purge_file_cache(
+            'https://ik.imagekit.io/harmonise/' + newPathNoExt + '.png' + '*'
+            )
+
+        imagekit.purge_file_cache(
+            'https://ik.imagekit.io/harmonise/' + newPathNoExt + '.jpeg' + '*'
+            )
+
+        profile_pic_update = {'$set': {
+            'profile_pic':
+            'https://harmonise.s3.eu-west-2.amazonaws.com/' + newPath
+        }
+
+        }
+
+        profile_pic_update_optimsed = {'$set': {
+            'profile_pic2':
+            'https://ik.imagekit.io/harmonise/' + newPath
+        }}
+        mongo.db.users.update_one(
+            {'_id': ObjectId(user_id)}, profile_pic_update)
+
+        mongo.db.users.update_one(
+            {'_id': ObjectId(user_id)}, profile_pic_update_optimsed)
+        flash("Profile Picture Updated! Changes may take a minute to display")
+
+        return redirect(url_for("profile", username=username))
+
+    return render_template("upload_file.html", listOfUsers=listOfUsers,
+                           user_notifications=user_notifications,
+                           allCurrentUsernames=allCurrentUsernames,
+                           listOfProjectNames=listOfProjectNames)
 
 
 # renders all other users on the site
@@ -394,13 +435,18 @@ def other_users():
         current_user = mongo.db.users.find_one({'username': user})
         user_id = mongo.db.users.find_one({'username': user})['_id']
 
-        return render_template("other-users.html", user=user,
-        username=username, current_user=current_user,
-        user_id=user_id, users=users, listOfUsers=listOfUsers,
-        user_notifications=user_notifications,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
-    except:
+        return render_template(
+            "other-users.html",
+            user=user,
+            username=username,
+            current_user=current_user,
+            user_id=user_id,
+            users=users,
+            listOfUsers=listOfUsers,
+            user_notifications=user_notifications,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames)
+    except BaseException:
         return render_template("login.html")
 
 
@@ -422,20 +468,23 @@ def filter_users():
             instrumentsQuery = request.form.getlist('instruments')
             genresQuery = request.form.getlist("genres")
 
-            return render_template("other-users-filter.html",
-            listOfUsers=listOfUsers,
-            allCurrentUsernames=allCurrentUsernames,
-            listOfProjectNames=listOfProjectNames,
-            user_notifications=user_notifications, cityQuery=cityQuery,
-            instrumentsQuery=instrumentsQuery, genresQuery=genresQuery,
-            users=users)
+            return render_template(
+                "other-users-filter.html",
+                listOfUsers=listOfUsers,
+                allCurrentUsernames=allCurrentUsernames,
+                listOfProjectNames=listOfProjectNames,
+                user_notifications=user_notifications,
+                cityQuery=cityQuery,
+                instrumentsQuery=instrumentsQuery,
+                genresQuery=genresQuery,
+                users=users)
 
         return render_template('user-filter.html', listOfUsers=listOfUsers,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames,
-        user_notifications=user_notifications)
+                               allCurrentUsernames=allCurrentUsernames,
+                               listOfProjectNames=listOfProjectNames,
+                               user_notifications=user_notifications)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -465,22 +514,27 @@ def other_profile(usernameOther):
         current_user = mongo.db.users.find_one({'username': user})
 
         if usernameOther != user and usernameOther in allCurrentUsernames:
-            return render_template('other-profile.html',
-            selectedUser=selectedUser, following=following,
-            listOfUsers=listOfUsers, user=user, current_user=current_user,
-            projects=projects, user_notifications=user_notifications,
-            project_number=project_number,
-            allCurrentUsernames=allCurrentUsernames,
-            listOfProjectNames=listOfProjectNames,
-            projectsImIn=projectsImIn, myUsername=myUsername)
+            return render_template(
+                'other-profile.html',
+                selectedUser=selectedUser,
+                following=following,
+                listOfUsers=listOfUsers,
+                user=user,
+                current_user=current_user,
+                projects=projects,
+                user_notifications=user_notifications,
+                project_number=project_number,
+                allCurrentUsernames=allCurrentUsernames,
+                listOfProjectNames=listOfProjectNames,
+                projectsImIn=projectsImIn,
+                myUsername=myUsername)
 
         elif usernameOther not in allCurrentUsernames:
             flash('This profile no longer exists')
             return redirect(url_for("profile", username=username))
-            
 
         return redirect(url_for("profile", username=username))
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -515,27 +569,36 @@ def other_profile_search():
         if usernameOther not in allCurrentUsernames:
             flash("That user doesn't exist")
             username = username
-            return render_template("profile.html", username=username,
-            current_user=current_user, listOfUsers=listOfUsers,
-            user_notifications=user_notifications,
-            allCurrentUsernames=allCurrentUsernames,
-            listOfProjectNames=listOfProjectNames)
+            return render_template(
+                "profile.html",
+                username=username,
+                current_user=current_user,
+                listOfUsers=listOfUsers,
+                user_notifications=user_notifications,
+                allCurrentUsernames=allCurrentUsernames,
+                listOfProjectNames=listOfProjectNames)
 
         if usernameOther != username:
-            return render_template('other-profile.html',
-            selectedUser=selectedUser, following=following,
-            listOfUsers=listOfUsers, usernameOther=usernameOther,
-            user=user, current_user=current_user, projects=projects,
-            user_notifications=user_notifications,
-            project_number=project_number,
-            allCurrentUsernames=allCurrentUsernames,
-            listOfProjectNames=listOfProjectNames,
-            projectsImIn=projectsImIn, myUsername=myUsername)
+            return render_template(
+                'other-profile.html',
+                selectedUser=selectedUser,
+                following=following,
+                listOfUsers=listOfUsers,
+                usernameOther=usernameOther,
+                user=user,
+                current_user=current_user,
+                projects=projects,
+                user_notifications=user_notifications,
+                project_number=project_number,
+                allCurrentUsernames=allCurrentUsernames,
+                listOfProjectNames=listOfProjectNames,
+                projectsImIn=projectsImIn,
+                myUsername=myUsername)
 
-        if usernameOther == username:  
+        if usernameOther == username:
             username = username
             return redirect(url_for("profile", username=username))
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -564,8 +627,8 @@ def follow_user(usernameOther):
                                   '$push': {"followers": user}})
         flash("You are now following " + selectedUser['username'])
 
-        return redirect(url_for('other_profile',usernameOther=usernameOther))
-    except:
+        return redirect(url_for('other_profile', usernameOther=usernameOther))
+    except BaseException:
         return render_template("login.html")
 
 
@@ -573,19 +636,19 @@ def follow_user(usernameOther):
 @app.route('/unfollow-user/<usernameOther>', methods=["GET", "POST"])
 def unfollow_user(usernameOther):
 
-        selectedUser = mongo.db.users.find_one({'username': usernameOther})
-        user = (session["user"])
-        usernameOther = (selectedUser['username'])
+    selectedUser = mongo.db.users.find_one({'username': usernameOther})
+    user = (session["user"])
+    usernameOther = (selectedUser['username'])
 
-        mongo.db.users.update_one(
-            {"username": user}, {'$pull': {"following": usernameOther}})
-        mongo.db.users.update_one({"username": usernameOther}, {
-                                  '$pull': {"followers": user}})
-        flash("You are no longer following " + selectedUser['username'])
+    mongo.db.users.update_one(
+        {"username": user}, {'$pull': {"following": usernameOther}})
+    mongo.db.users.update_one({"username": usernameOther}, {
+                              '$pull': {"followers": user}})
+    flash("You are no longer following " + selectedUser['username'])
 
-        return redirect(url_for('other_profile',usernameOther=usernameOther))
+    return redirect(url_for('other_profile', usernameOther=usernameOther))
 
-    
+
 # renders list of users the user follows
 @app.route("/following/")
 def following():
@@ -601,13 +664,18 @@ def following():
         current_user = mongo.db.users.find_one({'username': user})
         user_id = mongo.db.users.find_one({'username': user})['_id']
 
-        return render_template("following.html", user=user,
-        username=username, current_user=current_user,
-        user_id=user_id, users=users, listOfUsers=listOfUsers,
-        user_notifications=user_notifications,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
-    except:
+        return render_template(
+            "following.html",
+            user=user,
+            username=username,
+            current_user=current_user,
+            user_id=user_id,
+            users=users,
+            listOfUsers=listOfUsers,
+            user_notifications=user_notifications,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames)
+    except BaseException:
         return render_template("login.html")
 
 
@@ -626,14 +694,19 @@ def followers():
         current_user = mongo.db.users.find_one({'username': user})
         user_id = mongo.db.users.find_one({'username': user})['_id']
 
-        return render_template("followers.html", user=user,
-        username=username, current_user=current_user, user_id=user_id,
-        users=users, listOfUsers=listOfUsers,
-        user_notifications=user_notifications,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
+        return render_template(
+            "followers.html",
+            user=user,
+            username=username,
+            current_user=current_user,
+            user_id=user_id,
+            users=users,
+            listOfUsers=listOfUsers,
+            user_notifications=user_notifications,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -678,17 +751,17 @@ def create_a_project():
             return redirect(url_for('my_projects'))
 
         return render_template('create-a-project.html', user=user,
-        user_notifications=user_notifications,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
-        
-    except:
+                               user_notifications=user_notifications,
+                               allCurrentUsernames=allCurrentUsernames,
+                               listOfProjectNames=listOfProjectNames)
+
+    except BaseException:
         return render_template("login.html")
 
 
 # deletes users project and all related files and info
 @app.route('/delete_project/<thisProjectId>/<thisProjectTitle>/<noOfFiles>')
-def delete_project(thisProjectId,thisProjectTitle,noOfFiles):
+def delete_project(thisProjectId, thisProjectTitle, noOfFiles):
     user = (session['user'])
     listOfUsers = mongo.db.users.find()
     allCurrentUsernames = mongo.db.users.distinct("username")
@@ -697,31 +770,31 @@ def delete_project(thisProjectId,thisProjectTitle,noOfFiles):
     projects = mongo.db.projects.find({'username': user})
     project_number = mongo.db.projects.count_documents({'username': user})
     username = mongo.db.users.find_one({'username': user})
-    
-    thisProjectId=thisProjectId
-    thisProjectTitle=thisProjectTitle
-    noOfFiles= int(noOfFiles) 
 
-    result1=[]
-    result2=[]
-    
-    for nameOfFiles in mongo.db.projects.find({'_id': ObjectId(thisProjectId)}, {'projectFiles':{'file':True}}):
-        
+    thisProjectId = thisProjectId
+    thisProjectTitle = thisProjectTitle
+    noOfFiles = int(noOfFiles)
+
+    result1 = []
+    result2 = []
+
+    for nameOfFiles in mongo.db.projects.find({'_id': ObjectId(thisProjectId)}, {
+                                              'projectFiles': {'file': True}}):
+
         result1.append(nameOfFiles['projectFiles'])
         for i in range(noOfFiles):
             result2.append(nameOfFiles['projectFiles'][i]['file'])
-            
+
     mongo.db.projects.delete_one({'_id': ObjectId(thisProjectId)})
-    
+
     for filename in result2:
         key = str(filename)
         my_bucket = get_bucket()
         my_bucket.Object(key).delete()
-    
+
     flash('Project Deleted.')
 
     return redirect(url_for('my_projects'))
-
 
 
 # renders page of users projects
@@ -739,17 +812,18 @@ def my_projects():
         username = mongo.db.users.find_one({'username': user})
 
         return render_template('my-projects.html', user=user,
-        projects=projects, username=username,
-        user_notifications=user_notifications,
-        project_number=project_number,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
-    except:
+                               projects=projects, username=username,
+                               user_notifications=user_notifications,
+                               project_number=project_number,
+                               allCurrentUsernames=allCurrentUsernames,
+                               listOfProjectNames=listOfProjectNames)
+    except BaseException:
         return render_template("login.html")
 
 
 # application to join another users project
-@app.route('/apply_to_project/<thisProject>/<usernameOther>', methods=["GET", "POST"])
+@app.route('/apply_to_project/<thisProject>/<usernameOther>',
+           methods=["GET", "POST"])
 def apply_to_project(thisProject, usernameOther):
     try:
         listOfUsers = mongo.db.users.find()
@@ -760,11 +834,12 @@ def apply_to_project(thisProject, usernameOther):
         user = (session["user"])
         user_notifications = mongo.db.users.find_one({'username': user})
         current_user = mongo.db.users.find_one({'username': user})
-        
-        thisProjectId = mongo.db.projects.find_one({'projectTitle': thisProject})['_id']
+
+        thisProjectId = mongo.db.projects.find_one(
+            {'projectTitle': thisProject})['_id']
         user_notifications = mongo.db.users.find_one({'username': user})
         thisProject = mongo.db.projects.find_one({'projectTitle': thisProject})
-        
+
         thisProjectTitle = thisProject['projectTitle']
 
         if request.method == "POST":
@@ -788,19 +863,31 @@ def apply_to_project(thisProject, usernameOther):
 
             return redirect(url_for("profile", username=username))
 
-        return render_template('apply-to-project.html', user=user,
-        user_notifications=user_notifications, thisProject=thisProject,
-        usernameOther=usernameOther, listOfUsers=listOfUsers,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
+        return render_template(
+            'apply-to-project.html',
+            user=user,
+            user_notifications=user_notifications,
+            thisProject=thisProject,
+            usernameOther=usernameOther,
+            listOfUsers=listOfUsers,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
 # accept users application to your project and inform them of outcome
-@app.route('/accept_application/<applicant>/<applicantInstrument>/<thisProject>/<thisProjectTitle>/', methods=["GET", "POST"])
-def accept_application(applicant, applicantInstrument, thisProject, thisProjectTitle):
+@app.route(
+    '/accept_application/<applicant>/<applicantInstrument>/<thisProject>/<thisProjectTitle>/',
+    methods=[
+        "GET",
+        "POST"])
+def accept_application(
+        applicant,
+        applicantInstrument,
+        thisProject,
+        thisProjectTitle):
     try:
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
@@ -829,13 +916,13 @@ def accept_application(applicant, applicantInstrument, thisProject, thisProjectT
 
         )
         mongo.db.users.update_one({"username": applicant}, {'$push': {
-                                  "notifications": "Application to "\
-                                    + thisProjectTitle + " approved."}})
+                                  "notifications": "Application to "
+                                  + thisProjectTitle + " approved."}})
 
         flash("Application Approved")
 
         return redirect(request.referrer)
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -847,8 +934,8 @@ def remove_member(thisProject, member, thisProjectTitle):
         member = member
         thisProjectTitle = thisProjectTitle
 
-        mongo.db.projects.update_one({'_id': ObjectId(thisProject)}, {
-                                     '$pull': {'projectMembers': {'memberUsername': member}}})
+        mongo.db.projects.update_one({'_id': ObjectId(thisProject)}, {'$pull': {
+                                     'projectMembers': {'memberUsername': member}}})
         mongo.db.users.update_one({'username': member}, {
                                   '$push': {'notifications': 'You were \
                                       removed from ' + thisProjectTitle}})
@@ -856,12 +943,13 @@ def remove_member(thisProject, member, thisProjectTitle):
         flash(member + ' removed from project.')
 
         return redirect(request.referrer)
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
 # deny users project application and inform them of outcome
-@app.route('/deny_application/<applicant>/<thisProject>/<thisProjectTitle>', methods=["GET", "POST"])
+@app.route('/deny_application/<applicant>/<thisProject>/<thisProjectTitle>',
+           methods=["GET", "POST"])
 def deny_application(applicant, thisProject, thisProjectTitle):
     try:
         listOfUsers = mongo.db.users.find()
@@ -873,7 +961,7 @@ def deny_application(applicant, thisProject, thisProjectTitle):
         user_notifications = mongo.db.users.find_one({'username': user})
         current_user = mongo.db.users.find_one({'username': user})
         thisProject = thisProject
-        thisProjectTitle=thisProjectTitle
+        thisProjectTitle = thisProjectTitle
 
         user_notifications = mongo.db.users.find_one({'username': user})
 
@@ -883,34 +971,38 @@ def deny_application(applicant, thisProject, thisProjectTitle):
         )
 
         mongo.db.users.update_one({"username": applicant}, {'$push': {
-                                  "notifications": "Application to "\
-                                       + thisProjectTitle + " was denied."}})
+                                  "notifications": "Application to "
+                                  + thisProjectTitle + " was denied."}})
         flash("Application Denied")
         return redirect(request.referrer)
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
 # renders page of all relevant projects to user
 @app.route('/browse_projects/')
 def browse_projects():
-    
-        listOfUsers = mongo.db.users.find()
-        allCurrentUsernames = mongo.db.users.distinct("username")
-        listOfProjectNames = mongo.db.projects.distinct('projectTitle')
-        user = (session["user"])
-        user_notifications = mongo.db.users.find_one({'username': user})
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        projects = mongo.db.projects.find()
-        myProfile = mongo.db.users.find_one({'username': username})
 
-        return render_template('browse-projects.html',
-        listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames,
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username': user})
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    projects = mongo.db.projects.find()
+    myProfile = mongo.db.users.find_one({'username': username})
+
+    return render_template(
+        'browse-projects.html',
+        listOfUsers=listOfUsers,
+        allCurrentUsernames=allCurrentUsernames,
         listOfProjectNames=listOfProjectNames,
-        user_notifications=user_notifications, username=username,
-        projects=projects, myProfile=myProfile)
-    
+        user_notifications=user_notifications,
+        username=username,
+        projects=projects,
+        myProfile=myProfile)
+
 
 # renders all other user projects
 @app.route('/browse_all_projects/')
@@ -926,64 +1018,74 @@ def browse_all_projects():
         projects = mongo.db.projects.find()
         myProfile = mongo.db.users.find_one({'username': username})
 
-        return render_template('browse-all-projects.html',
-        listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames,
-        user_notifications=user_notifications, username=username,
-        projects=projects, myProfile=myProfile)
+        return render_template(
+            'browse-all-projects.html',
+            listOfUsers=listOfUsers,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames,
+            user_notifications=user_notifications,
+            username=username,
+            projects=projects,
+            myProfile=myProfile)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
 # allows user to update details about the project from "my-projects" page
 @app.route('/manage_project/<thisProject>/', methods=["GET", "POST"])
 def manage_project(thisProject):
-    
-        listOfUsers = mongo.db.users.find()
-        allCurrentUsernames = mongo.db.users.distinct("username")
-        listOfProjectNames = mongo.db.projects.distinct('projectTitle')
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        user = (session["user"])
-        user_notifications = mongo.db.users.find_one({'username': user})
-        current_user = mongo.db.users.find_one({'username': user})
-        
-        user_notifications = mongo.db.users.find_one({'username': user})
-        thisProject = mongo.db.projects.find_one(
-            {'_id': ObjectId(thisProject)})
-        thisProjectTitle = thisProject['projectTitle']
-        thisProjectId = thisProject['_id']
-        applications = mongo.db.projects.find_one(
-            {'_id': thisProjectId})['applications']
-        members = mongo.db.projects.find_one({'_id': ObjectId(thisProjectId)})[
-            'projectMembers']
 
-        if request.method == "POST":
+    listOfUsers = mongo.db.users.find()
+    allCurrentUsernames = mongo.db.users.distinct("username")
+    listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    user = (session["user"])
+    user_notifications = mongo.db.users.find_one({'username': user})
+    current_user = mongo.db.users.find_one({'username': user})
 
-            mongo.db.projects.update_one(
-                {"_id": ObjectId(thisProjectId)},
-                {
-                    '$set': {
-                        "username": request.form.get("project-username"),
-                        "projectTitle": request.form.get("project-title").lower(),
-                        "projectDescription": request.form.get("project-description"),
-                        "city": request.form.get("city"),
-                        "email": request.form.get("email"),
-                        "instruments": request.form.getlist("instruments"),
-                        "genres": request.form.getlist("genres")
-                    }
-                })
+    user_notifications = mongo.db.users.find_one({'username': user})
+    thisProject = mongo.db.projects.find_one(
+        {'_id': ObjectId(thisProject)})
+    thisProjectTitle = thisProject['projectTitle']
+    thisProjectId = thisProject['_id']
+    applications = mongo.db.projects.find_one(
+        {'_id': thisProjectId})['applications']
+    members = mongo.db.projects.find_one({'_id': ObjectId(thisProjectId)})[
+        'projectMembers']
 
-            return redirect(request.referrer)
+    if request.method == "POST":
 
-        return render_template('manage-projects.html', user=user,
-        user_notifications=user_notifications, thisProject=thisProject,
-        listOfUsers=listOfUsers, applications=applications,
-        members=members, allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames,username=username)
-        
-    
+        mongo.db.projects.update_one(
+            {"_id": ObjectId(thisProjectId)},
+            {
+                '$set': {
+                    "username": request.form.get("project-username"),
+                    "projectTitle": request.form.get("project-title").lower(),
+                    "projectDescription": request.form.get("project-description"),
+                    "city": request.form.get("city"),
+                    "email": request.form.get("email"),
+                    "instruments": request.form.getlist("instruments"),
+                    "genres": request.form.getlist("genres")
+                }
+            })
+
+        return redirect(request.referrer)
+
+    return render_template(
+        'manage-projects.html',
+        user=user,
+        user_notifications=user_notifications,
+        thisProject=thisProject,
+        listOfUsers=listOfUsers,
+        applications=applications,
+        members=members,
+        allCurrentUsernames=allCurrentUsernames,
+        listOfProjectNames=listOfProjectNames,
+        username=username)
+
+
 # allows user to update details about the project from notification link
 @app.route('/manage_project_link/<thisProject>/', methods=["GET", "POST"])
 def manage_project_link(thisProject):
@@ -996,7 +1098,8 @@ def manage_project_link(thisProject):
         user = (session["user"])
         user_notifications = mongo.db.users.find_one({'username': user})
         current_user = mongo.db.users.find_one({'username': user})
-        thisProject = mongo.db.projects.find_one({'projectTitle': thisProject})['_id']
+        thisProject = mongo.db.projects.find_one(
+            {'projectTitle': thisProject})['_id']
         user_notifications = mongo.db.users.find_one({'username': user})
         thisProject = mongo.db.projects.find_one(
             {'_id': ObjectId(thisProject)})
@@ -1025,12 +1128,18 @@ def manage_project_link(thisProject):
 
             return redirect(request.referrer)
 
-        return render_template('manage-projects.html', user=user,
-        user_notifications=user_notifications, thisProject=thisProject,
-        listOfUsers=listOfUsers, applications=applications,
-        members=members, allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames,username=username)
-    except:
+        return render_template(
+            'manage-projects.html',
+            user=user,
+            user_notifications=user_notifications,
+            thisProject=thisProject,
+            listOfUsers=listOfUsers,
+            applications=applications,
+            members=members,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames,
+            username=username)
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1050,18 +1159,24 @@ def projects_im_in():
         projectsImInNumber = mongo.db.projects.count_documents(
             {'projectMembers.memberUsername': username})
 
-        return render_template('projects-im-in.html',
-        listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames,
-        user=user, user_notifications=user_notifications,
-        projectsImIn=projectsImIn, projectsImInNumber=projectsImInNumber,
-        listOfProjectNames=listOfProjectNames)
+        return render_template(
+            'projects-im-in.html',
+            listOfUsers=listOfUsers,
+            allCurrentUsernames=allCurrentUsernames,
+            user=user,
+            user_notifications=user_notifications,
+            projectsImIn=projectsImIn,
+            projectsImInNumber=projectsImInNumber,
+            listOfProjectNames=listOfProjectNames)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
-"""displays hub page to selected project, allowing access to comment 
+"""displays hub page to selected project, allowing access to comment
 chat, and project files"""
+
+
 @app.route('/project_hub/<thisProject>/')
 def project_hub(thisProject):
     try:
@@ -1076,7 +1191,7 @@ def project_hub(thisProject):
         thisProjectId = thisProject
         thisProject = mongo.db.projects.find_one(
             {'_id': ObjectId(thisProject)})
-       
+
         thisProjectTitle = thisProject['projectTitle']
         members = mongo.db.projects.find_one({'_id': ObjectId(thisProjectId)})[
             'projectMembers']
@@ -1084,15 +1199,21 @@ def project_hub(thisProject):
             {'projectTitle': thisProjectTitle})['projectFiles']
         projectFilesNumber = thisProject['projectFiles']
 
-        return render_template('project-hub.html',
-        listOfUsers=listOfUsers, allCurrentUsernames=allCurrentUsernames,
-        user=user, user_notifications=user_notifications,
-        username=username, thisProject=thisProject,
-        thisProjectTitle=thisProjectTitle, members=members,
-        projectFiles=projectFiles, projectFilesNumber=projectFilesNumber,
-        listOfProjectNames=listOfProjectNames)
-        
-    except:
+        return render_template(
+            'project-hub.html',
+            listOfUsers=listOfUsers,
+            allCurrentUsernames=allCurrentUsernames,
+            user=user,
+            user_notifications=user_notifications,
+            username=username,
+            thisProject=thisProject,
+            thisProjectTitle=thisProjectTitle,
+            members=members,
+            projectFiles=projectFiles,
+            projectFilesNumber=projectFilesNumber,
+            listOfProjectNames=listOfProjectNames)
+
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1123,7 +1244,7 @@ def add_comment(thisProject):
 
         flash("Comment Added")
         return redirect(request.referrer)
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1140,7 +1261,7 @@ def clear_notifications():
             {"username": user}, {'$set': {'notifications': []}})
 
         return redirect(request.referrer)
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1198,13 +1319,16 @@ def upload_project_files(thisProject):
 
             return str(output)
 
-        return render_template('project-file-upload.html',
-        listOfUsers=listOfUsers, user_notifications=user_notifications,
-        thisProject=thisProject, thisProjectTitle=thisProjectTitle,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames)
+        return render_template(
+            'project-file-upload.html',
+            listOfUsers=listOfUsers,
+            user_notifications=user_notifications,
+            thisProject=thisProject,
+            thisProjectTitle=thisProjectTitle,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1222,8 +1346,8 @@ def messages(usernameToContact):
         user = (session["user"])
         user_notifications = mongo.db.users.find_one({'username': user})
         messages = mongo.db.messages.find(
-            {'members': [username, usernameToContact], 'members': \
-                                    [usernameToContact, username]})
+            {'members': [username, usernameToContact], 'members':
+             [usernameToContact, username]})
 
         if request.method == 'POST':
 
@@ -1265,20 +1389,27 @@ def messages(usernameToContact):
                 mongo.db.users.update_one({"username": usernameToContact}, {
                                           '$push': {'notifications': notification}})
 
-            return render_template('messages.html',
+            return render_template(
+                'messages.html',
+                listOfUsers=listOfUsers,
+                allCurrentUsernames=allCurrentUsernames,
+                listOfProjectNames=listOfProjectNames,
+                user_notifications=user_notifications,
+                messages=messages,
+                username=username,
+                usernameToContact=usernameToContact)
+
+        return render_template(
+            'messages.html',
             listOfUsers=listOfUsers,
             allCurrentUsernames=allCurrentUsernames,
             listOfProjectNames=listOfProjectNames,
-            user_notifications=user_notifications, messages=messages,
-            username=username, usernameToContact=usernameToContact)
+            user_notifications=user_notifications,
+            messages=messages,
+            username=username,
+            usernameToContact=usernameToContact)
 
-        return render_template('messages.html', listOfUsers=listOfUsers,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames,
-        user_notifications=user_notifications, messages=messages,
-        username=username, usernameToContact=usernameToContact)
-
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1296,18 +1427,24 @@ def convo_list():
         user_notifications = mongo.db.users.find_one({'username': user})
         myConversations = mongo.db.messages.find({'members': username})
 
-        return render_template('convo-list.html', listOfUsers=listOfUsers,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames,
-        user_notifications=user_notifications,
-        myConversations=myConversations, username=username, users=users)
+        return render_template(
+            'convo-list.html',
+            listOfUsers=listOfUsers,
+            allCurrentUsernames=allCurrentUsernames,
+            listOfProjectNames=listOfProjectNames,
+            user_notifications=user_notifications,
+            myConversations=myConversations,
+            username=username,
+            users=users)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
 """ creates new message to other user if no messages exist
 otherwise redirects to existing messages """
+
+
 @app.route('/contact/<usernameToContact>', methods=['GET', 'POST'])
 def contact(usernameToContact):
     try:
@@ -1327,7 +1464,10 @@ def contact(usernameToContact):
             messages = mongo.db.messages.find(
                 {'members': [username, usernameToContact], 'members': [usernameToContact, username]})
 
-            return redirect(url_for('messages', usernameToContact=usernameToContact))
+            return redirect(
+                url_for(
+                    'messages',
+                    usernameToContact=usernameToContact))
 
         else:
             if request.method == 'POST':
@@ -1374,15 +1514,18 @@ def contact(usernameToContact):
 
                 flash('Message Sent')
 
-                return redirect(url_for('messages', usernameToContact=usernameToContact))
+                return redirect(
+                    url_for(
+                        'messages',
+                        usernameToContact=usernameToContact))
 
         return render_template('contact.html', listOfUsers=listOfUsers,
-        allCurrentUsernames=allCurrentUsernames,
-        listOfProjectNames=listOfProjectNames,
-        user_notifications=user_notifications,
-        usernameToContact=usernameToContact)
+                               allCurrentUsernames=allCurrentUsernames,
+                               listOfProjectNames=listOfProjectNames,
+                               user_notifications=user_notifications,
+                               usernameToContact=usernameToContact)
 
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1415,7 +1558,7 @@ def upload_s3():
         my_bucket.Object(file.filename).put(Body=file)
 
         return redirect(url_for('files'))
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1429,7 +1572,7 @@ def upload_s3_profile_pic():
         my_bucket.Object(file.filename).put(Body=file)
 
         return redirect(url_for('files'))
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
@@ -1466,18 +1609,23 @@ def delete_s3(thisProject):
             {'projectTitle': thisProjectTitle})['projectFiles']
         projectFilesNumber = thisProject['projectFiles']
 
-        return render_template('project-hub.html',
-        listOfUsers=listOfUsers,
-        allCurrentUsernames=allCurrentUsernames, user=user,
-        user_notifications=user_notifications, username=username,
-        thisProject=thisProject, thisProjectTitle=thisProjectTitle,
-        members=members, projectFiles=projectFiles,
-        projectFilesNumber=projectFilesNumber,
-        listOfProjectNames=listOfProjectNames)
+        return render_template(
+            'project-hub.html',
+            listOfUsers=listOfUsers,
+            allCurrentUsernames=allCurrentUsernames,
+            user=user,
+            user_notifications=user_notifications,
+            username=username,
+            thisProject=thisProject,
+            thisProjectTitle=thisProjectTitle,
+            members=members,
+            projectFiles=projectFiles,
+            projectFilesNumber=projectFilesNumber,
+            listOfProjectNames=listOfProjectNames)
 
-    except:
+    except BaseException:
         return render_template("login.html")
-    
+
 
 # downloads files from amazon s3 bucket
 @app.route('/download_s3', methods=['post'])
@@ -1506,7 +1654,7 @@ def download_s3():
             headers={
                 "Content-Disposition": 'attachment;filename={}'.format(key)}
         )
-    except:
+    except BaseException:
         return render_template("login.html")
 
 
