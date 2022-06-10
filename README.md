@@ -105,23 +105,87 @@ Imagery used throughout the site acts mainly as a backdrop for the page content.
 
 #### The Navbar
 
+The site features a very feature packed navbar that quickly allows the user access to all areas of the website.
+
+![Desktop Navbar](/static/readme-files/features/navbar-min.png)
+
+The links on the navbar are grouped by category and expand into dropdowns to allow navigation to wherever the user desires.
+
+On smaller screens the navbar collapses into a vertical nav on the left of the screen. All the features and functionality of the full navbar is retained.
+
+![Mobile Navbar](/static/readme-files/features/sidenav-min.png)
+
 #### Notifications
 
+The navbar features a notifications dropdown that is updated when virtually any event of significance to the user happens. The notification is then contextually displayed based on what it is notifiying using an appropriate icon to quickly inform the user of what is being conveyed. 
+All of the notifications are also links to instantly take the user to the correct location. For example, a message notificaition informs the user that they have received a message from a certain username. This is displayed with an icon of a letter, and when clicked will take the user to the correct direct message chat.
+
+Examples of notifications created by the site:
+
+- Applications to your project
+- Results of an application made by the user
+- Direct message received
+- A comment on a project the user is in
+- being removed by a project host from a project
+- A new follower
+
+The notifications display inside a scrollable div, and the current number of notifications is displayed next to the bell icon.
+If a user wants to delete all of their notifications this can be done so by clicking the delete notification button.
+
+![Desktop Notifications](/static/readme-files/features/notifications-min.png)
+
+This same notifications system is also available on smaller screens and is displayed instead inside a modal.
+
+![Mobile Notifications](/static/readme-files/features/sidenav-notifications-min.png)
+
+
 #### Username Search Bar
+
+The both the desktop and side-navbar are also equipped with a search bar that links to other users profiles. The search bar draws from a datalist of all current usernames on the platform, and makes suggestions as the user types.
+The search bar is non-case sensitive, and strips off any whitespace that the user may add.
+If a username that doesn't exist on the site is entered, the user is taken to their profile and informed that no such user exists.
+
+![Desktop Search Bar](/static/readme-files/features/navbar-search-min.png)
+
 
 ### Register/Login Page
 ---
 #### Password Confirmation
+The register profile form is equipped with a password check to ensure the user enters their intended password.
+
+![confirm password](/static/readme-files/features/confirm-password-min.png)
 
 #### Instruments and Genres Dropdown
+
+When the user creates an account their are asked for all information that is relevant to their experience on the website. This includes instruments and genres that they play.
+These can be selected through the dropdown lists at the bottom of the form.
+
+![Instrument and Genre select](/static/readme-files/features/instruments-dropdown-min.png)
+
 
 ### Profiles Pages
 ---
 #### User Bio Tabs
+At the top of each users profile page is a section which displays all the relevant information about the user. This includes their bio, instruments and genres played, their followers following stats, and their number of projects. The biographic section can be selected via the tabs on the collapsible container.
+
+![Profile information](/static/readme-files/features/profile-min.png)
+
 
 #### Edit Profile Information
+By default the instruments and genres tabs are pre-populated with the information entered during the registration phase, but the bio by default displays a message prompting the user to write some information about themselves.
+All of these details can be altered by clicking the edit profile button, which allows the user to change all of the information added during sign-up, along with their bio.
+
+![Edit Profile](/static/readme-files/features/edit-profile-min.png)
+
 
 #### Change Profile Picture
+By default all users have the same profile pictures of a generic silhouette. This can be changed to their own custom upload by clicking the 'Upload Photo' button.
+
+The user is then taken to a form where they can select any .JPG .JPEG or .PNG file that they want. This image is then uploaded to an Amazon S3 bucket, before being streamed back to the website by ImageKit, which compresses the file to improve performance. 
+Eachtime a new profile photo is uploaded the previous photo in Amazon S3 is overwritten, and the ImageKit server cache is purged. The new photo then displays a short while later.
+
+![Upload Profile Image](/static/readme-files/features/change-profile-pic-min.png)
+
 
 #### Follow/Unfollow
 
