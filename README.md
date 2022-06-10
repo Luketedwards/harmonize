@@ -186,57 +186,140 @@ Eachtime a new profile photo is uploaded the previous photo in Amazon S3 is over
 
 ![Upload Profile Image](/static/readme-files/features/change-profile-pic-min.png)
 
-
 #### Follow/Unfollow
+The website features a followers system to allow the user to save other users of interest. When visiting another users page, the user is presented with the option to either follow or unfollow them depending on their current following status.
+These users can then be viewed through the 'My Connections' section, which displays all of the users who you either follow, or are followed by.
+
+![Follow Button](/static/readme-files/features/follow-user-min.png)
+![Unfollow Button](/static/readme-files/features/unfollow-user-min.png)
+![list of followers](/static/readme-files/features/following-min.png)
 
 #### Contact Button
+The profile page also allows users to contact eachother by pressing the 'contact' button.
+When pressed the user is taken to a direct message panel. If a message is sent the recipient is alerted and a new conversation tab is generated in the conversations list page.
+
+![Conversations list](/static/readme-files/features/convo-list-min.png)
 
 #### Users Projects Display
+At the bottom of a users profile page, all of their projects are displayed in cards. These cards provide information about the project, the ability to apply to the project, a button to view the project hub of that project should you already be a member, or a button to manage the project is you are the host.
 
+![Profile projects display](/static/readme-files/features/profile-projects-min.png)
 
 ### Create Project Page
 ---
 #### Create a Project
+By clicking the 'Create a Project' link in the 'projects' tab, the user is taken to a form where they can create a new project.
+The form allows them to input information regarding instruments and genres desired, a title, a description, a location an email and other various parameters. 
+Once the project has been created it will display on the website to other users, who can then apply to join.
+
+![Create a project](/static/readme-files/features/create-project-min.png)
+
 
 #### Apply to a Project
+Users are able to apply to join a project by pressing the 'apply' button on any project that they are not a member of. This then takes them to a form where they can write a message to the host and select which instrument and genre of the ones asked for that they are applying for.
+Once the application is submitted the host of the project is informed.
+
+![Apply to project](/static/readme-files/features/apply-project-min.png)
 
 ### Manage Project Page
 ---
+The host is able to manage many aspects of any of their projects, either by navigating to the 'my projects' section, or by clicking the 'manage' button on any of their project cards.
 
 #### Edit Project Information
+The manage projects page allows the user to update any of the information about the project. This will then be reflected to all users who view the project, members or not.
+The user can also choose to delete the entire project after a confirmation modal is also clicked.
+This will delete the project along with all commments, member information or project files associated with it.
+The files are also purged from the Amazon S3 bucket when a project is deleted.
+
+![Edit project](/static/readme-files/features/manage-project-min.png)
+
 
 #### View Project Members
+In the manage project page all current members of the project can be viewed, along with some information about their role in the project. 
+The host can also choose to kick a member, which will also notify them.
+
+![Kick member](/static/readme-files/features/project-members-min.png)
 
 #### View Project Applications
+The user is also able to view all outstanding applications to a project, along with the role applied for, and their message written during the application process. A decision can then be made, and the applicant will be notified of the outcome.
+
+![View project applications](/static/readme-files/features/view-application-min.png)
 
 ### Project Hub Page
 ---
+Once a user becomes a member of the project they gain access to the 'project hub'. This is an area which displays all the information about the project, a group chat comment system, and a file sharing section.
+
+![Project Hub](/static/readme-files/features/project-hub-min.png)
 
 #### Project Information and Members
+This panel displays all of the current members of a project and their instrument. It also allows quick access to the users profile by clicking their name. If you are the host you are also able to kick members by pressing the 'remove from project' button.
 
 #### Comments Panel
+The project hub features a group chat comment system, that allows all of the user to communicate with eachother. Messages can be entered in the text area and submtted to the chat using the button. This will then display the comment alongside your username, which links to your profile, and the time the comment was posted. The date of the comment has been formatted to be more readable ('just now', '1 day ago', '2 weeks ago').
+Depending on your role in the group the comment usernames are also color coded, with the host being displayed in green with a star icon next to any of their messages, to more quickly identify important comments.
+The scrollable comments div is also automatically loaded at the bottom to always display the most recent comment.
 
 #### File Upload/Storage System
+At the bottom of the project hub is a file sharing and storage section. This allows users to upload files through an upload form where they can choose a file name, a preset classification e.g. 'image','audio' etc. And also write a message to be linked to their file.
+This is then uploaded to Amazon S3, and displayed in the appropriate dropdown folder. The files can then be viewed, downloaded or if you are the uploader, deleted.
+
+![File Upload](/static/readme-files/features/upload-files-min.png)
+
+![File Storage](/static/readme-files/features/file-storage-min.png)
 
 ### Projects I'm In Page
 ---
-#### View Projects and Information
+This page provides quick access to all projects that you are a member of, along with icons displaying the number of members and comments.
+
+![Projects im in](/static/readme-files/features/projects-im-in.png)
 
 ### Browse Projects Pages
 ---
 #### Browse All/Relevant Projects
+These tabs allow the user to either view all projects on the website.
+
+![View all projects](/static/readme-files/features/all-projects-min.png)
+
+Or to view a filtered list of only projects relevant to the users played instruments.
+The relevant instruments are also highlighted on the project card to quickly convey the suitability of the user.
+
+![Relevant Projects](/static/readme-files/features/relevant-projects-min.png)
 
 ### Other Users Page
 ---
 #### View All Users
+The all users page displays all current users on the website, along with their profile photo, username which links to their profile, and a collapsible dropdown displaying their instruments, genres and location.
+
+![View all users](/static/readme-files/features/all-users-min.png)
 
 #### Search Users by Parameter
+You are also able to filter users on the website by specific parameters should you want to find a person suitable for your needs. e.g. a classical violinist from London. 
+
+Parameters can be entered into the form, and then all users who meet your critera will be diplayed with the relevant information highlighted in green.
+The city parameter is non-case sensitive and strips off white space like the user search feature.
+
+![Search user form](/static/readme-files/features/search-users-min.png)
+
+![Search User Results](/static/readme-files/features/user-search-results-min.png)
 
 ### Messages Pages
 ---
 #### Conversation List
+The conversations list page displays all of your active conversations along with a count for the number of messages exchanged.
+Clicking the link takes you to the messages page.
+
+![Conversations panel](/static/readme-files/features/convo-list-min.png)
 
 #### Direct Messaging
+This sections of the website allows for direct messaging between users. It operates much like the comments feature, allowing direct messages to be exchanged. It loads at the bottom of the scrollable div to always display the most recent message.
+
+Once a message is sent the recipient is notified that you have contacted them.
+
+![Messages](/static/readme-files/features/direct-messages-min.png)
+
+### Delete Profile
+---
+If you no longer wish to be a site member you can remove your profile from the system
 
 ## Technologies Used 
 ---
