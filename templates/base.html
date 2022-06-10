@@ -153,7 +153,7 @@
 
       <a href="{{ url_for('profile', username=session['user']) }}" id="logo" class="brand-logo">Harmonise</a>
 
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+      <a href="#!" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
       <ul id="main-navbar" class="right hide-on-med-and-down">
         {% if not session.user%}
         <li><a href="{{ url_for('register') }}">Register</a></li>
@@ -164,6 +164,8 @@
           <form method="post" action="{{url_for('other_profile_search', username=username)}}">
             <input placeholder="Search" class="autocomplete white-text" type="text" id="user-search-input-side"
               name="user-search-input" list="user-search">
+          <label style="display: none;" for="user-search-input-side">Search</label>
+
 
             <datalist id="user-search">
               {%for user in listOfUsers%}
@@ -220,6 +222,7 @@
       <form method="post" action="{{url_for('other_profile_search', username=username)}}">
         <input placeholder=" Search" class="autocomplete"  type="text" id="user-search-input" name="user-search-input"
           list="user-search" autocomplete="off">
+          <label style="display: none;" for="user-search-input">Search</label>
         <datalist id="user-search">
           {%for user in listOfUsers%}
           <option value="{{user.username}}">{{user.username}}</option>

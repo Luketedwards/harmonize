@@ -2,7 +2,7 @@
 {% block content %}
 <!-- Main project hub featuring shared file system, comments system and project information -->
 <div id="project-hub-main-panel" class="row s12 card-panel">
-    <h1 class="center white-text">{{thisProject.projectTitle|title}}</h1>
+    <h1 class="center white-text stroke-outline">{{thisProject.projectTitle|title}}</h1>
 
     <h5 id="project-hub-host-pill" class="center white-text">Host: <a
         class="link" href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
@@ -99,7 +99,7 @@
                     <i class="fa-solid fa-comment prefix white-text text-shadow"></i>
                     <textarea class="" id="addComment" name="addComment" type="text" minlength="1" maxlength="300"
                         required></textarea>
-                    <label for="addComment">Write a comment</label>
+                    <label for="addComment" class="black-text">Write a comment</label>
                 </div>
                 <div id="comment-btn" class="row">
                     <button type="submit" class="col s12 btn  ">
