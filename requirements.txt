@@ -9,6 +9,8 @@ docutils==0.15.2
 dropbox==11.30.0
 Flask==2.1.1
 Flask-PyMongo==2.3.0
+imagekitio==2.2.8
+imgkit==1.2.2
 itsdangerous==2.1.2
 jmespath==1.0.0
 Pillow==9.1.0
