@@ -11,9 +11,9 @@
   {% for project in projects%}
   {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
 
-  <div id="my-projects-panel" class="card-panel blue-grey darken-1">
+  <div class="card-panel my-projects-panel">
     {%if project.completed == false%}
-    <span class="">This project is still active!<i id="my-projects-panel-tick" class="fa-solid fa-check"></i></span>
+    <span class="">This project is still active!<i class="fa-solid fa-check my-projects-panel-tick"></i></span>
     {%else%}
     <span class=""> This project is no longer active.<i id="my-projects-panel-cross"
         class="fa-solid fa-circle-xmark "></i></span>
@@ -25,7 +25,7 @@
       </div>
       {%else%}
       {% if username == project.username%}
-      <div id="projects-panel-apply" class="col s12 right">
+      <div class="col s12 right projects-panel-apply">
         <span><a href="{{url_for('manage_project', thisProject=project._id)}}"
             class="waves-effect waves-light btn">Manage</a></span>
         <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
@@ -33,12 +33,12 @@
       </div>
       {%else%}
       {% if username in members %}
-      <div id="projects-panel-apply" class="col s12 right">
+      <div class="col s12 right projects-panel-apply">
         <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
             class="waves-effect waves-light btn">View</a></span>
       </div>
       {%else%}
-      <div id="projects-panel-apply" class="col s12 right">
+      <div class="col s12 right projects-panel-apply">
         <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=username)}}"
             class="waves-effect waves-light btn">Apply</a></span>
       </div>
@@ -52,7 +52,7 @@
     {%endif%}
 
     <div class="row">
-      <h2 id="other-profile-projects-title" class="center-align center">{{project.projectTitle|title}}</h2>
+      <h2  class="center-align center other-profile-projects-title">{{project.projectTitle|title}}</h2>
       <div class="row center">
         <div class="chip s12">
 
@@ -74,17 +74,21 @@
           <div class="col s6 ">
             <p style="margin-bottom: 20px;">
               I am looking for:
+              <ul class="disclist">
               {%for instrument in project.instruments%}
               <li>{{instrument}}</li>
               {%endfor%}
+            </ul>
             </p>
           </div>
           <div class="col s6 ">
             <p style="margin-bottom: 0;">
               The genre(s) are:
+              <ul class="disclist">
               {%for genre in project.genres%}
               <li>{{genre}}</li>
               {%endfor%}
+            </ul>
             </p>
           </div>
         </div>

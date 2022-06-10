@@ -95,9 +95,9 @@
   {% for project in projects%}
 
   {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
-  <div id="my-projects-panel" class="card-panel z-depth-3 darken-1 white-text">
+  <div  class="card-panel z-depth-3 darken-1 white-text my-projects-panel">
     {%if project.completed == false%}
-    <span class="">This project is still active!<i id="my-projects-panel-tick" class="fa-solid fa-check"></i></span>
+    <span class="">This project is still active!<i class="fa-solid fa-check my-projects-panel-tick"></i></span>
     {%else%}
     <span class=""> This project is no longer active.<i id="my-projects-panel-cross"
         class="fa-solid fa-circle-xmark "></i></span>
@@ -109,7 +109,7 @@
       </div>
       {%else%}
 
-      <div id="projects-panel-apply" class="col s12 right">
+      <div class="col s12 right projects-panel-apply">
         <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
             class="waves-effect waves-light btn">View</a></span>
       </div>
@@ -118,7 +118,7 @@
     <br>
 
     <div class="row">
-      <h2 id="other-profile-projects-title" class="center-align center ">{{project.projectTitle|title}}</h2>
+      <h2 class="center-align center other-profile-projects-title ">{{project.projectTitle|title}}</h2>
       <div class="row center">
         <div class="chip s12">
           <img src="{{selectedUser.profile_pic2 + '?tr=w-100,h-100'}}" alt="{{selectedUser.username}}'s profile photo">
@@ -139,16 +139,20 @@
         <p>
         <div class="col l6 m12 s12">
             I am looking for:
+          <ul class="disclist">
             {%for instrument in project.instruments%}
            <li>{{instrument}}</li> 
             {%endfor%}
+          </ul>
         </div>
         <div class="col l6 m12 s12 pull-l2">
 
             The genre(s) are:
+          <ul class="disclist">
             {%for genre in project.genres%}
            <li>{{genre}}</li> 
             {%endfor%}
+          </ul>
         </p>
         </div>
     </div>
