@@ -89,7 +89,7 @@
               <ul class="disclist">
               {%for instrument in project.instruments%}
               {% if instrument in myInstrumentsList%}
-              <li id="relevantInstrument"><span>{{instrument}}</span></li>
+              <li class="relevantInstrument"><span>{{instrument}}</span></li>
               {%else%}
               <li>{{instrument}}</li>
               {%endif%}

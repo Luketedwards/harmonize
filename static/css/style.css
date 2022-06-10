@@ -444,7 +444,7 @@ footer {
     color: white;
 }
 
-#message-col {
+.message-col {
     overflow-wrap: break-word;
     padding-left: 26%;
     display: block;
@@ -715,7 +715,7 @@ footer {
 }
 
 /* my-projects.html */
-#myProjects-buttons {
+.myProjects-buttons {
     display: inline-flex;
 }
 

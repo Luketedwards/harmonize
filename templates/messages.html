@@ -14,7 +14,7 @@
                         >{{message.username}}:</a>
                     </div>
                     <div class="col s8 push-s0.5">
-                        <span id="message-col" class="direct-message flow-text">{{message.message}}</span>
+                        <span class="direct-message message-col flow-text">{{message.message}}</span>
                     </div>
                     <div class="col s3 right">
                         <span class="comment-date">{{message.date|datetimeformat}}</span>
@@ -24,7 +24,7 @@
                 {%endfor%}
                 {%endfor%}
             </div>
-            <form id="message-form" method="POST" action="">
+            <form id="message-form" method="POST">
                 <textarea minlength="1" required name="message" id="message" cols="30" rows="10"
                     class="white black-text"></textarea>
                 <button id="messages-submit" type="submit" class="col s12 btn ">
