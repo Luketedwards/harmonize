@@ -86,12 +86,12 @@
           <div class="col s6">
             <p style="margin-bottom: 20px;">
               I am looking for:
-              <ul class="disclist">
+              <ul>
               {%for instrument in project.instruments%}
               {% if instrument in myInstrumentsList%}
-              <li class="relevantInstrument"><span>{{instrument}}</span></li>
+              <li class="relevantInstrument"><span>- {{instrument}}</span></li>
               {%else%}
-              <li>{{instrument}}</li>
+              <li>- {{instrument}}</li>
               {%endif%}
               {%endfor%}
             </ul>
@@ -100,9 +100,9 @@
           <div class="col s6">
             <p style="margin-bottom: 0;">
               The main genre(s) are:
-              <ul class="disclist">
+              <ul>
               {%for genre in project.genres%}
-              <li>{{genre}}</li>
+              <li>- {{genre}}</li>
               {%endfor%}
             </ul>
           </div>
