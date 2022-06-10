@@ -1,4 +1,5 @@
 /* General */
+
 .disclist li{
     list-style: disc !important;
 }
@@ -260,12 +261,12 @@ h4 {
     color: black !important;
 }
 
-#remove-member-btn {
+.remove-member-btn {
     background-color: #b60000 !important;
     border-radius: 5px;
 }
 
-#remove-member-btn:hover {
+.remove-member-btn:hover {
     background-color: white !important
 }
 
@@ -624,7 +625,7 @@ footer {
     margin-bottom: 20px;
 }
 
-#convo-username {
+.convo-username {
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 13px;
@@ -735,7 +736,7 @@ footer {
     height: 0px;
 }
 
-#view-btn {
+.view-btn {
     margin-left: 12px;
 }
 
@@ -1053,7 +1054,7 @@ footer {
     display: inline-flex;
 }
 
-#project-hub-member-panel {
+.project-hub-member-panel {
     margin: 5px;
 }
 
@@ -1151,32 +1152,32 @@ footer {
     margin-top: 8px;
 }
 
-#project-hub-member-panel article {
+.project-hub-member-panel article {
     margin: 0;
     padding-bottom: 10px;
 }
 
-#project-hub-member-panel a:hover {
+.project-hub-member-panel a:hover {
     color: white!important;
 }
 
 
-#project-hub-member-username {
+.project-hub-member-username {
     color: black;
 }
 
-#project-hub-member-username h4 {
+.project-hub-member-username h4 {
     margin: 0;
     font-weight: 600;
     
 }
 
-#project-hub-member-username h4:hover {
+.project-hub-member-username h4:hover {
     color: grey !important;
 }
 
-#convo-wrapper span {
-    color: white;
+.convo-wrapper span {
+    color: white !important;
 }
 
 #comment-btn {
@@ -1236,16 +1237,16 @@ footer {
     background: rgba(255, 255, 255, 0.95) !important;
 }
 
-#manage-project-member-div {
+.manage-project-member-div {
     padding-top: 10px;
     padding-bottom: 20px;
 }
 
-#manage-project-member-div h4 {
+.manage-project-member-div h4 {
     margin-top: 6px;
 }
 
-#manage-project-member-div h4:hover {
+.manage-project-member-div h4:hover {
     color: grey;
 }
 
@@ -1421,12 +1422,12 @@ footer {
 }
 
 /* user-filter.html */
-#relevantInstrument span {
+.relevantInstrument span {
     background-color: green;
     width: fit-content;
 }
 
-#relevantUserInstrument {
+.relevantUserInstrument {
     color: green;
     width: fit-content;
 }

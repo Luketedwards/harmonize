@@ -26,7 +26,7 @@
                         {% for member in members%}
 
                         <div>
-                            <section id="project-hub-member-panel" class="cards z-depth-2">
+                            <section class="cards z-depth-2 project-hub-member-panel">
 
                                 <article class="card-member card-panel">
                                     {% if user == thisProject.username%}
@@ -36,14 +36,14 @@
                                     </a>
                                     {%endif%}
                                     {% if member.memberUsername == user%}
-                                    <a id="project-hub-member-username" class=""
+                                    <a class="project-hub-member-username" class=""
                                         href="{{url_for('profile', username=member.memberUsername )}}">
                                         <h4 class="white-text ">{{member.memberUsername}}</h4>
                                     </a>
                                     <br>
                                     <p>{{member.memberInstrument}}</p>
                                     {%else%}
-                                    <a id="project-hub-member-username"
+                                    <a class="project-hub-member-username"
                                         href="{{url_for('other_profile', usernameOther=member.memberUsername )}}">
                                         <h4 class="white-text">{{member.memberUsername}}</h4>
                                     </a>
@@ -97,7 +97,7 @@
             <form class="" method="POST" action="{{ url_for('add_comment', thisProject = thisProject._id) }}">
                 <div class="input-field col s12">
                     <i class="fa-solid fa-comment prefix white-text text-shadow"></i>
-                    <textarea class="" id="addComment" name="addComment" type="text" minlength="1" maxlength="300"
+                    <textarea class="" id="addComment" name="addComment"  minlength="1" maxlength="300"
                         required></textarea>
                     <label for="addComment" class="black-text">Write a comment</label>
                 </div>

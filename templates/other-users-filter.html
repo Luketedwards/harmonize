@@ -30,25 +30,25 @@
       {% for use in users%}
       <ul>
       {% if instrumentQuery in use.instruments|join or genresQuery in use.genres|join or cityQueryLower in use.city or cityQueryUpper in use.city%}
-      <div id="all-users-row" class="row">
+      <div class="row all-users-row">
         <div class="center row s12">
           <li>
 
-            <div id="user-display-div" class="col l4 md12 s12 center">
-              <img id="user-images" class=" " src="{{use.profile_pic2 + '?tr=w-500,h-500'}}" alt="">
+            <div class="col l4 md12 s12 center user-display-div">
+              <img class=" user-images" src="{{use.profile_pic2 + '?tr=w-500,h-500'}}" alt="">
             </div>
             <div class="col l4 md12 s12">
               <a class="other-users-link link" href="{{url_for('other_profile', usernameOther=use.username )}}"
                 class=''>{{use.username}}</a>
             </div>
             <div class="col l4 md12 s12">
-              <ul id="user-info-collapse" class="collapsible s12 ">
+              <ul class="collapsible s12 user-info-collapse">
                 <li>
                   <div class="collapsible-header  "><i class="material-icons"></i>Instruments</div>
                   <div class="collapsible-body  "><span>
                       {%for instrument in use.instruments%}
                       {% if instrumentQuery == instrument%}
-                      <span id="relevantUserInstrument">{{instrument}},</span>
+                      <span class="relevantUserInstrument">{{instrument}},</span>
                       {%else%}
                       <span>{{instrument}},</span>
                       {%endif%}
@@ -61,7 +61,7 @@
 
                       {%for genre in use.genres%}
                       {% if genresQuery == genre%}
-                      <span id="relevantUserInstrument">{{genre}},</span>
+                      <span class="relevantUserInstrument">{{genre}},</span>
                       {%else%}
                       <span>{{genre}},</span>
                       {%endif%}
@@ -73,9 +73,9 @@
                   <div class="collapsible-header   "><i class="material-icons"></i>City</div>
                   <div class="collapsible-body   "><span>
                       {% if cityQuery == use.city%}
-                      <p id="relevantUserInstrument">{{use.city}}</p>
+                      <span class="relevantUserInstrument">{{use.city}}</span>
                       {%else%}
-                      <p>{{use.city}}</p>
+                      {{use.city}}
                       {%endif%}
                     </span></div>
                 </li>

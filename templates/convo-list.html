@@ -9,15 +9,15 @@
                 {% for chats in myConversations%}
                 {% if username == chats.members[0]%}
                 {% if username == chats.members[0]%}
-                <div id="convo-wrapper" class="center">
+                <div class="center convo-wrapper">
                     <div class="row valign-wrapper">
                         <div class="col s5">
                             <a href="{{url_for('messages', usernameToContact=chats.members[1])}}">
-                                <h3 id="convo-username" class="left ">{{chats.members[1]}}</h3>
+                                <h3  class="left convo-username">{{chats.members[1]}}</h3>
                             </a>
                         </div>
                         <div class="col s5 push-s1">
-                            <span id="message-count">{{chats.messages|length}} <i
+                            <span class="message-count">{{chats.messages|length}} <i
                                     class="fa-solid fa-message"></i></span>
                         </div>
                     </div>

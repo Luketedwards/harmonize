@@ -10,7 +10,7 @@
         <h3 class="center-align">Manage Project: {{thisProject.projectTitle|title}}</h3>
         <form class="col s12 m8 offset-m2" method="POST" action="#!">
             <div class="row">
-                <div id="project-username-div" class="row">
+                <div class="row project-username-div">
                     <input id="project-username" name="project-username" value="{{user}}" type="text" minlength="5"
                         maxlength="300">
                     <label class="black-text" for="project-username">username</label>
@@ -100,15 +100,15 @@
         <h5 class="center card-panel red lighten-2 black-text ">No current members.</h5>
         {%else%}
         {% for member in members%}
-        <div id="manage-project-member-div" class="yellow-bg card-panel white-text">
+        <div  class="yellow-bg card-panel white-text manage-project-member-div">
             <a class="white-text" href="{{url_for('other_profile', usernameOther=member.memberUsername )}}">
                 <h4>{{member.memberUsername}}</h4>
             </a>
 
             <span>{{member.memberInstrument}}</span>
-            <a id="remove-member-btn" style="border: 2px solid #b60000;"
+            <a  style="border: 2px solid #b60000;"
                 href="{{url_for('remove_member', thisProject=thisProject._id, member=member.memberUsername, thisProjectTitle=thisProject.projectTitle)}}"
-                class=" btn red red-btn right">Remove</a>
+                class=" btn red red-btn right remove-member-btn">Remove</a>
 
         </div>
         {%endfor%}

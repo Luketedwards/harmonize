@@ -7,22 +7,22 @@
 <h4 class="center-align">You currently have {{project_number}} existing projects.</h4>
 {% for project in projects%}
 
-    <div id="my-projects-panel" class="card-panel ">
+    <div class="card-panel my-projects-panel">
         {%if project.completed == false%}
-                <span class=" white-text">This project is still active!<i id="my-projects-panel-tick"  class="fa-solid fa-check"></i></span>
+                <span class=" white-text">This project is still active!<i class="fa-solid fa-check my-projects-panel-tick"></i></span>
                 {%else%}
-                <span class=""> This project is no longer active.<i id="my-projects-panel-cross" class="fa-solid fa-circle-xmark "></i></span>
+                <span class=""> This project is no longer active.<i  class="fa-solid fa-circle-xmark my-projects-panel-cross"></i></span>
                 {%endif%}
                 <div class="row s4 right">
-                    <div id="projects-panel-apply" class="col s4">
+                    <div class="col s4 projects-panel-apply">
                         <span id="myProjects-buttons" ><a href="{{url_for('manage_project', thisProject=project._id)}}" class="waves-effect waves-light btn">Manage</a>
-                        <a id="view-btn" href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn ">View</a></span>
+                        <a  href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn view-btn">View</a></span>
                         <br>
                     </div>
                 </div>
         <div class="row center">     
-        <h2 id="my-projects-title" class="center-align ">{{project.projectTitle|title}}</h2>
-        <div id="contact-chip" class="chip center">
+        <h2  class="center-align my-projects-title">{{project.projectTitle|title}}</h2>
+        <div class="chip center contact-chip">
             <img src="{{username.profile_pic2 + '?tr=w-100,h-100'}}" alt="{{user.username}}'s profile photo">
         <span> Created by: <a href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
         </div>    
@@ -39,16 +39,20 @@
                 <p>
                 <div class="col l6 m12 s12">
                     I am looking for:
+                    <ul class="disclist">
                     {%for instrument in project.instruments%}
                    <li>{{instrument}}</li> 
                     {%endfor%}
+                </ul>
                 </div>
                 <div class="col l6 m12 s12 pull-l2">
 
                     The genre(s) are:
+                    <ul class="disclist">
                     {%for genre in project.genres%}
                    <li>{{genre}}</li> 
                     {%endfor%}
+                </ul>
                 </p>
                 </div>
             </div>
