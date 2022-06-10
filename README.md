@@ -8,11 +8,6 @@ I developed harmonise as a social media platform aimed at making collaboration b
 
 ---
 
-# Walkthrough Video - Click To Watch!
-
-[![Harmonise Demo]()]( )
-
----
 # Deployed Project
 
 The deployed site can be viewed [Here](http://www.harmonise-app.co.uk/).
@@ -71,27 +66,18 @@ The deployed site can be viewed [Here](http://www.harmonise-app.co.uk/).
 
 ### Wireframes
 
-Wire frames for the site were generated using Figma, and can be viewed below.
-
-- [Register Page]()
-- [Login Page]()
-- [User Profile]()
-- [Other Users]()
-- [Manage Project]()
-- [Create a Project]()
-- [Project Hub]()
-- [Messages page]()
+Wire frames for the site were generated using Figma, and can be viewed [here](/static/readme-files/wireframes/harmonise-wireframes.png)
 
 ## 5. Surface 
 ---
 
 ### Colour Scheme
 
-The main colors used in developing the site are a vivid green for the navbar, footer and buttons, yellow for much of the project panels.
+The main colors used in developing the site are #39583a green for the navbar and footer. #395758 teal for the buttons and links, and #583957 purple for much of the project panels and collapsibles. I used [canva's complimentary color wheel](https://www.canva.com/colors/color-wheel/) to choose these colors.
 
 ### Typography
 
-I used 'Open Sans' for all of the heading throughout the site, 'Source Serif Pro' for the logo and 'Helvetic Neue'. These were backed up by 'Sans Serif'.
+I used 'Open Sans' for all of the heading throughout the site, 'Source Serif Pro' for the logo and 'Helvetic Neue'. These were backed up by 'Sans Serif' and imported from [Google Fonts](https://fonts.google.com/)
 
 
 ### Imagery and Theme
@@ -100,10 +86,10 @@ Imagery used throughout the site acts mainly as a backdrop for the page content.
 
 ## 5. Features 
 ---
-### General
+## General
 ---
 
-#### The Navbar
+### The Navbar
 
 The site features a very feature packed navbar that quickly allows the user access to all areas of the website.
 
@@ -115,7 +101,7 @@ On smaller screens the navbar collapses into a vertical nav on the left of the s
 
 ![Mobile Navbar](/static/readme-files/features/sidenav-min.png)
 
-#### Notifications
+### Notifications
 
 The navbar features a notifications dropdown that is updated when virtually any event of significance to the user happens. The notification is then contextually displayed based on what it is notifiying using an appropriate icon to quickly inform the user of what is being conveyed. 
 All of the notifications are also links to instantly take the user to the correct location. For example, a message notificaition informs the user that they have received a message from a certain username. This is displayed with an icon of a letter, and when clicked will take the user to the correct direct message chat.
@@ -139,7 +125,7 @@ This same notifications system is also available on smaller screens and is displ
 ![Mobile Notifications](/static/readme-files/features/sidenav-notifications-min.png)
 
 
-#### Username Search Bar
+### Username Search Bar
 
 The both the desktop and side-navbar are also equipped with a search bar that links to other users profiles. The search bar draws from a datalist of all current usernames on the platform, and makes suggestions as the user types.
 The search bar is non-case sensitive, and strips off any whitespace that the user may add.
@@ -148,14 +134,14 @@ If a username that doesn't exist on the site is entered, the user is taken to th
 ![Desktop Search Bar](/static/readme-files/features/navbar-search-min.png)
 
 
-### Register/Login Page
+## Register/Login Page
 ---
-#### Password Confirmation
+### Password Confirmation
 The register profile form is equipped with a password check to ensure the user enters their intended password.
 
 ![confirm password](/static/readme-files/features/confirm-password-min.png)
 
-#### Instruments and Genres Dropdown
+### Instruments and Genres Dropdown
 
 When the user creates an account their are asked for all information that is relevant to their experience on the website. This includes instruments and genres that they play.
 These can be selected through the dropdown lists at the bottom of the form.
@@ -163,22 +149,22 @@ These can be selected through the dropdown lists at the bottom of the form.
 ![Instrument and Genre select](/static/readme-files/features/instruments-dropdown-min.png)
 
 
-### Profiles Pages
+## Profiles Pages
 ---
-#### User Bio Tabs
+### User Bio Tabs
 At the top of each users profile page is a section which displays all the relevant information about the user. This includes their bio, instruments and genres played, their followers following stats, and their number of projects. The biographic section can be selected via the tabs on the collapsible container.
 
 ![Profile information](/static/readme-files/features/profile-min.png)
 
 
-#### Edit Profile Information
+### Edit Profile Information
 By default the instruments and genres tabs are pre-populated with the information entered during the registration phase, but the bio by default displays a message prompting the user to write some information about themselves.
 All of these details can be altered by clicking the edit profile button, which allows the user to change all of the information added during sign-up, along with their bio.
 
 ![Edit Profile](/static/readme-files/features/edit-profile-min.png)
 
 
-#### Change Profile Picture
+### Change Profile Picture
 By default all users have the same profile pictures of a generic silhouette. This can be changed to their own custom upload by clicking the 'Upload Photo' button.
 
 The user is then taken to a form where they can select any .JPG .JPEG or .PNG file that they want. This image is then uploaded to an Amazon S3 bucket, before being streamed back to the website by ImageKit, which compresses the file to improve performance. 
@@ -186,7 +172,7 @@ Eachtime a new profile photo is uploaded the previous photo in Amazon S3 is over
 
 ![Upload Profile Image](/static/readme-files/features/change-profile-pic-min.png)
 
-#### Follow/Unfollow
+### Follow/Unfollow
 The website features a followers system to allow the user to save other users of interest. When visiting another users page, the user is presented with the option to either follow or unfollow them depending on their current following status.
 These users can then be viewed through the 'My Connections' section, which displays all of the users who you either follow, or are followed by.
 
@@ -194,20 +180,20 @@ These users can then be viewed through the 'My Connections' section, which displ
 ![Unfollow Button](/static/readme-files/features/unfollow-user-min.png)
 ![list of followers](/static/readme-files/features/following-min.png)
 
-#### Contact Button
+### Contact Button
 The profile page also allows users to contact eachother by pressing the 'contact' button.
 When pressed the user is taken to a direct message panel. If a message is sent the recipient is alerted and a new conversation tab is generated in the conversations list page.
 
 ![Conversations list](/static/readme-files/features/convo-list-min.png)
 
-#### Users Projects Display
+### Users Projects Display
 At the bottom of a users profile page, all of their projects are displayed in cards. These cards provide information about the project, the ability to apply to the project, a button to view the project hub of that project should you already be a member, or a button to manage the project is you are the host.
 
 ![Profile projects display](/static/readme-files/features/profile-projects-min.png)
 
-### Create Project Page
+## Create Project Page
 ---
-#### Create a Project
+### Create a Project
 By clicking the 'Create a Project' link in the 'projects' tab, the user is taken to a form where they can create a new project.
 The form allows them to input information regarding instruments and genres desired, a title, a description, a location an email and other various parameters. 
 Once the project has been created it will display on the website to other users, who can then apply to join.
@@ -215,17 +201,17 @@ Once the project has been created it will display on the website to other users,
 ![Create a project](/static/readme-files/features/create-project-min.png)
 
 
-#### Apply to a Project
+### Apply to a Project
 Users are able to apply to join a project by pressing the 'apply' button on any project that they are not a member of. This then takes them to a form where they can write a message to the host and select which instrument and genre of the ones asked for that they are applying for.
 Once the application is submitted the host of the project is informed.
 
 ![Apply to project](/static/readme-files/features/apply-project-min.png)
 
-### Manage Project Page
+## Manage Project Page
 ---
 The host is able to manage many aspects of any of their projects, either by navigating to the 'my projects' section, or by clicking the 'manage' button on any of their project cards.
 
-#### Edit Project Information
+### Edit Project Information
 The manage projects page allows the user to update any of the information about the project. This will then be reflected to all users who view the project, members or not.
 The user can also choose to delete the entire project after a confirmation modal is also clicked.
 This will delete the project along with all commments, member information or project files associated with it.
@@ -234,32 +220,32 @@ The files are also purged from the Amazon S3 bucket when a project is deleted.
 ![Edit project](/static/readme-files/features/manage-project-min.png)
 
 
-#### View Project Members
+### View Project Members
 In the manage project page all current members of the project can be viewed, along with some information about their role in the project. 
 The host can also choose to kick a member, which will also notify them.
 
 ![Kick member](/static/readme-files/features/project-members-min.png)
 
-#### View Project Applications
+### View Project Applications
 The user is also able to view all outstanding applications to a project, along with the role applied for, and their message written during the application process. A decision can then be made, and the applicant will be notified of the outcome.
 
 ![View project applications](/static/readme-files/features/view-application-min.png)
 
-### Project Hub Page
+## Project Hub Page
 ---
 Once a user becomes a member of the project they gain access to the 'project hub'. This is an area which displays all the information about the project, a group chat comment system, and a file sharing section.
 
 ![Project Hub](/static/readme-files/features/project-hub-min.png)
 
-#### Project Information and Members
+### Project Information and Members
 This panel displays all of the current members of a project and their instrument. It also allows quick access to the users profile by clicking their name. If you are the host you are also able to kick members by pressing the 'remove from project' button.
 
-#### Comments Panel
+### Comments Panel
 The project hub features a group chat comment system, that allows all of the user to communicate with eachother. Messages can be entered in the text area and submtted to the chat using the button. This will then display the comment alongside your username, which links to your profile, and the time the comment was posted. The date of the comment has been formatted to be more readable ('just now', '1 day ago', '2 weeks ago').
 Depending on your role in the group the comment usernames are also color coded, with the host being displayed in green with a star icon next to any of their messages, to more quickly identify important comments.
 The scrollable comments div is also automatically loaded at the bottom to always display the most recent comment.
 
-#### File Upload/Storage System
+### File Upload/Storage System
 At the bottom of the project hub is a file sharing and storage section. This allows users to upload files through an upload form where they can choose a file name, a preset classification e.g. 'image','audio' etc. And also write a message to be linked to their file.
 This is then uploaded to Amazon S3, and displayed in the appropriate dropdown folder. The files can then be viewed, downloaded or if you are the uploader, deleted.
 
@@ -267,15 +253,15 @@ This is then uploaded to Amazon S3, and displayed in the appropriate dropdown fo
 
 ![File Storage](/static/readme-files/features/file-storage-min.png)
 
-### Projects I'm In Page
+## Projects I'm In Page
 ---
 This page provides quick access to all projects that you are a member of, along with icons displaying the number of members and comments.
 
 ![Projects im in](/static/readme-files/features/projects-im-in.png)
 
-### Browse Projects Pages
+## Browse Projects Pages
 ---
-#### Browse All/Relevant Projects
+### Browse All/Relevant Projects
 These tabs allow the user to either view all projects on the website.
 
 ![View all projects](/static/readme-files/features/all-projects-min.png)
@@ -285,14 +271,14 @@ The relevant instruments are also highlighted on the project card to quickly con
 
 ![Relevant Projects](/static/readme-files/features/relevant-projects-min.png)
 
-### Other Users Page
+## Other Users Page
 ---
-#### View All Users
+### View All Users
 The all users page displays all current users on the website, along with their profile photo, username which links to their profile, and a collapsible dropdown displaying their instruments, genres and location.
 
 ![View all users](/static/readme-files/features/all-users-min.png)
 
-#### Search Users by Parameter
+### Search Users by Parameter
 You are also able to filter users on the website by specific parameters should you want to find a person suitable for your needs. e.g. a classical violinist from London. 
 
 Parameters can be entered into the form, and then all users who meet your critera will be diplayed with the relevant information highlighted in green.
@@ -302,22 +288,22 @@ The city parameter is non-case sensitive and strips off white space like the use
 
 ![Search User Results](/static/readme-files/features/user-search-results-min.png)
 
-### Messages Pages
+## Messages Pages
 ---
-#### Conversation List
+### Conversation List
 The conversations list page displays all of your active conversations along with a count for the number of messages exchanged.
 Clicking the link takes you to the messages page.
 
 ![Conversations panel](/static/readme-files/features/convo-list-min.png)
 
-#### Direct Messaging
+### Direct Messaging
 This sections of the website allows for direct messaging between users. It operates much like the comments feature, allowing direct messages to be exchanged. It loads at the bottom of the scrollable div to always display the most recent message.
 
 Once a message is sent the recipient is notified that you have contacted them.
 
 ![Messages](/static/readme-files/features/direct-messages-min.png)
 
-### Delete Profile
+## Delete Profile
 ---
 If you no longer wish to be a site member you can remove your profile from the system through the 'Delete Profile' page.
 After confirming your decision your profile will be wiped clean from the site.
@@ -401,38 +387,44 @@ Any messages you had with other users are retained, but when they click the link
 # Testing User Stories from the User Experience (UX) Section
 - As a first time user I want to:
 
-1. Q.  Quickly understand the purpose and layout of the game
-      * The website features a very streamlined and simple navigation bar that quickly allows users to access a clear set of game instructions. The game itself is also well equipped with user messages, buttons with contextual text, and informative pop-ups and modals.
+1. Q.  Quickly understand the purpose and layout of the site.
+      * The site is layed out in an organised manner with quick access to any area from the navbar. The process of ceating and joining musical projects is intuitive and streamlined.
 
-2. Q. Understand how to play the game
-      * The game features access to both a clear instructions page which detail exactly how to play the game, and also a very in-depth resource that both explains the techniques needed to beat the game and also allows users to generate the necessary tools to win.
+2. Q. Understand how to create a profile and navigate the sites functionality.
+      * The website features a very streamlined and simple navigation bar that quickly allows users access to any area of the site within 2-3 mouse clicks. All areas of the site are neatly organised to make navigation as streamlined as possible.
+      The Registeration process is quick and clear and can easily be completed in just a minute.
 
-3. Q .Receive tips and guidance on how to improve my score
-      * The "Memory Tips" page both gives a comprehensive history of the techniques of memorisation, along with detailed instructions as to how the user can quickly improve their memory. This page also has a tool that allows the user to generate their own PAO system and save it to their computer. The ability to play at differing difficulty levels, and to track previous scores also aid the player in improving their scores.
+3. Q. Be able to customise my profile.
+      * The user is easilly able to update and change any aspect of their profile. They are also able to upload their own custom profile picture.
 
 - As a returning visitor I want to:
 
-1. Q. Have different levels of difficulty to challenge myself
-      * The game features three seperate dificulty levels. Easy: 10 cards, Medium: 25 cards, Hard: 52 cards.
+1. Q. Be able to create and edit musical projects and advertise them to relevant site members.
+      * The site allows for creation and updating of musical projects with ease. There is lots of scope for specifying exactly what you want to achieve with the project. The projects are then easilly found by other users including by relevance.
 
-2. Q. Have a system to track my previous score so that I can try and improve my skill
-      * The game has a "Previous Scores" button that saves the users previous efforts to local storage for them to keep track of their last attempt across browser sessions.
+2. Q. Be able to find projects relevant to my skills and interests, and then apply to join them.
+      * The process for finding projects relevant to your profile is very quick and seamless. Once found applying to join the project is extremely quick via a short form.
 
-3. Q. Have tools to help me develop a method to learn the skills of memorisation
+3. Q. Be able to communicate with other members/users on the site.
+      * There are two simple ways to communicate with othe users, either through a communal project chat, or via direct message.
+
+4. Q. Be able to share sheet music, MP3's and other relevant files to project members.
       * The "Memory Tips" page contains both detailed historical information surrounding the pursit of memory techniques, along with detailed instructions on how to best memorise the deck of cards among other things. It also has a PAO generator section to allow the user to create their own memory tool to beat the game.
+
+5. Q. Be able to view other members personal profiles, and follow them to build a community.
+      * The "Memory Tips" page contains both detailed historical information surrounding the pursit of memory techniques, along with detailed instructions on how to best memorise the deck of cards among other things. It also has a PAO generator section to allow the user to create their own memory tool to beat the game.
+
+6. Q. Be notified of any actions on the site relevant to me (direct messages, new followers etc.)
+      * There is a simple and orgnaised project upload system built into the project hub page which allows upload of any file you may want to share. This can then be ordganised by type, and displayed with the information of file uploader, file description, a custom file name, upload date and the ability to view or download the file.                  
 
 ## Further Testing
 ---
 ### Validator Results
-* All Html pages passed through the official [W3C Validator](https://validator.w3.org) validator with no errors.
+* All Html pages passed through the official [W3C Validator](https://validator.w3.org) validator with no errors outside of some warnings caused by some of the materialize dropdowns.
 
-Results can be found here:
-[Game Page](assets/readme-images/new-index.html-validator-min.png)|[How To Play](assets/readme-images/how-to-play-html-validator.png)|[Memory Tips](assets/readme-images/memory-tips-html-validator.png)|
+* The CSS stylesheet passed through the official [W3C Validator](https://validator.w3.org) with no issues.
 
-* The CSS stylesheets all passed through the official [W3C Validator](https://validator.w3.org) with no issues.
-
-CSS validation results can be found here: 
-[style.css](assets/readme-images/style.css-validator.png)| [memory-tips.css](assets/readme-images/memorytips.css-validator.png)| [How-to-play.css](assets/readme-images/gameinstructions.css-validator.png)
+Results can be found [here](/static/readme-files/validator-results/)
 
 ### Manual Testing
 * The website was tested on multiple web-browsers including Safari, Chrome, Firefox and Brave.
@@ -444,10 +436,7 @@ CSS validation results can be found here:
 * Family members trialled the website on their own devices to both give feedback and look for bugs. 
 
 ### Known Bugs
-* On my current version of Safari browser, some of the buttons are slightly misaligned compared to Google Chrome.
-* On the iPhones that I tested the site on, the sound files all work perfectly for their first play, however subsequent plays have the very start clipped off. This is a minor issue and is only noticeable when looking for it.
-* In the console, the following error message is displayed: "Error with Permissions-Policy header: Unrecognized feature: 'interest-cohort'.". From my research this appears to be an issue with Github Pages.
-![Console Error Message](/assets/readme-images/console-error-msg.png)
+
 
 ### Notable Solved Bugs
 * After first deploying my site to Github pages, when the game was started and the poker theme was introduced, on ipads the entire interface of the game would rotate and become unusable. This only happened on iPad, not on any phone or computer, however it was present on multiple iPads. 
@@ -459,17 +448,12 @@ This fix for this turned out to be a CSS rule to rotate the background image of 
 ---
 The project was tested using both [lighthouse](https://developers.google.com/web/tools/lighthouse) and [Wave](https://wave.webaim.org/) to check the overall performance and accessibility of the project.
 
-The [Wave](https://wave.webaim.org/) report revealed no errors, and just a few advisory alerts for things such as "potentially erroneous alt text." I investigated all of these and found no issue with them.
-Wave results can be viewed here:
-[Main page](assets/readme-images/wave-index-min.png)
-[Memory Tips](assets/readme-images/wave-memory-tips-min.png)
-[How to play](assets/readme-images/wave-how-to-play-min.png)
+The [Wave](https://wave.webaim.org/) report revealed some errors however I believe these were irrelevant. For example the link for the side nav is a burger icon. Wave reported this as an empty link. Some of the labels for the instrument and genre dropdowns were also not recognised despite being present.
+Wave results can be viewed [here](/static/readme-files/wave/)
 
-The [lighthouse](https://developers.google.com/web/tools/lighthouse) report was positive for all areas, particularly on the main game page.
-Light house results can be viewed here:
-[Main page](assets/readme-images/index.html-performance-min.png)
-[Memory Tips](assets/readme-images/memory-tips-performance-min.png)
-[How to play](assets/readme-images/game-instructions-performance-min.png)
+The [lighthouse](https://developers.google.com/web/tools/lighthouse) report was positive for almost all areas, particularly for accessibility, SEO and best practises. Some marks were lost again due to an 'Empty link' for the side nav.
+Performance was generally rated positively, and the site seems to run well on all tested devices.
+Light house results can be viewed [here](/static/readme-files/lighthouse/)
 
 ## Deployment
 ---
