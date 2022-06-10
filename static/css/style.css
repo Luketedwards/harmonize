@@ -696,8 +696,8 @@ footer {
 }
 
 #message-profile-link {
-    font-size: 1.2em;
-    color: #39583a;
+    font-size: 1.2em !important;
+    color: #39583a !important;
 }
 
 #messages-bg-image {

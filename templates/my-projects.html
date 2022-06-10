@@ -23,7 +23,7 @@
         <div class="row center">     
         <h2 id="my-projects-title" class="center-align ">{{project.projectTitle|title}}</h2>
         <div id="contact-chip" class="chip center">
-            <img src="{{username.profile_pic}}" alt="{{user.username}}'s profile photo">
+            <img src="{{username.profile_pic2 + '?tr=w-100,h-100'}}" alt="{{user.username}}'s profile photo">
         <span> Created by: <a href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
         </div>    
         </div>   
