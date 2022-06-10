@@ -1,4 +1,8 @@
 /* General */
+.link{
+    color: #395758 !important;
+}
+
 .stroke-outline{
     color: black !important;
     -webkit-text-fill-color: white !important; 
@@ -85,6 +89,7 @@ span.badge.new {
 
 .collapsible-body {
     background: rgba(255, 255, 255, 0.9) !important;
+    font-family: "Helvetica Neue",sans-serif;;
 }
 
 .transparent-bg ul {
@@ -868,6 +873,8 @@ footer {
 
 #profile-followers {
     margin-bottom: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .card-content {
@@ -1070,7 +1077,7 @@ footer {
 .project-download-btn {
     padding-bottom: 5px;
     border: none;
-    color: blue;
+    color: #395758 !important;
     background-color: transparent;
 }
 
@@ -1124,7 +1131,7 @@ footer {
 }
 
 #project-hub-host-pill a:hover {
-    color: black;
+    color: black !important;
 }
 
 #project-hub-main-panel .card-panel {

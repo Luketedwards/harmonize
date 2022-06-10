@@ -5,7 +5,7 @@
     <h1 class="center white-text">{{thisProject.projectTitle|title}}</h1>
 
     <h5 id="project-hub-host-pill" class="center white-text">Host: <a
-            href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
+        class="link" href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
 
     <div id="comment-project-info-container" class="row ">
         <div style="overflow-y: auto;" class="col card-panel l6 m12 s12 transparent-bg">
@@ -86,7 +86,7 @@
                 {%else%}
                 <span>
                     <span class="comment-date right">{{comment.date|datetimeformat}}</span>
-                    <a href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
+                    <a class="link" href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
                     {{comment.userComment}}
                      </span>
                 <hr>
@@ -103,7 +103,7 @@
                 </div>
                 <div id="comment-btn" class="row">
                     <button type="submit" class="col s12 btn  ">
-                        Comment <i class="fa-solid fa-comment"></i>
+                        Comment
                     </button>
                 </div>
             </form>
