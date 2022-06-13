@@ -1379,6 +1379,7 @@ def convo_list():
             {"username": session["user"]})["username"]
         user_notifications = mongo.db.users.find_one({'username': user})
         myConversations = mongo.db.messages.find({'members': username})
+        myConversationsCount = mongo.db.messages.count_documents({'members': username})
 
         return render_template(
             'convo-list.html',
@@ -1388,7 +1389,8 @@ def convo_list():
             user_notifications=user_notifications,
             myConversations=myConversations,
             username=username,
-            users=users)
+            users=users,
+            myConversationsCount=myConversationsCount)
 
     except BaseException:
         return render_template("login.html")

@@ -4,9 +4,12 @@
 <div id="messages-bg-image">
     <div style="height: 100%;" class="transparent-bg">
         <h1 style="margin-top:0;padding-top:20px;" class="center">Conversations</h1>
+        {% if myConversationsCount == 0%}
+                    <h2 class="center">You have no conversations.</h2>
+        {%else%}
         <div class="">
             <div id="convo-panel" class="card-panel  white-text">
-                {% for chats in myConversations%}
+                {% for chats in myConversations%}  
                 {% if username == chats.members[0]%}
                 {% if username == chats.members[0]%}
                 <div class="center convo-wrapper">
@@ -37,6 +40,7 @@
                 {%endfor%}
             </div>
         </div>
+        {%endif%}  
     </div>
 </div>
 {%endblock%}
