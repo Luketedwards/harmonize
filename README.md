@@ -3,8 +3,7 @@ I developed harmonise as a social media platform aimed at making collaboration b
 
 ---
 
-![Website Mockup]()
-
+![Website Mockup](/static/readme-files/all-devices-black.png)
 
 ---
 
