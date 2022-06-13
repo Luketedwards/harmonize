@@ -413,7 +413,8 @@ def upload_file():
                             allCurrentUsernames=allCurrentUsernames,
                             listOfProjectNames=listOfProjectNames)
     except BaseException:
-            return render_template("login.html")
+        return render_template("login.html")
+
 
 # renders all other users on the site
 @app.route("/other_users")
@@ -964,7 +965,8 @@ def browse_projects():
             projects=projects,
             myProfile=myProfile)
     except BaseException:
-            return render_template("login.html")
+        return render_template("login.html")
+
 
 # renders all other user projects
 @app.route('/browse_all_projects/')
@@ -1047,6 +1049,7 @@ def manage_project(thisProject):
             username=username)
     except BaseException:
             return render_template("login.html")
+
 
 # allows user to update details about the project from notification link
 @app.route('/manage_project_link/<thisProject>/', methods=["GET", "POST"])
