@@ -12,6 +12,28 @@ I developed harmonise as a social media platform aimed at making collaboration b
 
 The deployed site can be viewed [Here](http://www.harmonise-app.co.uk/).
 
+# Project Overview
+
+The purpose of this project is to develop and present my skills in the follow areas:
+
+1. Handling data
+      - Build a database structure backed by flask that allows me to create, read, update and delete user data in a manner useful to my project.
+
+2. User functionality
+      - Develop functionality for users to create, read, update and delete data records on the site.
+
+3. Use of technologies
+      - Make use of an array of technologies including custom HTML, CSS and Javascript to develop the fontend, and Python for the back-end.    
+
+4. Documentation
+      - Create a README.md document explaining the purpose of the project and its benefit to users.
+
+5. Version control
+      - Use Git and Github for version control of my code.
+
+6. Deployment
+      - Use the hosting platform Heroku to deploy and host my final code.
+                          
 ##  User Experience (UX)
 ---
 ### User Stories
