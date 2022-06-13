@@ -11,6 +11,17 @@ I developed harmonise as a social media platform aimed at making collaboration b
 
 The deployed site can be viewed [Here](http://www.harmonise-app.co.uk/).
 
+As much of the websites functionality revloves around interacting with other users I have created two accounts for you to use for marking purposes. These have one project created each, and are a member of the others project for you to test the project hub section. You can also test the messages function and other features that require two accounts.
+Please feel free to create your own account from scratch also; I just thought this would save a little time and make the marking process more streamlined.
+
+## Demo Log in details
+
+Username: codeinstitute1
+Password: password
+
+Username: codeinstitute2
+Password: password
+
 # Project Overview
 
 The purpose of this project is to develop and present my skills in the follow areas:
