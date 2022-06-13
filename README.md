@@ -43,6 +43,7 @@ The purpose of this project is to develop and present my skills in the follow ar
 1. Quickly understand the purpose and layout of the site.
 2. Understand how to create a profile and navigate the sites functionality.
 3. Be able to customise my profile.
+4. Be able to view other users profiles and interact with them.
 
 - As a returning visitor I want to:
 
@@ -405,157 +406,89 @@ Any messages you had with other users are retained, but when they click the link
 
 18. [Heroku](https://heroku.com/)
       * Heroku was used to host my project.                      
-
-# Testing User Stories from the User Experience (UX) Section
-- As a first time user I want to:
-
-1. Q.  Quickly understand the purpose and layout of the site.
-      * The site is layed out in an organised manner with quick access to any area from the navbar. The process of ceating and joining musical projects is intuitive and streamlined.
-
-2. Q. Understand how to create a profile and navigate the sites functionality.
-      * The website features a very streamlined and simple navigation bar that quickly allows users access to any area of the site within 2-3 mouse clicks. All areas of the site are neatly organised to make navigation as streamlined as possible.
-      The Registeration process is quick and clear and can easily be completed in just a minute.
-
-3. Q. Be able to customise my profile.
-      * The user is easilly able to update and change any aspect of their profile. They are also able to upload their own custom profile picture.
-
-- As a returning visitor I want to:
-
-1. Q. Be able to create and edit musical projects and advertise them to relevant site members.
-      * The site allows for creation and updating of musical projects with ease. There is lots of scope for specifying exactly what you want to achieve with the project. The projects are then easilly found by other users including by relevance.
-
-2. Q. Be able to find projects relevant to my skills and interests, and then apply to join them.
-      * The process for finding projects relevant to your profile is very quick and seamless. Once found applying to join the project is extremely quick via a short form.
-
-3. Q. Be able to communicate with other members/users on the site.
-      * There are two simple ways to communicate with othe users, either through a communal project chat, or via direct message.
-
-4. Q. Be able to share sheet music, MP3's and other relevant files to project members.
-      * The "Memory Tips" page contains both detailed historical information surrounding the pursit of memory techniques, along with detailed instructions on how to best memorise the deck of cards among other things. It also has a PAO generator section to allow the user to create their own memory tool to beat the game.
-
-5. Q. Be able to view other members personal profiles, and follow them to build a community.
-      * The "Memory Tips" page contains both detailed historical information surrounding the pursit of memory techniques, along with detailed instructions on how to best memorise the deck of cards among other things. It also has a PAO generator section to allow the user to create their own memory tool to beat the game.
-
-6. Q. Be notified of any actions on the site relevant to me (direct messages, new followers etc.)
-      * There is a simple and orgnaised project upload system built into the project hub page which allows upload of any file you may want to share. This can then be ordganised by type, and displayed with the information of file uploader, file description, a custom file name, upload date and the ability to view or download the file.                  
+             
 
 ## Further Testing
 ---
-### Validator Results
-* All Html pages passed through the official [W3C Validator](https://validator.w3.org) validator with no errors outside of some warnings caused by some of the materialize dropdowns.
-
-* The CSS stylesheet passed through the official [W3C Validator](https://validator.w3.org) with no issues.
-
-Results can be found [here](/static/readme-files/validator-results/)
-
-### Manual Testing
-* The website was tested on multiple web-browsers including Safari, Chrome, Firefox and Brave.
-
-* The website was viewed on multiple devices with varying screen sizes. These include multiple iPhone 11's, an iPad air, an iPad pro, a 16 inch Macbook pro and a 13 inch Acer laptop.
-
-* All links and pages were tested thoroughly across various browsers and screen sizes.
-
-* Family members trialled the website on their own devices to both give feedback and look for bugs. 
-
-### Known Bugs
-
-
-### Notable Solved Bugs
-* After first deploying my site to Github pages, when the game was started and the poker theme was introduced, on ipads the entire interface of the game would rotate and become unusable. This only happened on iPad, not on any phone or computer, however it was present on multiple iPads. 
-This fix for this turned out to be a CSS rule to rotate the background image of the Nav and Footer by 90 deg. I did this to change the alignment of the wood grain in the image, however it seemed the iPad misinterpreted this as "Rotate the nav and footer 90 deg". This is now solved.
-
-* On certain screen sizes the cards would become misaligned when flipped. I initially tried to fix this through very tedious testing of media queries to compensate at different screen sizes. This was not an ideal solution. After much testing I found that by using "Scalex(-1)" instead of "Translatex(-100%)" the cards correctly alligned.
-
-## Accessibility and Performance
----
-The project was tested using both [lighthouse](https://developers.google.com/web/tools/lighthouse) and [Wave](https://wave.webaim.org/) to check the overall performance and accessibility of the project.
-
-The [Wave](https://wave.webaim.org/) report revealed some errors however I believe these were irrelevant. For example the link for the side nav is a burger icon. Wave reported this as an empty link. Some of the labels for the instrument and genre dropdowns were also not recognised despite being present.
-Wave results can be viewed [here](/static/readme-files/wave/)
-
-The [lighthouse](https://developers.google.com/web/tools/lighthouse) report was positive for almost all areas, particularly for accessibility, SEO and best practises. Some marks were lost again due to an 'Empty link' for the side nav.
-Performance was generally rated positively, and the site seems to run well on all tested devices.
-Light house results can be viewed [here](/static/readme-files/lighthouse/)
+Details of testing can be found in the [Testing](/testing.md) file.
 
 ## Deployment
 ---
 
-### GitHub Pages
+### **Heroku**
+  Before you can deploy your app to Heroku, initialize a local Git repository and commit your application code to it.
 
- The project was deployed to GitHub Pages using the following steps...
+  #### **Create a Heroku Remote**
+  Git remotes are versions of your repository that live on other servers. You deploy your app by pushing its code to a special Heroku-hosted remote that’s associated with your app.
 
- 1. Log in to GitHub and locate the [GitHub Repository](https://github.com/Luketedwards/memorise-a-deck-of-cards)
- 2. At the top of the Repository (not top of page), locate the "Settings" Button on the menu.
-     - Alternatively Click [Here](https://raw.githubusercontent.com/) for a GIF demonstrating the process starting from Step 2.
- 3. Scroll down the Settings page until you locate the "GitHub Pages" Section.
- 4. Under "Source", click the dropdown called "None" and select "Master Branch".
- 5. The page will automatically refresh.
- 6. Scroll back down through the page to locate the now published site [link](https://luketedwards.github.io/memorise-a-deck-of-cards/index.html) in the "GitHub Pages" section.
+  #### **For a New App**:
 
- ### Forking the GitHub Repository
+  The heroku create CLI command creates a new empty application on Heroku, along with an associated empty Git repository. If you run this command from your app’s root directory, the empty Heroku Git repository is automatically set as a remote for your local repository.
 
- By forking the GitHub Repository we make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original repository by using the following steps...
+      heroku create -a harmonise
 
- 1. Log in to GitHub and locate the [GitHub Repository](https://github.com/Luketedwards/memorise-a-deck-of-cards)
- 2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
- 3. You should now have a copy of the original repository in your GitHub account.
+  You can use the "git remote -v" command to confirm that a remote named heroku has been set for your app.
 
- ### Making a Local Clone
+  #### **For an Existing App**:
 
- 1. Log in to GitHub and locate the [GitHub Repository](https://github.com/Luketedwards/memorise-a-deck-of-cards)
- 2. Under the repository name, click "Clone or download".
- 3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
- 4. Open Git Bash
- 5. Change the current working directory to the location where you want the cloned directory to be made.
- 6. Type `git clone`, and then paste the URL you copied in Step 3.
+  Add a remote to your local repository with the heroku git:remote command. All you need is your Heroku app’s name:
 
- ```
- $ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
- ```
+      heroku git:remote -a harmonise
 
- 7. Press Enter. Your local clone will be created.
+  #### **Deploy Your Code**:
+  To deploy your app to Heroku, use the "git push" command to push the code from your local repository’s main branch to your heroku remote. For example:
 
- ```
- $ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
- > Cloning into `CI-Clone`...
- > remote: Counting objects: 10, done.
- > remote: Compressing objects: 100% (8/8), done.
- > remove: Total 10 (delta 1), reused 10 (delta 1)
- > Unpacking objects: 100% (10/10), done.
- ```
+      git push heroku main
 
- Click [Here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop) to retrieve pictures for some of the buttons and more detailed explanations of the above process.
+  Use this same command whenever you want to deploy the latest committed version of your code to Heroku.
+
+  Heroku only deploys code that you push to the master or main branches of the remote. Pushing code to another branch of the heroku remote has no effect.
+
+  ---
+
+  ### **Forking the GitHub Repository**
+  By forking the GitHub Repository you make a copy of the original repository on your GitHub account to view and/or make changes without affecting the original repository.
+
+  You can do this by completing the following steps:
+
+  1. Log in to GitHub and locate the GitHub Repository
+  2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
+  3. You should now have a copy of the original repository in your GitHub account.
+
+  ---
+
+  ### **Making a Local Clone**:
+  1. Log in to GitHub and locate the GitHub Repository
+  2. Under the repository name, click "Clone or download".
+  3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
+  4. Open Git Bash
+  5. Change the current working directory to the location where you want the cloned directory to be made.
+  6. Type git clone, and then paste the URL you copied in Step 3.
+
+    $ git clone https://github.com/Luketedwards/harmonize.git
+
 
  # Credits
 
 ## Code 
-* Bootstrap4: Bootstrap library was used during the inital setup of my site to help quickly create a responsive design. I also used their code in initially creating one of the modals on the page.
-* Sweet alert 2: I used several of their templates to create an aesthetically pleasing modal for my game information, before altering it to suit my requirements.
+* Materialize was used to generate the initial layout of my UI.
+
 ## Content
 
 ## Media
 
 ### Images
 ---
-* All poker chip buttons were created in Affinity Photo by the developer using this background provided by [SVG Repo](https://www.svgrepo.com/svg/4886/poker-chip).
-* Images for the playing cards were downloaded from [Google Code Archive](https://code.google.com/archive/p/vector-playing-cards/).
-* Images of the card suits were downloaded using a free trial from [Adobe](https://stock.adobe.com/images/set-poker-cards-symbols-vector/323996998?as_campaign=TinEye&as_content=tineye_match&epi1=323996998&tduid=f877f64edb5850dacc9d98bf4bac7909&as_channel=affiliate&as_campclass=redirect&as_source=arvato).
-* Image for poker table wooden background from [Joshua Bartell on Unsplash](https://unsplash.com/photos/6vvIBTvL90A).
-* Green felt poker table background from [Engin Akyurt on Unsplash](https://unsplash.com/photos/HEMIBJ8QQuA).
-* Image of brain on "Memory tips" page were downloade using a free trial from [Adobe](https://stock.adobe.com/images/human-brain-on-white-background/26636186?as_campaign=TinEye&as_content=tineye_match&epi1=26636186&tduid=f877f64edb5850dacc9d98bf4bac7909&as_channel=affiliate&as_campclass=redirect&as_source=arvato).
-* Image of playing cards from "Game Instructions" page from [Eyestetix on Unsplash](https://unsplash.com/@eyestetix).
- ### Audio
- ---
- * "Try again" sound effect [javapimp on freesound](https://freesound.org/people/javapimp/sounds/439187/).
- * Card flip sound effect [notification sounds](https://notification-sounds.com/1433-card-flip-sound-effect.html).
- * "Congratulations" sound effect [dersuperanton on freesound](https://freesound.org/people/dersuperanton/sounds/433702/) 
- * Card shuffle sound effect [SoundJay](https://www.soundjay.com/misc/sounds/shuffling-cards-1.mp3).
- * Error sound effect [Freesoundeffect](http://freesoundeffect.net/sound/multimedia-error-08-sound-effect).
- * Un-mute audio sound [Freesound](https://freesound.org/people/dland/sounds/320181/).
- * Game Won sound effect [Freesound](https://freesound.org/people/FunWithSound/sounds/456966/).
- * Previous Score sound effect [Freesound](https://freesound.org/people/shinephoenixstormcrow/sounds/337049/).
- * Game Over sound effect [Orangefreesounds](https://orangefreesounds.com/you-lose-game-over/).
- * "Completed Memorising Cards" sound [Freesound](https://freesound.org/people/shinephoenixstormcrow/sounds/337049/).
+All images on the site were sourced from [Unsplash](https://unsplash.com)
+
+* [Sheet Music Image for Project Upload](https://unsplash.com/photos/2zHGVCrdxHw)
+* [Delete Account Background Image](https://unsplash.com/photos/BwMcYuHI9OI)
+* [Messages Background Image](https://unsplash.com/photos/VPTSnznXtyQ)
+* [Log In Background Image](https://unsplash.com/photos/qYHyn4ztNkc)
+* [Project Hub Background Image](https://unsplash.com/photos/pH88tHG-1yw)
+* [All Users Background Image](https://unsplash.com/photos/ECI6l_JwOew)
+* [Upload Profile Photo Background Image](https://unsplash.com/photos/ECI6l_JwOew)
+* [Register Background Image](https://unsplash.com/photos/i3yZJaQgR7k)
 
 ## Acknowledgements
 ---

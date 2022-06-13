@@ -128,4 +128,4 @@ Light house results can be viewed [here](/static/readme-files/lighthouse/)
 
 The python file was run through the PEP8 validator to ensure no syntax errors, and the Javascript files were validated using JsHint.
 
-[Return to README]()
+[Return to README](/README.md)
