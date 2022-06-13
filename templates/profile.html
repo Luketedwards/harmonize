@@ -10,7 +10,8 @@
 
           <div class="row ">
             <div class="col s12 l4 l-left center-m">
-              <img src="{{current_user.profile_pic2 + '?tr=w-500,h-500'}}" alt="" id="profile-image" class="circle responsive-img ">
+              <img src="{{current_user.profile_pic2 + '?tr=w-500,h-500'}}"
+                alt="{{current_user.username}}'s profile photo" id="profile-image" class="circle responsive-img ">
               <!-- notice the "circle" class -->
             </div>
 
@@ -88,14 +89,14 @@
 </div>
 </span>
 <div class="">
-<!-- Displays projects of user -->
+  <!-- Displays projects of user -->
   <h3 class="center-align">Your Projects</h3>
   <hr>
 
   {% for project in projects%}
 
   {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
-  <div  class="card-panel z-depth-3 darken-1 white-text my-projects-panel">
+  <div class="card-panel z-depth-3 darken-1 white-text my-projects-panel">
     {%if project.completed == false%}
     <span class="">This project is still active!<i class="fa-solid fa-check my-projects-panel-tick"></i></span>
     {%else%}
@@ -110,9 +111,11 @@
       {%else%}
 
       <div class="col s12 right projects-panel-apply">
-        <span class="myProjects-buttons" ><a href="{{url_for('manage_project', thisProject=project._id)}}" class="waves-effect waves-light btn">Manage</a>
-          <a  href="{{url_for('project_hub', thisProject = project._id)}}" class="waves-effect waves-light btn view-btn">View</a></span>
-          <br>
+        <span class="myProjects-buttons"><a href="{{url_for('manage_project', thisProject=project._id)}}"
+            class="waves-effect waves-light btn">Manage</a>
+          <a href="{{url_for('project_hub', thisProject = project._id)}}"
+            class="waves-effect waves-light btn view-btn">View</a></span>
+        <br>
       </div>
       {%endif%}
     </div>
@@ -123,52 +126,52 @@
       <div class="row center">
         <div class="chip s12">
           <img src="{{selectedUser.profile_pic2 + '?tr=w-100,h-100'}}" alt="{{selectedUser.username}}'s profile photo">
-          <span> Created by: <a
-            class="link"  href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
+          <span> Created by: <a class="link"
+              href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div  class="col l6 m6 s12  push-l1 left about-the-project white-text">
+      <div class="col l6 m6 s12  push-l1 left about-the-project white-text">
         <h4>About the project</h4>
         <p>{{project.projectDescription}}</p>
         <p>{{project.city}}</p>
-    </div>
-    <div  class="col l6  m6 s12 push-l1 right instruments-and-genre white-text">
+      </div>
+      <div class="col l6  m6 s12 push-l1 right instruments-and-genre white-text">
         <h4>Instruments & Genre</h4>
         <p>
-        <div class="col l6 m12 s12">
+          <div class="col l6 m12 s12">
             I am looking for:
-          <ul >
-            {%for instrument in project.instruments%}
-           <li>- {{instrument}}</li> 
-            {%endfor%}
-          </ul>
-        </div>
-        <div class="col l6 m12 s12 pull-l2">
+            <ul>
+              {%for instrument in project.instruments%}
+              <li>- {{instrument}}</li>
+              {%endfor%}
+            </ul>
+          </div>
+          <div class="col l6 m12 s12 pull-l2">
 
             The genre(s) are:
-          <ul >
-            {%for genre in project.genres%}
-           <li>- {{genre}}</li> 
-            {%endfor%}
-          </ul>
+            <ul>
+              {%for genre in project.genres%}
+              <li>- {{genre}}</li>
+              {%endfor%}
+            </ul>
         </p>
-        </div>
-    </div>
-        </div>
-
       </div>
-
     </div>
-
   </div>
 
-  {% else %}
-  <h4 style="padding-bottom: 15px;" class="center-align">You currently have no projects.</h4>
+</div>
 
-  {%endfor%}
+</div>
+
+</div>
+
+{% else %}
+<h4 style="padding-bottom: 15px;" class="center-align">You currently have no projects.</h4>
+
+{%endfor%}
 
 </div>
 

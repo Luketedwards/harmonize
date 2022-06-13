@@ -47,7 +47,7 @@
                         {%else%}
                         <option value="{{instrument}}">{{instrument}}</option>
                         {%endif%}
-                    {%endfor%}  
+                        {%endfor%}
                     </select>
 
                     <label class="black-text" for="instrumentsEdit">What Instruments Do You Play?</label>
@@ -61,7 +61,7 @@
                         {%else%}
                         <option value="{{genre}}">{{genre}}</option>
                         {%endif%}
-                    {%endfor%}   
+                        {%endfor%}
 
                     </select>
 
@@ -82,8 +82,7 @@
                     <div class="col s12">
                         <p class="center-align">
                             Changed your mind?
-                            <a href="{{ url_for('profile', username=session['user']) }}"
-                                class="link">Cancel Edit</a>
+                            <a href="{{ url_for('profile', username=session['user']) }}" class="link">Cancel Edit</a>
                         </p>
                     </div>
                 </div>

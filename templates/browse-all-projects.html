@@ -1,103 +1,103 @@
 {% extends 'base.html'%}
 {%block content%}
 <div id="create-project-bg-image">
-<div class="transparent-bg">
-<h1 class="center">All Projects</h1>
-<div class="">
+  <div class="transparent-bg">
+    <h1 class="center">All Projects</h1>
+    <div class="">
 
-  <!-- displays all current available projects,
+      <!-- displays all current available projects,
   also conditionally renders buttons of projects based on if user is a member or the host -->
-  {%set myInstrumentsList = myProfile.instruments%}
-  {% for project in projects%}
-  {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
+      {%set myInstrumentsList = myProfile.instruments%}
+      {% for project in projects%}
+      {% set members = project.projectMembers|map(attribute='memberUsername')|join(', ')%}
 
-  <div class="card-panel my-projects-panel">
-    {%if project.completed == false%}
-    <span class="">This project is still active!<i class="fa-solid fa-check my-projects-panel-tick"></i></span>
-    {%else%}
-    <span class=""> This project is no longer active.<i id="my-projects-panel-cross"
-        class="fa-solid fa-circle-xmark "></i></span>
-    {%endif%}
-    <div class="row right">
-      {% if project.completed == true%}
-      <div id="projects-panel-apply-closed" class="col s12 right ">
-        <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
-      </div>
-      {%else%}
-      {% if username == project.username%}
-      <div class="col s12 right projects-panel-apply">
-        <span><a href="{{url_for('manage_project', thisProject=project._id)}}"
-            class="waves-effect waves-light btn">Manage</a></span>
-        <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
-            class="waves-effect waves-light btn">View</a></span>
-      </div>
-      {%else%}
-      {% if username in members %}
-      <div class="col s12 right projects-panel-apply">
-        <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
-            class="waves-effect waves-light btn">View</a></span>
-      </div>
-      {%else%}
-      <div class="col s12 right projects-panel-apply">
-        <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=username)}}"
-            class="waves-effect waves-light btn">Apply</a></span>
-      </div>
-      {%endif%}
-      {%endif%}
-      {%endif%}
-    </div>
-    <br>
-    {% if username in members%}
-    <span>You are a member of this project!</span>
-    {%endif%}
-
-    <div class="row">
-      <h2  class="center-align center other-profile-projects-title">{{project.projectTitle|title}}</h2>
-      <div class="row center">
-        <div class="chip s12">
-
-          <span> Created by: <a
-            class="link"  href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
+      <div class="card-panel my-projects-panel">
+        {%if project.completed == false%}
+        <span class="">This project is still active!<i class="fa-solid fa-check my-projects-panel-tick"></i></span>
+        {%else%}
+        <span class=""> This project is no longer active.<i id="my-projects-panel-cross"
+            class="fa-solid fa-circle-xmark "></i></span>
+        {%endif%}
+        <div class="row right">
+          {% if project.completed == true%}
+          <div id="projects-panel-apply-closed" class="col s12 right ">
+            <span><a class="waves-effect waves-light grey btn">Project Closed</a></span>
+          </div>
+          {%else%}
+          {% if username == project.username%}
+          <div class="col s12 right projects-panel-apply">
+            <span><a href="{{url_for('manage_project', thisProject=project._id)}}"
+                class="waves-effect waves-light btn">Manage</a></span>
+            <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
+                class="waves-effect waves-light btn">View</a></span>
+          </div>
+          {%else%}
+          {% if username in members %}
+          <div class="col s12 right projects-panel-apply">
+            <span><a href="{{url_for('project_hub', thisProject = project._id)}}"
+                class="waves-effect waves-light btn">View</a></span>
+          </div>
+          {%else%}
+          <div class="col s12 right projects-panel-apply">
+            <span><a href="{{url_for('apply_to_project', thisProject=project.projectTitle, usernameOther=username)}}"
+                class="waves-effect waves-light btn">Apply</a></span>
+          </div>
+          {%endif%}
+          {%endif%}
+          {%endif%}
         </div>
-      </div>
-    </div>
+        <br>
+        {% if username in members%}
+        <span>You are a member of this project!</span>
+        {%endif%}
 
-    <div class="row">
-      <div class="col l6 m6 s12 push-l1 left-align left about-the-project">
-        <h4>About the project</h4>
-        <p>"{{project.projectDescription}}"</p>
-        <p>Location: {{project.city}}</p>
-      </div>
-      <div class="col l6 m6 s12 push-l1 left-align right-l left-s instruments-and-genre">
-        <h4>Instruments & Genre</h4>
         <div class="row">
-          <div class="col s6 ">
-            <p style="margin-bottom: 20px;">
-              I am looking for:
-              <ul>
-              {%for instrument in project.instruments%}
-              <li>- {{instrument}}</li>
-              {%endfor%}
-            </ul>
-            </p>
+          <h2 class="center-align center other-profile-projects-title">{{project.projectTitle|title}}</h2>
+          <div class="row center">
+            <div class="chip s12">
+
+              <span> Created by: <a class="link"
+                  href="{{url_for('other_profile', usernameOther=project.username )}}">{{project.username}}</a></span>
+            </div>
           </div>
-          <div class="col s6 ">
-            <p style="margin-bottom: 0;">
-              The genre(s) are:
-              <ul>
-              {%for genre in project.genres%}
-              <li>- {{genre}}</li>
-              {%endfor%}
-            </ul>
-            </p>
+        </div>
+
+        <div class="row">
+          <div class="col l6 m6 s12 push-l1 left-align left about-the-project">
+            <h4>About the project</h4>
+            <p>"{{project.projectDescription}}"</p>
+            <p>Location: {{project.city}}</p>
+          </div>
+          <div class="col l6 m6 s12 push-l1 left-align right-l left-s instruments-and-genre">
+            <h4>Instruments & Genre</h4>
+            <div class="row">
+              <div class="col s6 ">
+                <p style="margin-bottom: 20px;">
+                  I am looking for:
+                  <ul>
+                    {%for instrument in project.instruments%}
+                    <li>- {{instrument}}</li>
+                    {%endfor%}
+                  </ul>
+                </p>
+              </div>
+              <div class="col s6 ">
+                <p style="margin-bottom: 0;">
+                  The genre(s) are:
+                  <ul>
+                    {%for genre in project.genres%}
+                    <li>- {{genre}}</li>
+                    {%endfor%}
+                  </ul>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      {%endfor%}
     </div>
   </div>
-  {%endfor%}
-</div>
-</div>
 </div>
 </div>
 </div>

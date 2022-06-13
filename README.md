@@ -1,5 +1,5 @@
 # Project Mission Statement
-I developed harmonise as a social media platform aimed at making collaboration between musicians more streamlined and providing a focussed community for likeminded individuals. My main aims were at creating a platform where users could advertise musical projects that they were interested in creating, to individuals suited to their goal. The app would then provide a simple way to communuicate with other project members both individually and as a group, and allow them to share files and other documents relevant to their projects. 
+I developed harmonise as a social media platform aimed at making collaboration between musicians more streamlined and providing a focused community for like-minded individuals. My main aims were creating a platform where users could create and advertise musical projects that they were interested in, to individuals that are suited and relevant to their needs. The app would then provide a simple way to communuicate with other project members both individually and as a group, and allow them to share important files and other documents such as sheet music and MP3's that are relevant to their projects. 
 
 ---
 
@@ -11,8 +11,8 @@ I developed harmonise as a social media platform aimed at making collaboration b
 
 The deployed site can be viewed [Here](http://www.harmonise-app.co.uk/).
 
-As much of the websites functionality revloves around interacting with other users I have created two accounts for you to use for marking purposes. These have one project created each, and are a member of the others project for you to test the project hub section. You can also test the messages function and other features that require two accounts.
-Please feel free to create your own account from scratch also; I just thought this would save a little time and make the marking process more streamlined.
+As much of the websites functionality revloves around interacting with other users I have created two accounts for you to use for marking purposes. These each have one project created, and are a member of the others project for you to test the project hub section. You can also test the messages function and other features that require two accounts.
+Please feel free to also create your own account from scratch; I just thought this would save a little time and make the marking process more streamlined.
 
 ## Demo Log in details
 
@@ -43,6 +43,11 @@ The purpose of this project is to develop and present my skills in the follow ar
 
 6. Deployment
       - Use the hosting platform Heroku to deploy and host my final code.
+
+## A note on relational vs non-relational databases     
+
+I have created this project using MongoDb as my database. I chose to use MongoDb due comments in the course material stating that for something like a social media platform, where the database content is very varied and changing that a non-relational databse might be the best choice.
+Although MongoDb is technically a non-relational database, I have used it in a relational manner, where all data associated (messages, projects, files) with a user is tied to their unique username. I spoke to the assessments team to check that this is okay, and they have confirmed to me that it is.
                           
 ##  User Experience (UX)
 ---
@@ -64,12 +69,17 @@ The purpose of this project is to develop and present my skills in the follow ar
 5. Be able to view other members personal profiles, and follow them to build a community.
 6. Be notified of any actions on the site relevant to me (direct messages, new followers etc.)
 
+- As a frequent visitor I want to:
+
+1. Be able to delete projects and content that I have created.
+2. Be able to remove my account and all associated data.
+
 ## 1. Strategy
 ---
 ## Project purpose
 - To provide a streamlined platform for musicians to communicate and collaborate.
 - create a tool for useful files to be easilly shared between users.
-- create a social environment for likeminded musicians to be able to discover each other based on a variety of parameters (instrument, genre, location etc.) and also follow one anothers accounts.
+- create a social environment for like-minded musicians to be able to discover each other based on a variety of parameters (instrument, genre, location etc.) and also follow one anothers accounts to build a community of useful contacts.
 
 ## 2. Scope
 ---
@@ -86,10 +96,10 @@ The purpose of this project is to develop and present my skills in the follow ar
 - The sites functionality is split accross several drop-down tabs:
 
     1. An autocompleting search bar to allow the user to find another user by their username
-    2. Notifications drop-down that updates with alerts of virtually any action on the website that is of concern to the user (direct message, comment, follow, apllications to a project, the results of an application made by the user, new followers etc.)
-    The notifications all feature contextual icons to quickly convey what type it is, and also act as links to instantly traverse the user to the appropriate location.
-    3. A projects tab which allows the user to create new projects, browse other projects (either all of them, or only those relevant to them), manage your own projects, and view projects that the user is a member of. Any project that a user is a member of will allow the user to view the 'project hub' for that project, allowing them to view all other members, important information about the project, a group chat, and the ability to both upload or download projects files.
-    4. An account section which allows the user access to their own profile in which they can change and update their information, and change their profile picture, and also a 'delete profile' tab which allows the user to remove their profile and all data about them from the site.
+    2. Notifications drop-down that updates with alerts of virtually any action on the website that is of concern to the user (direct message, comment, follow, applications to a project, the results of an application made by the user, new followers etc.)
+    The notifications all feature contextual icons to quickly convey what type it is, and also act as a link to instantly traverse the user to the appropriate location.
+    3. A projects tab which allows the user to create new projects, browse other projects (either all of them, or only those relevant to them), manage your own projects, and view projects that the user is a member of. Any project that a user is a member of will allow the user to view the 'project hub' for that project, allowing them to view all other members, important information about the project, a group chat, and have the ability to both upload or download projects files.
+    4. An account section which allows the user access to their own profile in which they can change and update their information, change their profile picture, and also a 'delete profile' tab which allows the user to remove their profile and all data about them from the site.
     5. A users tab which provides the ability to either view all site members, or view only those fitting certain search criteria.
     6. A connections tab which displays the profiles and information of accounts which are either following or followed by the user.
     7. A messages tab which displays a list of all conversations the user has, and allows access to a direct messaging function.
@@ -115,7 +125,7 @@ I used 'Open Sans' for all of the heading throughout the site, 'Source Serif Pro
 
 ### Imagery and Theme
 
-Imagery used throughout the site acts mainly as a backdrop for the page content. I stuck closely with the music theme, making use of images of musicians, and sheet music throughout. 
+Imagery used throughout the site acts mainly as a backdrop for the page content. I stuck closely with the music theme, making use of images of musicians, and sheet music throughout. All of the imagery was taken from Unsplash and is credited at the end of this README.
 
 ## 5. Features 
 ---
@@ -143,13 +153,13 @@ Examples of notifications created by the site:
 
 - Applications to your project
 - Results of an application made by the user
-- Direct message received
+- Direct messages received
 - A comment on a project the user is in
 - being removed by a project host from a project
 - A new follower
 
 The notifications display inside a scrollable div, and the current number of notifications is displayed next to the bell icon.
-If a user wants to delete all of their notifications this can be done so by clicking the delete notification button.
+If a user wants to delete all of their notifications this can be done so by clicking the delete notification button located either at the end of the list on desktop, or at the top of the modal on mobile.
 
 ![Desktop Notifications](/static/readme-files/features/notifications-min.png)
 
@@ -160,9 +170,9 @@ This same notifications system is also available on smaller screens and is displ
 
 ### Username Search Bar
 
-The both the desktop and side-navbar are also equipped with a search bar that links to other users profiles. The search bar draws from a datalist of all current usernames on the platform, and makes suggestions as the user types.
+Both the desktop and side-navbar are also equipped with a search bar that links to other users profiles. The search bar draws from a datalist of all current usernames on the platform, and makes suggestions as the user types.
 The search bar is non-case sensitive, and strips off any whitespace that the user may add.
-If a username that doesn't exist on the site is entered, the user is taken to their profile and informed that no such user exists.
+If a username that doesn't exist on the site is entered, the user is taken to their own profile and informed that no such user exists.
 
 ![Desktop Search Bar](/static/readme-files/features/navbar-search-min.png)
 
@@ -176,7 +186,7 @@ The register profile form is equipped with a password check to ensure the user e
 
 ### Instruments and Genres Dropdown
 
-When the user creates an account their are asked for all information that is relevant to their experience on the website. This includes instruments and genres that they play.
+When the user creates an account they are asked for all information that is relevant to their experience on the website. This includes instruments and genres that they play.
 These can be selected through the dropdown lists at the bottom of the form.
 
 ![Instrument and Genre select](/static/readme-files/features/instruments-dropdown-min.png)
@@ -185,13 +195,14 @@ These can be selected through the dropdown lists at the bottom of the form.
 ## Profiles Pages
 ---
 ### User Bio Tabs
-At the top of each users profile page is a section which displays all the relevant information about the user. This includes their bio, instruments and genres played, their followers following stats, and their number of projects. The biographic section can be selected via the tabs on the collapsible container.
+At the top of each users profile page is a section which displays all the relevant information about the user. This includes their bio, instruments and genres played, their followers/following stats, and their number of projects. The biographic section can be selected via the tabs on the collapsible container.
 
 ![Profile information](/static/readme-files/features/profile-min.png)
 
 
 ### Edit Profile Information
 By default the instruments and genres tabs are pre-populated with the information entered during the registration phase, but the bio by default displays a message prompting the user to write some information about themselves.
+Upon opening the 'edit profile' page, all of the users current details are automatically pre-populated into the form.
 All of these details can be altered by clicking the edit profile button, which allows the user to change all of the information added during sign-up, along with their bio.
 
 ![Edit Profile](/static/readme-files/features/edit-profile-min.png)
@@ -201,7 +212,7 @@ All of these details can be altered by clicking the edit profile button, which a
 By default all users have the same profile pictures of a generic silhouette. This can be changed to their own custom upload by clicking the 'Upload Photo' button.
 
 The user is then taken to a form where they can select any .JPG .JPEG or .PNG file that they want. This image is then uploaded to an Amazon S3 bucket, before being streamed back to the website by ImageKit, which compresses the file to improve performance. 
-Eachtime a new profile photo is uploaded the previous photo in Amazon S3 is overwritten, and the ImageKit server cache is purged. The new photo then displays a short while later.
+Each time a new profile photo is uploaded the previous photo in Amazon S3 is overwritten, and the ImageKit server cache is purged. The new photo then displays a short while later.
 
 ![Upload Profile Image](/static/readme-files/features/change-profile-pic-min.png)
 
@@ -220,7 +231,7 @@ When pressed the user is taken to a direct message panel. If a message is sent t
 ![Conversations list](/static/readme-files/features/convo-list-min.png)
 
 ### Users Projects Display
-At the bottom of a users profile page, all of their projects are displayed in cards. These cards provide information about the project, the ability to apply to the project, a button to view the project hub of that project should you already be a member, or a button to manage the project is you are the host.
+At the bottom of a users profile page, all of their projects are displayed in cards. These cards provide information about the project, the ability to apply to the project, a button to view the project hub of that project should you already be a member, or a button to manage the project if you are the host.
 
 ![Profile projects display](/static/readme-files/features/profile-projects-min.png)
 
@@ -228,7 +239,7 @@ At the bottom of a users profile page, all of their projects are displayed in ca
 ---
 ### Create a Project
 By clicking the 'Create a Project' link in the 'projects' tab, the user is taken to a form where they can create a new project.
-The form allows them to input information regarding instruments and genres desired, a title, a description, a location an email and other various parameters. 
+The form allows them to input information regarding instruments and genres desired, a title, a description, a location, email and other various parameters. 
 Once the project has been created it will display on the website to other users, who can then apply to join.
 
 ![Create a project](/static/readme-files/features/create-project-min.png)
@@ -255,7 +266,8 @@ The files are also purged from the Amazon S3 bucket when a project is deleted.
 
 ### View Project Members
 In the manage project page all current members of the project can be viewed, along with some information about their role in the project. 
-The host can also choose to kick a member, which will also notify them.
+The host can also choose to kick a member, which will also notify them
+of their removal.
 
 ![Kick member](/static/readme-files/features/project-members-min.png)
 
@@ -274,7 +286,7 @@ Once a user becomes a member of the project they gain access to the 'project hub
 This panel displays all of the current members of a project and their instrument. It also allows quick access to the users profile by clicking their name. If you are the host you are also able to kick members by pressing the 'remove from project' button.
 
 ### Comments Panel
-The project hub features a group chat comment system, that allows all of the user to communicate with eachother. Messages can be entered in the text area and submtted to the chat using the button. This will then display the comment alongside your username, which links to your profile, and the time the comment was posted. The date of the comment has been formatted to be more readable ('just now', '1 day ago', '2 weeks ago').
+The project hub features a group chat comment system, that allows all of the user to communicate with each-other. Messages can be entered in the text area and submtted to the chat using the button. This will then display the comment alongside your username, which links to your profile, and the time the comment was posted. The date of the comment has been formatted to be more readable ('just now', '1 day ago', '2 weeks ago').
 Depending on your role in the group the comment usernames are also color coded, with the host being displayed in green with a star icon next to any of their messages, to more quickly identify important comments.
 The scrollable comments div is also automatically loaded at the bottom to always display the most recent comment.
 
@@ -295,12 +307,12 @@ This page provides quick access to all projects that you are a member of, along 
 ## Browse Projects Pages
 ---
 ### Browse All/Relevant Projects
-These tabs allow the user to either view all projects on the website.
+These tabs allow the user to either view all projects on the website...
 
 ![View all projects](/static/readme-files/features/all-projects-min.png)
 
 Or to view a filtered list of only projects relevant to the users played instruments.
-The relevant instruments are also highlighted on the project card to quickly convey the suitability of the user.
+The relevant instruments are highlighted on the project card to quickly convey the reason he project is suitable to the user.
 
 ![Relevant Projects](/static/readme-files/features/relevant-projects-min.png)
 
@@ -314,7 +326,7 @@ The all users page displays all current users on the website, along with their p
 ### Search Users by Parameter
 You are also able to filter users on the website by specific parameters should you want to find a person suitable for your needs. e.g. a classical violinist from London. 
 
-Parameters can be entered into the form, and then all users who meet your critera will be diplayed with the relevant information highlighted in green.
+Parameters can be entered into the form, and then all users who meet your critera will be displayed with the relevant information highlighted in green.
 The city parameter is non-case sensitive and strips off white space like the user search feature.
 
 ![Search user form](/static/readme-files/features/search-users-min.png)
@@ -330,7 +342,7 @@ Clicking the link takes you to the messages page.
 ![Conversations panel](/static/readme-files/features/convo-list-min.png)
 
 ### Direct Messaging
-This sections of the website allows for direct messaging between users. It operates much like the comments feature, allowing direct messages to be exchanged. It loads at the bottom of the scrollable div to always display the most recent message.
+This section of the website allows for direct messaging between users. It operates much like the comments feature, allowing direct messages to be exchanged. It loads at the bottom of the scrollable div to always display the most recent message.
 
 Once a message is sent the recipient is notified that you have contacted them.
 
@@ -481,11 +493,9 @@ Details of testing can be found in the [Testing](/testing.md) file.
  # Credits
 
 ## Code 
-* Materialize was used to generate the initial layout of my UI.
+* Materialize was used to generate the initial layout of my UI, and some of their components (dropdown menus, container with tabs) was used in the final version of the project.
 
 ## Content
-
-## Media
 
 ### Images
 ---

@@ -5,37 +5,38 @@
   <div class=" transparent-bg s12">
     <h1 id="filter-user-header" class="center">Users matching: "{{cityQuery}} {{instrumentsQuery|join}}
       {{genresQuery|join}}"</h1>
-      <!-- Takes search criteria and makes parses them so they can be used in if statements -->
+    <!-- Takes search criteria and makes parses them so they can be used in if statements -->
     {% if instrumentsQuery != ['']%}
-      {% set instrumentQuery = instrumentsQuery|join%}
-      {%else%}
-      {% set instrumentQuery = "notAnInstrument" %}
+    {% set instrumentQuery = instrumentsQuery|join%}
+    {%else%}
+    {% set instrumentQuery = "notAnInstrument" %}
     {%endif%}
 
     {% if genresQuery != ['']%}
-      {% set genresQuery = genresQuery|join%}
-      {%else%}
-      {% set genresQuery = "notAnInstrument" %}
+    {% set genresQuery = genresQuery|join%}
+    {%else%}
+    {% set genresQuery = "notAnInstrument" %}
     {%endif%}
 
 
     {% if cityQuery|length == 0%}
-      {% set cityQuery = "notACity" %}
-      {%else%}
-      {% set cityQueryLower = cityQuery|lower %}
-      {% set cityQueryUpper = cityQuery|capitalize%}
+    {% set cityQuery = "notACity" %}
+    {%else%}
+    {% set cityQueryLower = cityQuery|lower %}
+    {% set cityQueryUpper = cityQuery|capitalize%}
     {%endif%}
 
-    
-      {% for use in users%}
-      <ul>
+
+    {% for use in users%}
+    <ul>
       {% if instrumentQuery in use.instruments|join or genresQuery in use.genres|join or cityQueryLower in use.city or cityQueryUpper in use.city%}
       <div class="row all-users-row">
         <div class="center row s12">
           <li>
 
             <div class="col l4 md12 s12 center user-display-div">
-              <img class=" user-images" src="{{use.profile_pic2 + '?tr=w-500,h-500'}}" alt="">
+              <img class=" user-images" src="{{use.profile_pic2 + '?tr=w-500,h-500'}}"
+                alt="{{use.username}}'s profile photo">
             </div>
             <div class="col l4 md12 s12">
               <a class="other-users-link link" href="{{url_for('other_profile', usernameOther=use.username )}}"
@@ -85,10 +86,10 @@
         </div>
       </div>
     </ul>
-      <hr>
-      {% endif %}
-      {% endfor%}
-    
+    <hr>
+    {% endif %}
+    {% endfor%}
+
 
   </div>
 </div>

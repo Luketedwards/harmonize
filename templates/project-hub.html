@@ -4,8 +4,8 @@
 <div id="project-hub-main-panel" class="row s12 card-panel">
     <h1 class="center white-text stroke-outline">{{thisProject.projectTitle|title}}</h1>
 
-    <h5 id="project-hub-host-pill" class="center white-text">Host: <a
-        class="link" href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
+    <h5 id="project-hub-host-pill" class="center white-text">Host: <a class="link"
+            href="{{url_for('other_profile', usernameOther=thisProject.username )}}">{{thisProject.username}}</a></h5>
 
     <div id="comment-project-info-container" class="row ">
         <div style="overflow-y: auto;" class="col card-panel l6 m12 s12 transparent-bg">
@@ -71,7 +71,7 @@
                     <i class="fa-solid fa-star"></i><a id="host-comment"
                         href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
                     {{comment.userComment}}
-                     </span>
+                </span>
                 <hr>
                 <br>
                 {% elif comment.username == user%}
@@ -80,15 +80,16 @@
                     <a class="red-text"
                         href="{{url_for('profile', username=comment.username )}}">{{comment.username}}</a>:
                     {{comment.userComment}}
-                     </span>
+                </span>
                 <hr>
                 <br>
                 {%else%}
                 <span>
                     <span class="comment-date right">{{comment.date|datetimeformat}}</span>
-                    <a class="link" href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
+                    <a class="link"
+                        href="{{url_for('other_profile', usernameOther=comment.username )}}">{{comment.username}}</a>:
                     {{comment.userComment}}
-                     </span>
+                </span>
                 <hr>
                 <br>
                 {%endif%}
@@ -97,7 +98,7 @@
             <form class="" method="POST" action="{{ url_for('add_comment', thisProject = thisProject._id) }}">
                 <div class="input-field col s12">
                     <i class="fa-solid fa-comment prefix white-text text-shadow"></i>
-                    <textarea class="" id="addComment" name="addComment"  minlength="1" maxlength="300"
+                    <textarea class="" id="addComment" name="addComment" minlength="1" maxlength="300"
                         required></textarea>
                     <label for="addComment" class="black-text">Write a comment</label>
                 </div>

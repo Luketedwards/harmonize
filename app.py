@@ -12,7 +12,7 @@ import boto3
 import botocore
 from filters import datetimeformat, datetimeformatBucket, file_type
 
-
+# imageKit credentials
 from imagekitio import ImageKit
 imagekit = ImageKit(
     private_key='private_qwuxSVAklF1V0cJcrBjfluCALVM=',
@@ -25,11 +25,12 @@ if os.path.exists("env.py"):
 
 
 app = Flask(__name__)
+# configuring filters for date and filetype which are imported from filters.py
 app.jinja_env.filters['datetimeformat'] = datetimeformat
 app.jinja_env.filters['datetimeformatBucket'] = datetimeformatBucket
 app.jinja_env.filters['file_type'] = file_type
 
-
+#configuring variables from env.py file
 UPLOAD_FOLDER = 'static/images/user-images/'
 UPLOAD_FOLDER_PROJECT = 'static/project-files/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -46,9 +47,8 @@ mongo = PyMongo(app)
 
 global user
 
+
 # creating global instance of amazon S3 bucket for file uploads
-
-
 def _get_s3_resource():
     if S3_KEY and S3_SECRET:
         return boto3.resource(
@@ -59,16 +59,13 @@ def _get_s3_resource():
     else:
         return boto3.resource('s3')
 
-# projects Amazon S3 bucket
 
-
+# the projects Amazon S3 bucket
 def get_bucket():
     s3_resource = _get_s3_resource()
     return s3_resource.Bucket(S3_BUCKET)
 
-# Login function
-
-
+# Login function to allow user to sign in to their account
 @app.route("/")
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -99,15 +96,6 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/files')
-def files():
-    s3_resource = boto3.resource('s3')
-    my_bucket = s3_resource.Bucket(S3_BUCKET)
-    summaries = my_bucket.objects.all()
-
-    return render_template("files.html", my_bucket=my_bucket, files=summaries)
-
-
 # registers user account, creates user object in database
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -117,11 +105,11 @@ def register():
             {"username": request.form.get("username").lower()})
         takenUsername = mongo.db.takenUsernames.find_one(
             {"username": request.form.get("username").lower()})
-
+        # if username exists inform user and reload page
         if existing_user or takenUsername:
             flash("Username already exists")
             return redirect(url_for("register"))
-
+        # Contains all info needed for new user account
         registerInfo = {
             "username": request.form.get("username").lower(),
             "fname": request.form.get("first_name"),
@@ -140,7 +128,7 @@ def register():
             "followers": [],
             "following": [],
             "notifications": []}
-
+        
         takenUsernames = {
             "username": request.form.get("username").lower()
         }
@@ -155,9 +143,8 @@ def register():
 
     return render_template("register.html")
 
+
 # logs out user
-
-
 @app.route("/logout")
 def logout():
     # remove user from session cookie
@@ -173,6 +160,7 @@ def profile(username):
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
         projects = mongo.db.projects.find({'username': username})
+
         # grab the session user's username from db
         username = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
@@ -311,6 +299,7 @@ def edit_profile(username):
         listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
         listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+        # updates existing user information
         if request.method == "POST":
             edit = {'$set': {
                 "fname": request.form.get("first_nameEdit"),
@@ -362,7 +351,7 @@ def upload_file():
             if 'file1' not in request.files:
                 return 'there is no file1 in form!'
             file1 = request.files['file1']
-
+            # creates new file name for photo
             newFileName = "profile-image" + "-" + user
             path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
             ext = pathlib.Path(path).suffix
@@ -371,6 +360,7 @@ def upload_file():
             newPathNoExt = os.path.join(
                 app.config['UPLOAD_FOLDER'], newFileName)
 
+            #uploads photo to S3 bucket
             my_bucket = get_bucket()
             my_bucket.Object(newPath).put(Body=file1)
 
@@ -387,14 +377,14 @@ def upload_file():
             imagekit.purge_file_cache(
                 'https://ik.imagekit.io/harmonise/' + newPathNoExt + '.jpeg' + '*'
             )
-
+            #updates the url to the photo in the users account
             profile_pic_update = {'$set': {
                 'profile_pic':
                 'https://harmonise.s3.eu-west-2.amazonaws.com/' + newPath
             }
 
             }
-
+            #updates the url to the optimised photo in the users account
             profile_pic_update_optimsed = {'$set': {
                 'profile_pic2':
                 'https://ik.imagekit.io/harmonise/' + newPath
@@ -484,7 +474,7 @@ def filter_users():
         return render_template("login.html")
 
 
-# other users profiles
+# other users personal profile
 @app.route('/other_profile/<usernameOther>', methods=["GET", "POST"])
 def other_profile(usernameOther):
     try:
@@ -507,7 +497,7 @@ def other_profile(usernameOther):
         following = mongo.db.users.find_one({'username': user}, {"following"})
         username = user
         current_user = mongo.db.users.find_one({'username': user})
-
+        # if username isn't equal to users own
         if usernameOther != user and usernameOther in allCurrentUsernames:
             return render_template(
                 'other-profile.html',
@@ -523,7 +513,7 @@ def other_profile(usernameOther):
                 listOfProjectNames=listOfProjectNames,
                 projectsImIn=projectsImIn,
                 myUsername=myUsername)
-
+        # if other user account no longer exists
         elif usernameOther not in allCurrentUsernames:
             flash('This profile no longer exists')
             return redirect(url_for("profile", username=username))
@@ -539,7 +529,6 @@ def other_profile(usernameOther):
 def other_profile_search():
     try:
         user = (session["user"])
-
         usernameOther = request.form.get("user-search-input").lower().strip()
 
         projects = mongo.db.projects.find({'username': usernameOther})
@@ -640,7 +629,7 @@ def unfollow_user(usernameOther):
     return redirect(url_for('other_profile', usernameOther=usernameOther))
 
 
-# renders list of users the user follows
+# renders list of the users the user follows
 @app.route("/following/")
 def following():
     try:
@@ -759,7 +748,7 @@ def delete_project(thisProjectId, thisProjectTitle, noOfFiles):
 
     result1 = []
     result2 = []
-
+    # removes all files from amazon s3
     for nameOfFiles in mongo.db.projects.find({'_id': ObjectId(thisProjectId)}, {
                                               'projectFiles': {'file': True}}):
 
@@ -835,6 +824,7 @@ def apply_to_project(thisProject, usernameOther):
                 "isApproved": False
             }
             usernameOther = request.form.get('project-username')
+            # notifies host of application
             mongo.db.users.update_one({"username": usernameOther}, {
                                       '$push': {"notifications": thisProjectTitle}})
             mongo.db.projects.update_one({'_id': ObjectId(thisProjectId)}, {
@@ -905,9 +895,10 @@ def remove_member(thisProject, member, thisProjectTitle):
         thisProject = thisProject
         member = member
         thisProjectTitle = thisProjectTitle
-
+        # remove user from project
         mongo.db.projects.update_one({'_id': ObjectId(thisProject)}, {'$pull': {
                                      'projectMembers': {'memberUsername': member}}})
+        #notify user
         mongo.db.users.update_one({'username': member}, {
                                   '$push': {'notifications': 'You were \
                                       removed from ' + thisProjectTitle}})
@@ -931,7 +922,7 @@ def deny_application(applicant, thisProject, thisProjectTitle):
             {'_id': ObjectId(thisProject)},
             {'$pull': {'applications': {'applicantUsername': applicant}}},
         )
-
+        #notify user of outcome
         mongo.db.users.update_one({"username": applicant}, {'$push': {
                                   "notifications": "Application to "
                                   + thisProjectTitle + " was denied."}})
@@ -1048,7 +1039,7 @@ def manage_project(thisProject):
             listOfProjectNames=listOfProjectNames,
             username=username)
     except BaseException:
-            return render_template("login.html")
+        return render_template("login.html")
 
 
 # allows user to update details about the project from notification link
@@ -1138,8 +1129,6 @@ def projects_im_in():
 
 """displays hub page to selected project, allowing access to comment
 chat, and project files"""
-
-
 @app.route('/project_hub/<thisProject>/')
 def project_hub(thisProject):
     try:
@@ -1192,12 +1181,14 @@ def add_comment(thisProject):
 
         projectHost = mongo.db.projects.find_one(
             {'_id': ObjectId(thisProject)})['username']
+        # generates comment object from form    
         newComment = {
             'userComment': request.form.get('addComment'),
             'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
             'username': username
         }
 
+        #adds comment to project
         mongo.db.projects.update_one({'_id': ObjectId(thisProject)}, {
                                      '$push': {"comments": newComment}})
         mongo.db.users.update_one({"username": projectHost}, {
@@ -1239,9 +1230,6 @@ def upload_project_files(thisProject):
             {'_id': ObjectId(thisProject)})["_id"]
         thisProjectTitle = mongo.db.projects.find_one(
             {'_id': ObjectId(thisProject)})["projectTitle"]
-
-        projectFiles = mongo.db.projects.find_one(
-            {'projectTitle': thisProjectTitle})['projectFiles']
 
         if request.method == 'POST':
             if 'file1' not in request.files:
@@ -1303,13 +1291,13 @@ def messages(usernameToContact):
              [usernameToContact, username]})
 
         if request.method == 'POST':
-
+            # creates message from form
             conversation = {
                 'username': username,
                 'message': request.form.get('message'),
                 'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             }
-
+            # checking if conversation already exists
             convoExists1 = mongo.db.messages.count_documents(
                 {'members': [username, usernameToContact]})
             convoExists2 = mongo.db.messages.count_documents(
@@ -1398,8 +1386,6 @@ def convo_list():
 
 """ creates new message to other user if no messages exist
 otherwise redirects to existing messages """
-
-
 @app.route('/contact/<usernameToContact>', methods=['GET', 'POST'])
 def contact(usernameToContact):
     try:
@@ -1572,6 +1558,7 @@ def download_s3():
 
         file_obj = my_bucket.Object(key).get()
 
+        # checking file type 
         if '.pdf' in key:
             typeOfFile = 'application/pdf'
         elif '.jpg' in key or '.jpeg' in key:
@@ -1596,4 +1583,4 @@ def download_s3():
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)
+            debug=False)

@@ -41,8 +41,7 @@
             <div class="col s12">
                 <p class="center-align">
                     Changed your mind?
-                    <a href="{{url_for('project_hub', thisProject = thisProject)}}"
-                        class="link">Back to project</a>
+                    <a href="{{url_for('project_hub', thisProject = thisProject)}}" class="link">Back to project</a>
                 </p>
             </div>
         </div>
@@ -50,14 +49,14 @@
 
 </div>
 <script>
-var uploadField = document.getElementById("file-upload");
+    var uploadField = document.getElementById("file-upload");
 
-uploadField.onchange = function() {
-    if(this.files[0].size > 1048576){
-       alert("File cannot exceed 1MB.");
-       this.value = "";
+    uploadField.onchange = function () {
+        if (this.files[0].size > 1048576) {
+            alert("File cannot exceed 1MB.");
+            this.value = "";
+        };
     };
-};
 </script>
 
 {% endblock %}

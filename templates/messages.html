@@ -10,8 +10,8 @@
                 {% for message in conversation.messages%}
                 <div class="row">
                     <div class="col s1">
-                        <a href="{{url_for('other_profile', usernameOther=message.username )}}" class="left message-profile-link link"
-                        >{{message.username}}:</a>
+                        <a href="{{url_for('other_profile', usernameOther=message.username )}}"
+                            class="left message-profile-link link">{{message.username}}:</a>
                     </div>
                     <div class="col s8 push-s0.5">
                         <span class="direct-message message-col flow-text">{{message.message}}</span>
@@ -31,7 +31,6 @@
                     Send
                 </button>
                 <label style="display: none;" for="message">send message</label>
-            
 
             </form>
         </div>

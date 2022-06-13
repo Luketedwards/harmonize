@@ -6,7 +6,8 @@
     <div class="row">
       <div class="col s12 center">
         <h3 class="center">No longer want a Harmonise account?</h3>
-        <p class="center">We'll be sad to see you go. You can delete your profile and data by clicking the button below.</p>
+        <p class="center">We'll be sad to see you go. You can delete your profile and data by clicking the button below.
+        </p>
       </div>
       <div class="col s12 center">
         <a id="application-denied-btn" href="#modal3"
@@ -14,21 +15,21 @@
       </div>
     </div>
   </div>
-    <!-- Confirmation modal -->
-    <div id="modal3" class="modal">
-      <div class="modal-content center">
-        <h4>Are you sure you want to delete your account?</h4>
-        <p>This action is irreversible and will remove all profile and project data.</p>
-      </div>
-      <div class="row">
-        <div class="modal-footer center">
-          <div class="col s12 center">
-            <a href="{{ url_for('delete_account')}}"
-              class=" modal-close waves-effect waves-green btn-flat red white-text center">Delete</a>
-            <a href="#!" class=" modal-close waves-effect waves-green btn-flat grey white-text center">Cancel</a>
-          </div>
+  <!-- Confirmation modal -->
+  <div id="modal3" class="modal">
+    <div class="modal-content center">
+      <h4>Are you sure you want to delete your account?</h4>
+      <p>This action is irreversible and will remove all profile and project data.</p>
+    </div>
+    <div class="row">
+      <div class="modal-footer center">
+        <div class="col s12 center">
+          <a href="{{ url_for('delete_account')}}"
+            class=" modal-close waves-effect waves-green btn-flat red white-text center">Delete</a>
+          <a href="#!" class=" modal-close waves-effect waves-green btn-flat grey white-text center">Cancel</a>
         </div>
       </div>
     </div>
+  </div>
 </div>
 {%endblock%}
