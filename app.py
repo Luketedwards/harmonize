@@ -1016,7 +1016,7 @@ def manage_project(thisProject):
             'projectMembers']
 
         if request.method == "POST":
-
+            # Updates project in db
             mongo.db.projects.update_one(
                 {"_id": ObjectId(thisProjectId)},
                 {
