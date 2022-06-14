@@ -30,7 +30,7 @@ app.jinja_env.filters['datetimeformat'] = datetimeformat
 app.jinja_env.filters['datetimeformatBucket'] = datetimeformatBucket
 app.jinja_env.filters['file_type'] = file_type
 
-#configuring variables from env.py file
+# configuring variables from env.py file
 UPLOAD_FOLDER = 'static/images/user-images/'
 UPLOAD_FOLDER_PROJECT = 'static/project-files/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -43,9 +43,6 @@ S3_KEY = os.environ.get("S3_KEY")
 S3_SECRET = os.environ.get("S3_SECRET")
 
 mongo = PyMongo(app)
-
-
-global user
 
 
 # creating global instance of amazon S3 bucket for file uploads
@@ -64,6 +61,7 @@ def _get_s3_resource():
 def get_bucket():
     s3_resource = _get_s3_resource()
     return s3_resource.Bucket(S3_BUCKET)
+
 
 # Login function to allow user to sign in to their account
 @app.route("/")
@@ -128,7 +126,7 @@ def register():
             "followers": [],
             "following": [],
             "notifications": []}
-        
+
         takenUsernames = {
             "username": request.form.get("username").lower()
         }
@@ -231,7 +229,6 @@ def delete_account():
 
     for projectsD in projectsToDelete:
         thisProjectId = projectsD['_id']
-        thisProjectTitle = projectsD['projectTitle']
         noOfFiles = mongo.db.projects.find_one(
             {'_id': ObjectId(thisProjectId)})
         noOfFiles = len(noOfFiles['projectFiles'])
@@ -360,31 +357,37 @@ def upload_file():
             newPathNoExt = os.path.join(
                 app.config['UPLOAD_FOLDER'], newFileName)
 
-            #uploads photo to S3 bucket
+            # uploads photo to S3 bucket
             my_bucket = get_bucket()
             my_bucket.Object(newPath).put(Body=file1)
 
             # purges imagekit cache so new profile image is updated
 
             imagekit.purge_file_cache(
-                'https://ik.imagekit.io/harmonise/' + newPathNoExt + '.jpg' + '*'
-            )
+                'https://ik.imagekit.io/harmonise/' +
+                newPathNoExt +
+                '.jpg' +
+                '*')
 
             imagekit.purge_file_cache(
-                'https://ik.imagekit.io/harmonise/' + newPathNoExt + '.png' + '*'
-            )
+                'https://ik.imagekit.io/harmonise/' +
+                newPathNoExt +
+                '.png' +
+                '*')
 
             imagekit.purge_file_cache(
-                'https://ik.imagekit.io/harmonise/' + newPathNoExt + '.jpeg' + '*'
-            )
-            #updates the url to the photo in the users account
+                'https://ik.imagekit.io/harmonise/' +
+                newPathNoExt +
+                '.jpeg' +
+                '*')
+            # updates the url to the photo in the users account
             profile_pic_update = {'$set': {
                 'profile_pic':
                 'https://harmonise.s3.eu-west-2.amazonaws.com/' + newPath
             }
 
             }
-            #updates the url to the optimised photo in the users account
+            # updates the url to the optimised photo in the users account
             profile_pic_update_optimsed = {'$set': {
                 'profile_pic2':
                 'https://ik.imagekit.io/harmonise/' + newPath
@@ -394,14 +397,15 @@ def upload_file():
 
             mongo.db.users.update_one(
                 {'_id': ObjectId(user_id)}, profile_pic_update_optimsed)
-            flash("Profile Picture Updated! Changes may take a minute to display")
+            flash("Profile Picture Updated! \
+                 Changes may take a minute to display")
 
             return redirect(url_for("profile", username=username))
 
         return render_template("upload_file.html", listOfUsers=listOfUsers,
-                            user_notifications=user_notifications,
-                            allCurrentUsernames=allCurrentUsernames,
-                            listOfProjectNames=listOfProjectNames)
+                               user_notifications=user_notifications,
+                               allCurrentUsernames=allCurrentUsernames,
+                               listOfProjectNames=listOfProjectNames)
     except BaseException:
         return render_template("login.html")
 
@@ -697,6 +701,7 @@ def create_a_project():
         user = (session['user'])
         allCurrentUsernames = mongo.db.users.distinct("username")
         listOfProjectNames = mongo.db.projects.distinct('projectTitle')
+        listOfUsers = mongo.db.users.find()
 
         user_notifications = mongo.db.users.find_one({'username': user})
         projects = mongo.db.projects.find({'username': user})
@@ -732,7 +737,8 @@ def create_a_project():
         return render_template('create-a-project.html', user=user,
                                user_notifications=user_notifications,
                                allCurrentUsernames=allCurrentUsernames,
-                               listOfProjectNames=listOfProjectNames)
+                               listOfProjectNames=listOfProjectNames,
+                               listOfUsers=listOfUsers)
 
     except BaseException:
         return render_template("login.html")
@@ -773,6 +779,7 @@ def delete_project(thisProjectId, thisProjectTitle, noOfFiles):
 def my_projects():
     try:
         user = (session['user'])
+        listOfUsers = mongo.db.users.find()
         allCurrentUsernames = mongo.db.users.distinct("username")
         listOfProjectNames = mongo.db.projects.distinct('projectTitle')
 
@@ -786,7 +793,8 @@ def my_projects():
                                user_notifications=user_notifications,
                                project_number=project_number,
                                allCurrentUsernames=allCurrentUsernames,
-                               listOfProjectNames=listOfProjectNames)
+                               listOfProjectNames=listOfProjectNames,
+                               listOfUsers=listOfUsers)
     except BaseException:
         return render_template("login.html")
 
@@ -860,7 +868,6 @@ def accept_application(
         thisProject,
         thisProjectTitle):
     try:
-        user = (session["user"])
         thisProject = thisProject
         applicantInstrument = applicantInstrument
         thisProjectTitle = thisProjectTitle
@@ -898,7 +905,7 @@ def remove_member(thisProject, member, thisProjectTitle):
         # remove user from project
         mongo.db.projects.update_one({'_id': ObjectId(thisProject)}, {'$pull': {
                                      'projectMembers': {'memberUsername': member}}})
-        #notify user
+        # notify user
         mongo.db.users.update_one({'username': member}, {
                                   '$push': {'notifications': 'You were \
                                       removed from ' + thisProjectTitle}})
@@ -922,7 +929,7 @@ def deny_application(applicant, thisProject, thisProjectTitle):
             {'_id': ObjectId(thisProject)},
             {'$pull': {'applications': {'applicantUsername': applicant}}},
         )
-        #notify user of outcome
+        # notify user of outcome
         mongo.db.users.update_one({"username": applicant}, {'$push': {
                                   "notifications": "Application to "
                                   + thisProjectTitle + " was denied."}})
@@ -1181,14 +1188,14 @@ def add_comment(thisProject):
 
         projectHost = mongo.db.projects.find_one(
             {'_id': ObjectId(thisProject)})['username']
-        # generates comment object from form    
+        # generates comment object from form
         newComment = {
             'userComment': request.form.get('addComment'),
             'date': datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
             'username': username
         }
 
-        #adds comment to project
+        # adds comment to project
         mongo.db.projects.update_one({'_id': ObjectId(thisProject)}, {
                                      '$push': {"comments": newComment}})
         mongo.db.users.update_one({"username": projectHost}, {
@@ -1367,7 +1374,8 @@ def convo_list():
             {"username": session["user"]})["username"]
         user_notifications = mongo.db.users.find_one({'username': user})
         myConversations = mongo.db.messages.find({'members': username})
-        myConversationsCount = mongo.db.messages.count_documents({'members': username})
+        myConversationsCount = mongo.db.messages.count_documents(
+            {'members': username})
 
         return render_template(
             'convo-list.html',
@@ -1558,7 +1566,7 @@ def download_s3():
 
         file_obj = my_bucket.Object(key).get()
 
-        # checking file type 
+        # checking file type
         if '.pdf' in key:
             typeOfFile = 'application/pdf'
         elif '.jpg' in key or '.jpeg' in key:

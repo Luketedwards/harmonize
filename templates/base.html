@@ -166,10 +166,11 @@
               name="user-search-input" list="user-search">
             <label style="display: none;" for="user-search-input-side">Search</label>
 
+    <!-- Datalist for user search bar to draw from -->
 
             <datalist id="user-search">
-              {%for user in listOfUsers%}
-              <option value="{{user.username}}">{{user.username}}</option>
+              {%for userList in listOfUsers%}
+              <option value="{{user.username}}">{{userList.username}}</option>
               {%endfor%}
             </datalist>
           </form>

@@ -48,6 +48,20 @@ The purpose of this project is to develop and present my skills in the follow ar
 
 I have created this project using MongoDb as my database. I chose to use MongoDb due comments in the course material stating that for something like a social media platform, where the database content is very varied and changing that a non-relational databse might be the best choice.
 Although MongoDb is technically a non-relational database, I have used it in a relational manner, where all data associated (messages, projects, files) with a user is tied to their unique username. I spoke to the assessments team to check that this is okay, and they have confirmed to me that it is.
+
+My database is structured into 3 collections. 
+
+- the User collection stores all the data about a user as a document. The document contains all of their biographical and instrument information, personal details, following/followers list, and the link to their profile photo.
+
+![User Collection](/static/readme-files/features/user-collection.png)
+
+- The projects collection creates a new document for each project that is created. This document stores all the information about the project, the list of outstanding user applications, the project members, an array of all of the comments in the group chat, and links and data for all of the project files.
+![Projects Collection](/static/readme-files/features/projects-collection.png)
+
+- The Messages collection creates a new document for each conversation between two usernames. The messages are then all stored within this document as objects, containing the message and date data.
+![Messages Collection](/static/readme-files/features/messages-collection.png)
+
+All of the information between these collections are connected using the users username, which is a unique identifier.
                           
 ##  User Experience (UX)
 ---

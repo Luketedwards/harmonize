@@ -105,6 +105,7 @@ During development I continually testing the project in a number of ways.
 
 Results can be found [here](/static/readme-files/validator-results/)
 
+
 ### Known Bugs
 
 * Occasionally during development the Javascript would fail to initialise when a page was loaded, causing the materialize dropdowns to not work. This is easilly resolved by reloading the page.
@@ -127,5 +128,6 @@ Performance was generally rated positively, and the site seems to run very well 
 Light house results can be viewed [here](/static/readme-files/lighthouse/)
 
 The python file was run through the PEP8 validator to ensure no syntax errors, and the Javascript files were validated using JsHint.
+I used both autopep8 and an online tool to try to adhere to PEP8 guidlines with the python code. In some cases the code is longer than the suggested 79 characters. I chose to leave these as they were as any alterations I made resulted in much less readable code.
 
 [Return to README](/README.md)
