@@ -46,7 +46,7 @@ The purpose of this project is to develop and present my skills in the follow ar
 
 ## A note on relational vs non-relational databases     
 
-I have created this project using MongoDb as my database. I chose to use MongoDb due comments in the course material stating that for something like a social media platform, where the database content is very varied and changing that a non-relational databse might be the best choice.
+I have created this project using MongoDb as my database. I chose to use MongoDb due to comments in the course material stating that for something like a social media platform, where the database content is very varied and changing, that a non-relational databse might be the best choice.
 Although MongoDb is technically a non-relational database, I have used it in a relational manner, where all data associated (messages, projects, files) with a user is tied to their unique username. I spoke to the assessments team to check that this is okay, and they have confirmed to me that it is.
 
 My database is structured into 3 collections. 
