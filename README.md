@@ -9,7 +9,7 @@ I developed harmonise as a social media platform aimed at making collaboration b
 
 # Deployed Project
 
-The deployed site can be viewed [Here](http://www.harmonise-app.co.uk/).
+The deployed site can be viewed at: [http://www.harmonise-app.co.uk/](http://www.harmonise-app.co.uk/).
 
 As much of the websites functionality revloves around interacting with other users I have created two accounts for you to use for marking purposes. These each have one project created, and are a member of the others project for you to test the project hub section. You can also test the messages function and other features that require two accounts.
 Please feel free to also create your own account from scratch; I just thought this would save a little time and make the marking process more streamlined.
