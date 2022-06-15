@@ -118,8 +118,7 @@ def register():
             "email": request.form.get("email"),
             "instruments": request.form.getlist("instruments"),
             "genres": request.form.getlist("genres"),
-            "bio": "Tell us a little about yourself! Click the edit profile \
-                    button to write your bio",
+            "bio": "Tell us a little about yourself! Click the edit profile button to write your bio",
             "profile_pic": "/static/images/default-pp-min.png",
             "profile_pic2":
             "https://ik.imagekit.io/harmonise/static/images/user-images/default-pp-min.png",

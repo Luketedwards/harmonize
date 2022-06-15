@@ -987,6 +987,7 @@ footer {
     margin-bottom: 5px;
     font-size: 2.9rem;
     font-weight: 600;
+    word-break: break-all;
 }
 
 .edit-profile-btns {
@@ -1552,7 +1553,7 @@ footer {
         width: 44vw;
         margin: 0 auto !important;
         margin-top: 0;
-        margin-bottom: 15px;
+        margin-bottom: 15px !important;
     }
 
     .user-info-collapse .collapsible-header {
