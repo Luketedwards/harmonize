@@ -110,6 +110,7 @@ Results can be found [here](/static/readme-files/validator-results/)
 
 * Occasionally during development the Javascript would fail to initialise when a page was loaded, causing the materialize dropdowns to not work. This is easilly resolved by reloading the page.
 
+* on some of the ipads tested, when using safari and in landscape mode, the dropdown instrument selection is inaccurate and selects the item either above or below the intended target
 
 ### Notable Solved Bugs
 
