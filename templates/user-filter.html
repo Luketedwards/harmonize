@@ -2,7 +2,8 @@
 {% block content %}
 <!-- Form to search for user by parameter -->
 <div id="filter-users-bg-image">
-  <div style="height:auto; overflow: initial;" id="search-users-panel" class="row card-panel s8 transparent-bg">
+
+  <div style="height:auto; overflow: revert;" id="search-users-panel" class="row card-panel s8 transparent-bg">
     <h3 class="center-align">Search Users by Parameter</h3>
     <form class="col s12 m8 offset-m2" method="POST" action="#!">
       <div class="row">
@@ -74,17 +75,19 @@
           </button>
         </div>
       </div>
-    </form>
-    <div class="row">
-      <div class="col s12">
-        <p class="center-align">
-          Changed your mind?
-          <a href="{{ url_for('profile', username=session['user']) }}" class="link">Back to
-            profile</a>
-        </p>
+      <div class="row">
+        <div class="col s12">
+          <p class="center-align">
+            Changed your mind?
+            <a href="{{ url_for('profile', username=session['user']) }}" class="link">Back to
+              profile</a>
+          </p>
+        </div>
       </div>
-    </div>
+    </form>
+    
 
   </div>
+
 </div>
 {% endblock %}

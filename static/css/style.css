@@ -231,7 +231,6 @@ h4 {
 #dropdown-notifications {
     width: 45vw !important;
     white-space: initial;
-    min-height: fit-content;
     max-height: 50vh;
     word-wrap: break-word;
     text-overflow: ellipsis;
@@ -289,8 +288,9 @@ h4 {
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
-    height: 100vh;
-    
+    height: 100%;
+    overflow: revert;
+    overflow-y: auto;
 }
 
 #side-modal-h4 {
