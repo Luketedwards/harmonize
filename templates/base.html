@@ -115,7 +115,7 @@
           <ul class="">
             {%if session.user%}
             {% if user_notifications.notifications|length == 0%}
-            <li>You have no notifications</li>
+            <li class="center">You have no notifications</li>
             {%else%}
             {% for notify_side in user_notifications.notifications|reverse %}
             {%if notify_side in allCurrentUsernames  %}
